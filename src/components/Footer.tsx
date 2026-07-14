@@ -1,6 +1,8 @@
+import BrandMark from "@/components/BrandMark";
+
 const COLUMNS = [
   {
-    title: "PRODUCT",
+    title: "FLIGHT PLAN",
     links: [
       { label: "THE FILM", href: "#film" },
       { label: "DEPARTURES", href: "#departures" },
@@ -9,45 +11,63 @@ const COLUMNS = [
     ],
   },
   {
-    title: "SUPPORT",
+    title: "GROUND CREW",
     links: [
       { label: "SUPPORT & FAQ", href: "support.html" },
       { label: "REPORT A PROBLEM", href: "support.html#contact" },
     ],
   },
   {
-    title: "PRIVACY",
+    title: "PAPERWORK",
     links: [
       { label: "PRIVACY POLICY", href: "privacy.html" },
-      { label: "ALL DATA STAYS ON YOUR MAC", href: "privacy.html" },
+      { label: "DATA & PRIVACY", href: "privacy.html" },
     ],
   },
 ];
 
 export default function Footer() {
   return (
-    <footer data-mood="light" className="bg-paper text-ink">
-      <div className="hairline-t mx-auto max-w-[1200px] px-gutter py-xl max-md:px-m">
-        <div className="flex flex-wrap justify-between gap-l">
-          <div className="max-w-[260px]">
-            <p className="board font-bold">
-              <span aria-hidden="true">✈</span> WINDOWSEAT
+    <footer data-mood="dark" className="bg-nighttop px-gutter py-xl text-starlight max-md:px-m">
+      <div className="mx-auto max-w-[1320px]">
+        <div className="flex items-center gap-4 border-y border-starlight/15 py-4">
+          <span className="h-2 w-2 rounded-full bg-starlight/60" />
+          <span className="board-caption">TKS</span>
+          <span className="h-px flex-1 bg-starlight/15" />
+          <span className="text-route">✈</span>
+          <span className="h-px flex-1 border-t border-dashed border-starlight/20" />
+          <span className="h-2 w-2 rounded-full bg-instrument" />
+          <span className="board-caption text-instrument">YOUR NEXT DESTINATION</span>
+        </div>
+
+        <div className="grid grid-cols-12 gap-l py-xl max-lg:grid-cols-1">
+          <div className="col-span-6">
+            <div className="flex items-center gap-3">
+              <BrandMark size={44} />
+              <p className="board-micro text-starlight/35">WINDOWSEAT / MACOS</p>
+            </div>
+            <p className="mt-m text-[clamp(48px,7vw,92px)] font-black leading-[0.82] tracking-[-0.065em]">
+              FOCUS
+              <span className="block text-instrument">SESSIONS, FLOWN.</span>
             </p>
-            <p className="board-caption mt-xs text-ink/60">FOCUS SESSIONS, FLOWN.</p>
-            <p className="body-sm mt-m text-ink/40">
-              A native Mac focus app that turns protected time into routes, landings, and
-              passport stamps.
+            <p className="body-sm mt-l max-w-[400px] text-starlight/45">
+              A native Mac focus app that turns protected time into routes, landings, and passport
+              stamps.
             </p>
           </div>
-          <div className="flex flex-wrap gap-xl max-md:gap-l">
-            {COLUMNS.map((col) => (
-              <div key={col.title}>
-                <p className="board-caption mb-s text-ink/40">{col.title}</p>
-                <ul className="space-y-xs">
-                  {col.links.map((l) => (
-                    <li key={l.label}>
-                      <a href={l.href} className="board-caption text-ink/70 hover:text-ink">
-                        {l.label}
+
+          <div className="col-span-6 grid grid-cols-3 gap-l self-end max-sm:grid-cols-2">
+            {COLUMNS.map((column) => (
+              <div key={column.title}>
+                <p className="board-micro mb-m text-starlight/30">{column.title}</p>
+                <ul className="space-y-s">
+                  {column.links.map((link) => (
+                    <li key={link.label}>
+                      <a
+                        href={link.href}
+                        className="board-caption text-starlight/60 transition-colors hover:text-instrument"
+                      >
+                        {link.label}
                       </a>
                     </li>
                   ))}
@@ -56,10 +76,13 @@ export default function Footer() {
             ))}
           </div>
         </div>
-        <p className="board-micro mt-xl text-ink/30">
-          © 2026 WINDOWSEAT · MADE FOR MACOS 26+ · TOKENS &amp; TYPE FROM THE APP&apos;S OWN
-          DESIGN SYSTEM
-        </p>
+
+        <div className="flex justify-between border-t border-starlight/15 pt-m max-md:block">
+          <p className="board-micro text-starlight/25">© 2026 WINDOWSEAT · MADE FOR MACOS 26+</p>
+          <p className="board-micro text-starlight/25 max-md:mt-s">
+            DESIGN TOKENS &amp; TYPE / WINDOWSEAT UI SYSTEM
+          </p>
+        </div>
       </div>
     </footer>
   );

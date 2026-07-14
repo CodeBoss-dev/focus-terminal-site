@@ -90,6 +90,32 @@ section[id] {
     font-size: clamp(27px, 4vw, 34px);
   }
 
+  .hero-display {
+    font-size: clamp(58px, 8.8vw, 142px);
+    font-weight: 900;
+    letter-spacing: -0.055em;
+    line-height: 0.83;
+    word-spacing: 0.06em;
+  }
+
+  .outline-display {
+    color: transparent;
+    font-family: var(--font-mono);
+    font-size: clamp(58px, 8vw, 118px);
+    font-weight: 700;
+    letter-spacing: -0.07em;
+    line-height: 0.9;
+    -webkit-text-stroke: 1.5px rgba(20, 22, 26, 0.32);
+  }
+
+  .route-display {
+    font-family: var(--font-mono);
+    font-size: clamp(55px, 8vw, 118px);
+    font-weight: 800;
+    letter-spacing: -0.075em;
+    line-height: 0.9;
+  }
+
   .board {
     font-family: var(--font-mono);
     font-size: 17px;
@@ -174,6 +200,26 @@ section[id] {
     -webkit-backdrop-filter: blur(14px);
   }
 
+  .flight-grid {
+    background-image:
+      linear-gradient(rgba(232, 236, 244, 0.2) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232, 236, 244, 0.2) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.08;
+  }
+
+  .route-draw {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: ws-route-draw 2.2s 0.25s cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
+  }
+
+  @keyframes ws-route-draw {
+    to {
+      stroke-dashoffset: 38;
+    }
+  }
+
   .hairline-b {
     border-bottom: 1px solid rgba(20, 22, 26, 0.12);
   }
@@ -232,6 +278,10 @@ section[id] {
   }
   .row-shimmer::after {
     animation: none;
+  }
+  .route-draw {
+    animation: none;
+    stroke-dashoffset: 38;
   }
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { type MouseEvent, useEffect, useState } from "react";
+import BrandMark from "@/components/BrandMark";
 
 const LINKS = [
   { href: "#departures", label: "DEPARTURES" },
@@ -16,12 +17,15 @@ const LINKS = [
 export default function Nav() {
   const [visible, setVisible] = useState(false);
   const [mood, setMood] = useState<"light" | "dark">("dark");
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const film = document.getElementById("film");
     const onScroll = () => {
       if (!film) return;
       setVisible(window.scrollY > film.offsetTop + film.offsetHeight - window.innerHeight);
+      const distance = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(distance > 0 ? Math.min(1, window.scrollY / distance) : 0);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -77,13 +81,17 @@ export default function Nav() {
           : "border-b border-starlight/15 bg-nighttop/70 text-starlight"
       } backdrop-blur-md`}
     >
-      <div className="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-gutter max-md:px-m">
+      <div className="mx-auto flex h-16 max-w-[1320px] items-center justify-between px-gutter max-md:h-14 max-md:px-m">
         <a
           href="#film"
           onClick={(event) => jumpTo(event, "#film")}
-          className="board-sm flex items-center gap-2 font-bold"
+          className="board-sm flex items-center gap-3 font-bold"
         >
-          <span aria-hidden="true">✈</span> WINDOWSEAT
+          <BrandMark size={28} />
+          <span>WINDOWSEAT</span>
+          <span className={`board-micro border-l pl-3 font-normal max-md:hidden ${light ? "border-ink/15 text-ink/35" : "border-starlight/15 text-starlight/35"}`}>
+            TKS → ???
+          </span>
         </a>
         <div className="flex items-center gap-6 max-md:gap-4">
           {LINKS.map((l) => (
@@ -101,10 +109,18 @@ export default function Nav() {
           {/* TODO: App Store URL */}
           <a
             href="#board"
-            className="board-caption rounded-full bg-signal px-4 py-2 font-bold text-ink transition-transform hover:scale-[1.03]"
+            className="board-caption bg-signal px-5 py-2.5 font-bold text-ink transition-transform hover:-translate-y-0.5"
           >
             GET WINDOWSEAT
           </a>
+        </div>
+      </div>
+      <div className={`absolute inset-x-0 bottom-0 h-px ${light ? "bg-ink/10" : "bg-starlight/10"}`}>
+        <div
+          className="relative h-full bg-route transition-[width] duration-150"
+          style={{ width: `${progress * 100}%` }}
+        >
+          <span className="absolute -right-1 -top-[3px] h-[7px] w-[7px] rotate-45 bg-route" />
         </div>
       </div>
     </nav>
