@@ -1,26 +1,252 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * WindowSeat design tokens, ported 1:1 from the app's WS enum
+ * (WindowSeat/UI/DesignSystem.swift). No other color, size, or spacing
+ * value may be hardcoded in components.
+ */
+@theme {
+  /* Terminal (light) */
+  --color-paper: #f7f6f2;
+  --color-lifted: #ffffff;
+  --color-ink: #14161a;
+  --color-signal: #ffc400;
+
+  /* Night Flight (dark) */
+  --color-nighttop: #0a0f1e;
+  --color-nightbottom: #101b33;
+  --color-starlight: #e8ecf4;
+  --color-instrument: #ffb454;
+  --color-route: #5ac8fa;
+
+  /* Semantic */
+  --color-boarding: #34c77b;
+  --color-turbulence: #ff5a5f;
+  --color-stampfresh: #b0472e;
+  --color-stampaged: #7a5b3a;
+  --color-dawn: #ff965a;
+
+  /* Seat-class hues — chips and edge-bars only, never full surfaces */
+  --color-seatwork: #ffc400;
+  --color-seatstudy: #4a90d9;
+  --color-seatread: #5fa97c;
+  --color-seatcreate: #f2695c;
+
+  /* Mac targets — the system stack renders real SF */
+  --font-sans: system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+
+  /* 8pt grid spacing scale: 4/8/16/24/40/64 */
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-s: 16px;
+  --spacing-m: 24px;
+  --spacing-l: 40px;
+  --spacing-xl: 64px;
+  --spacing-gutter: 40px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+::selection {
+  background: var(--color-signal);
+  color: var(--color-ink);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis owns smooth scroll */
+  scroll-padding-top: 56px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-nighttop);
+  color: var(--color-starlight);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+section[id] {
+  scroll-margin-top: 56px;
+}
+
+@layer components {
+  /* ------ Type roles (4 fixed roles, no ad-hoc sizes) ------ */
+  .signage {
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.02;
+  }
+  .signage-lg {
+    font-size: clamp(40px, 7vw, 64px);
+  }
+  .signage-md {
+    font-size: clamp(32px, 5vw, 48px);
+  }
+  .signage-sm {
+    font-size: clamp(27px, 4vw, 34px);
+  }
+
+  .board {
+    font-family: var(--font-mono);
+    font-size: 17px;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+  .board-sm {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+  .board-status {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+  .board-caption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+  }
+  .board-micro {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  .board-display {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: clamp(28px, 4.5vw, 48px);
+    text-transform: uppercase;
+  }
+
+  .body-text {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .body-sm {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .instrument {
+    font-family: ui-rounded, var(--font-sans);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The first-run PA line: signage-scaled but semibold — heavy signage
+     reads as shouting in a dark cabin. */
+  .briefing-line {
+    font-size: clamp(26px, 3.4vw, 36px);
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    line-height: 1.35;
+  }
+
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ------ Surfaces ------ */
+  .bg-night-grad {
+    background: linear-gradient(180deg, var(--color-nighttop) 0%, var(--color-nightbottom) 100%);
+  }
+  /* Flipped variant so consecutive dark sections meet on the same hex —
+     no visible seam where one un-sticks against the next. */
+  .bg-night-grad-flip {
+    background: linear-gradient(180deg, var(--color-nightbottom) 0%, var(--color-nighttop) 100%);
+  }
+
+  /* HUD glass capsule over the night scene — fill starlight 6%, hairline 15% */
+  .glass {
+    background: rgba(232, 236, 244, 0.06);
+    border: 1px solid rgba(232, 236, 244, 0.15);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .hairline-b {
+    border-bottom: 1px solid rgba(20, 22, 26, 0.12);
+  }
+  .hairline-t {
+    border-top: 1px solid rgba(20, 22, 26, 0.12);
+  }
+
+  /* Printed boarding-pass paper */
+  .paper-texture {
+    background-color: var(--color-lifted);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.02 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* BOARDING row shimmer — a faint signal sheen sweeping the row */
+  .row-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .row-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 42%,
+      rgba(255, 196, 0, 0.1) 50%,
+      transparent 58%
+    );
+    transform: translateX(-100%);
+    animation: ws-shimmer 3.4s ease-in-out infinite;
+  }
+  @keyframes ws-shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    60%,
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
+
+/* Pinned scrub sections collapse to normal flow under reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .pin-section {
+    height: auto !important;
+    min-height: 100svh;
+  }
+  .pin-section > .sticky {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: 100svh;
+    overflow: visible;
+  }
+  .row-shimmer::after {
+    animation: none;
+  }
+}
+
+/* Small screens read the story in normal document flow. This prevents the
+   app-derived panels from being cropped inside a pinned viewport. */
+@media (max-width: 767px) {
+  .pin-section {
+    height: auto !important;
+    min-height: 100svh;
+  }
+  .pin-section > .sticky {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: 100svh;
+    overflow: visible;
+  }
 }
