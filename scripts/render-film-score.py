@@ -19,9 +19,8 @@ import numpy as np
 SAMPLE_RATE = 48_000
 DURATION = 50.5
 FRAME_COUNT = round(SAMPLE_RATE * DURATION)
-TEMPO = 105.0
+TEMPO = 120.0
 BEAT = 60.0 / TEMPO
-SCORE_START = 0.43
 
 
 def smoothstep(values: np.ndarray) -> np.ndarray:
@@ -158,6 +157,67 @@ def add_ui_click(mix: np.ndarray, at: float, gain: float, pan: float = 0.0) -> N
     add_mono(mix, voice * shape, at, gain=gain, pan=pan)
 
 
+def add_split_flap(
+    mix: np.ndarray,
+    at: float,
+    pitch: float,
+    gain: float,
+    pan: float = 0.0,
+) -> None:
+    duration = 0.105
+    count = round(duration * SAMPLE_RATE)
+    time = np.arange(count, dtype=np.float64) / SAMPLE_RATE
+    generator = np.random.default_rng(0x464C4150 + round(at * 100))
+    noise = generator.standard_normal(count).astype(np.float32)
+    snap = (
+        np.sin(2.0 * math.pi * pitch * time)
+        + 0.34 * np.sin(2.0 * math.pi * pitch * 1.91 * time + 0.45)
+    ).astype(np.float32)
+    first = np.exp(-62.0 * time).astype(np.float32)
+    second_time = np.maximum(0.0, time - 0.038)
+    second = (time >= 0.038).astype(np.float32) * np.exp(-74.0 * second_time).astype(np.float32)
+    signal = snap * (first + second * 0.58) + noise * first * 0.075
+    add_mono(mix, signal, at, gain=gain, pan=pan)
+
+
+def add_noise_gesture(
+    mix: np.ndarray,
+    start: float,
+    duration: float,
+    gain: float,
+    seed: int,
+    pan: float = 0.0,
+    reverse: bool = False,
+) -> None:
+    count = round(duration * SAMPLE_RATE)
+    time = np.arange(count, dtype=np.float64) / SAMPLE_RATE
+    generator = np.random.default_rng(seed)
+    noise = generator.standard_normal(count).astype(np.float32)
+    smooth = np.convolve(noise, np.ones(18, dtype=np.float32) / 18.0, mode="same")
+    texture = noise * 0.34 + smooth * 0.82
+    progress = time / duration
+    if reverse:
+        shape = smoothstep(progress.astype(np.float32))
+        shape *= smoothstep(np.minimum((1.0 - progress) / 0.10, 1.0).astype(np.float32))
+    else:
+        shape = smoothstep(np.minimum(progress / 0.10, 1.0).astype(np.float32))
+        shape *= smoothstep((1.0 - progress).astype(np.float32))
+    add_mono(mix, texture * shape, start, gain=gain, pan=pan)
+
+
+def add_scene_hit(mix: np.ndarray, at: float, gain: float) -> None:
+    add_kick(mix, at, gain=gain)
+    add_synth_pluck(
+        mix,
+        at + 0.015,
+        146.83,
+        gain=gain * 0.42,
+        pan=0.0,
+        duration=1.1,
+        decay=3.1,
+    )
+
+
 def add_bell(
     mix: np.ndarray,
     at: float,
@@ -210,143 +270,196 @@ def add_stamp(mix: np.ndarray, at: float) -> None:
 def render_score() -> np.ndarray:
     mix = np.zeros((FRAME_COUNT, 2), dtype=np.float32)
 
-    # Twenty-two compact phrases follow the film's motion at 105 BPM. The
-    # arrangement moves like a focus session: choose, commit, work, arrive.
-    bars = (
-        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 2), 0.48),
-        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 1), 0.56),
-        (58.27, (233.08, 293.66, 349.23, 440.00), (0, 1, 2, 3), 0.66),
-        (65.41, (261.63, 293.66, 392.00, 523.25), (0, 2, 1, 3), 0.69),
-        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 1, 2, 3), 0.72),
-        (87.31, (220.00, 261.63, 349.23, 392.00), (1, 2, 3, 2), 0.74),
-        (65.41, (261.63, 293.66, 392.00, 523.25), (0, 1, 2, 1), 0.76),
-        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 2, 1, 3), 0.80),
-        (98.00, (196.00, 233.08, 293.66, 440.00), (0, 1, 2, 3), 0.80),
-        (58.27, (233.08, 293.66, 349.23, 440.00), (0, 2), 0.68),
-        (65.41, (261.63, 293.66, 392.00, 523.25), (0, 1), 0.64),
-        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 1, 2), 0.74),
-        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 1, 2, 3), 0.88),
-        (65.41, (261.63, 293.66, 392.00, 523.25), (0, 2, 1, 3), 0.90),
-        (58.27, (233.08, 293.66, 349.23, 440.00), (0, 1, 2, 3), 0.92),
-        (87.31, (220.00, 261.63, 349.23, 392.00), (1, 2, 3, 2), 0.90),
-        (65.41, (261.63, 293.66, 392.00, 523.25), (2, 1, 0, 1), 0.84),
-        (98.00, (196.00, 233.08, 293.66, 440.00), (0, 2), 0.68),
-        (58.27, (233.08, 293.66, 349.23, 440.00), (0, 1), 0.70),
-        (73.42, (293.66, 369.99, 440.00, 659.25), (0, 1, 2, 3), 0.80),
-        (65.41, (261.63, 329.63, 392.00, 587.33), (0, 2, 1, 3), 0.74),
-        (73.42, (293.66, 369.99, 440.00, 659.25), (0, 1), 0.66),
-    )
+    motif = (293.66, 440.00, 659.25, 392.00)
 
-    bar_duration = BEAT * 4.0
-    for bar_index, (root, notes, pattern, dynamic) in enumerate(bars):
-        bar_start = SCORE_START + bar_index * bar_duration
+    # 00.00–04.97 · The hook assembles character by character. The flap
+    # mechanics become the rhythm, then the amber line completes the motif.
+    hook_flaps = (0.93, 1.17, 1.53, 1.97, 2.27, 2.47, 3.47)
+    for index, at in enumerate(hook_flaps):
+        add_split_flap(
+            mix,
+            at,
+            pitch=470.0 + (index % 4) * 72.0,
+            gain=0.036 if at < 3.0 else 0.046,
+            pan=-0.22 + (index % 4) * 0.14,
+        )
+    add_synth_pluck(mix, 2.47, motif[0], gain=0.026, pan=-0.12, duration=1.6, decay=2.0)
+    add_synth_pluck(mix, 3.47, motif[1], gain=0.030, pan=0.12, duration=1.5, decay=2.1)
+    add_noise_gesture(mix, 4.70, 0.27, gain=0.016, seed=0x0500, reverse=True)
+    add_scene_hit(mix, 4.97, gain=0.105)
 
-        if bar_index in {1, 2, 3, 4, 5, 6, 7, 8, 12, 13, 14, 15, 16, 18, 19, 20}:
-            add_bass_note(mix, bar_start, root, gain=0.105 * dynamic)
-            add_bass_note(mix, bar_start + BEAT * 2.0, root, gain=0.075 * dynamic)
-        elif bar_index == 21:
-            add_bass_note(mix, bar_start, root, gain=0.095 * dynamic)
+    # 04.97–10.57 · Departures rows populate and the yellow selection moves.
+    # Each visible board action supplies the next note of the musical phrase.
+    departure_events = (5.40, 6.50, 6.73, 7.10, 7.93, 8.33, 8.77)
+    for index, at in enumerate(departure_events):
+        add_split_flap(
+            mix,
+            at,
+            pitch=330.0 + (index % 3) * 52.0,
+            gain=0.037 if index < 4 else 0.046,
+            pan=-0.24 + (index % 4) * 0.16,
+        )
+        add_synth_pluck(
+            mix,
+            at + 0.025,
+            motif[index % len(motif)],
+            gain=0.022 if index < 4 else 0.029,
+            pan=-0.16 if index % 2 == 0 else 0.16,
+            duration=1.0,
+            decay=3.0,
+        )
+    add_bass_note(mix, 5.40, 73.42, gain=0.078)
+    add_bass_note(mix, 7.93, 58.27, gain=0.080)
+    add_ui_click(mix, 10.03, gain=0.033, pan=0.10)
+    add_scene_hit(mix, 10.57, gain=0.090)
 
-        if bar_index == 1:
-            for beat in (0.0, 2.0):
-                add_kick(mix, bar_start + BEAT * beat, gain=0.085)
-        elif 2 <= bar_index <= 8:
-            for beat in (0.0, 2.0 if bar_index % 2 == 0 else 2.5):
-                add_kick(mix, bar_start + BEAT * beat, gain=0.10)
-            for beat in (1.0, 3.0):
-                add_rim(mix, bar_start + BEAT * beat, gain=0.024, pan=0.08)
-            for hat_index, beat in enumerate((0.5, 1.5, 2.5, 3.5)):
-                add_hat(
-                    mix,
-                    bar_start + BEAT * beat,
-                    gain=0.010,
-                    pan=-0.20 if hat_index % 2 == 0 else 0.20,
-                )
-        elif bar_index in {9, 10}:
-            add_kick(mix, bar_start, gain=0.076)
-            for beat in (1.5, 3.5):
-                add_hat(mix, bar_start + BEAT * beat, gain=0.008, pan=0.14)
-        elif bar_index == 11:
-            add_kick(mix, bar_start, gain=0.082)
-            for hat_index, beat in enumerate((2.5, 3.0, 3.5)):
-                add_hat(
-                    mix,
-                    bar_start + BEAT * beat,
-                    gain=0.009 + hat_index * 0.002,
-                    pan=-0.12 + hat_index * 0.12,
-                )
-        elif 12 <= bar_index <= 16:
-            for beat in (0.0, 2.5):
-                add_kick(mix, bar_start + BEAT * beat, gain=0.115)
-            for beat in (1.0, 3.0):
-                add_rim(mix, bar_start + BEAT * beat, gain=0.027, pan=0.10)
-            for hat_index, beat in enumerate((0.5, 1.5, 2.0, 3.5)):
-                add_hat(
-                    mix,
-                    bar_start + BEAT * beat,
-                    gain=0.012,
-                    pan=-0.22 if hat_index % 2 == 0 else 0.22,
-                )
-        elif bar_index in {18, 19, 20}:
-            for beat in (0.0, 2.0):
-                add_kick(mix, bar_start + BEAT * beat, gain=0.082)
-            add_rim(mix, bar_start + BEAT * 3.0, gain=0.020, pan=0.08)
+    # 10.57–17.07 · Duration and route characters scramble, then lock.
+    # The pitches climb with the changing data and stop on confirmation.
+    add_noise_gesture(mix, 12.72, 0.22, gain=0.014, seed=0x1300, reverse=True)
+    route_events = (12.93, 13.50, 13.73, 14.67, 14.90, 15.13, 15.37)
+    route_notes = (293.66, 329.63, 369.99, 440.00, 493.88, 587.33, 659.25)
+    for index, (at, frequency) in enumerate(zip(route_events, route_notes)):
+        add_split_flap(
+            mix,
+            at,
+            pitch=560.0 + index * 38.0,
+            gain=0.039,
+            pan=-0.22 + (index % 4) * 0.15,
+        )
+        add_synth_pluck(
+            mix,
+            at,
+            frequency,
+            gain=0.021 + index * 0.001,
+            pan=-0.15 if index % 2 == 0 else 0.15,
+            duration=0.85,
+            decay=3.5,
+        )
+    add_bass_note(mix, 12.93, 65.41, gain=0.070)
+    add_bass_note(mix, 14.67, 73.42, gain=0.074)
+    add_bell(mix, 15.97, 659.25, 0.72, gain=0.037, pan=0.08)
+    add_scene_hit(mix, 17.07, gain=0.088)
 
-        spacing = 3.0 / max(1, len(pattern) - 1) if len(pattern) > 1 else 0.0
-        for note_index, note_position in enumerate(pattern):
-            note_at = bar_start + BEAT * (0.48 + spacing * note_index)
-            add_synth_pluck(
-                mix,
-                note_at,
-                notes[note_position],
-                gain=0.045 * dynamic,
-                pan=-0.18 if note_index % 2 == 0 else 0.18,
-            )
+    # 17.07–21.57 · Two statements, two sustained thoughts, then a breath.
+    add_synth_pluck(mix, 17.10, 146.83, gain=0.046, pan=-0.08, duration=2.8, decay=1.25)
+    add_synth_pluck(mix, 17.18, 440.00, gain=0.027, pan=0.12, duration=2.5, decay=1.45)
+    add_synth_pluck(mix, 19.33, 164.81, gain=0.043, pan=-0.10, duration=2.4, decay=1.35)
+    add_synth_pluck(mix, 19.42, 523.25, gain=0.025, pan=0.13, duration=2.1, decay=1.55)
+    add_noise_gesture(mix, 21.17, 0.40, gain=0.015, seed=0x2157, reverse=True)
 
-    # Interface feedback is tied to visible state changes rather than every cut.
-    add_ui_click(mix, 5.00, gain=0.052, pan=-0.12)
-    add_ui_click(mix, 10.50, gain=0.045, pan=0.12)
-    add_ui_click(mix, 13.00, gain=0.042, pan=-0.08)
-    add_ui_click(mix, 13.15, gain=0.035, pan=0.08)
-    add_ui_click(mix, 17.00, gain=0.048, pan=0.10)
+    # 21.57–26.07 · The physical boarding pass enters, the seatbelt chime
+    # sounds, and the three tear movements are audible as one gesture.
+    add_noise_gesture(mix, 21.57, 0.78, gain=0.026, seed=0x2250, pan=-0.14)
+    add_scene_hit(mix, 21.57, gain=0.070)
+    add_bell(mix, 21.75, 440.00, 0.52, gain=0.064, pan=-0.16)
+    add_bell(mix, 22.13, 554.37, 0.59, gain=0.064, pan=0.16)
+    tear_events = (24.17, 24.83, 25.13)
+    for index, at in enumerate(tear_events):
+        add_noise_gesture(
+            mix,
+            at,
+            0.16,
+            gain=0.025 + index * 0.005,
+            seed=0x2400 + index,
+            pan=-0.16 + index * 0.16,
+        )
+        add_split_flap(
+            mix,
+            at + 0.015,
+            pitch=300.0 - index * 46.0,
+            gain=0.037 + index * 0.004,
+            pan=-0.12 + index * 0.12,
+        )
+    add_riser(mix, 25.13, 0.92, 132.0, 72.0, gain=0.046)
 
-    # Boarding, takeoff, arrival, and stamping retain the app's sonic language.
-    add_bell(mix, 21.65, 440.00, 0.52, gain=0.070, pan=-0.16)
-    add_bell(mix, 22.03, 554.37, 0.59, gain=0.070, pan=0.16)
-    add_riser(mix, 26.2, 1.65, 82.0, 132.0, gain=0.056)
-    add_riser(mix, 38.25, 1.55, 128.0, 76.0, gain=0.048)
-    add_bell(mix, 38.38, 349.23, 0.76, gain=0.030, pan=-0.12)
-    add_bell(mix, 38.92, 293.66, 0.80, gain=0.026, pan=0.12)
-    add_stamp(mix, 40.05)
+    # 26.07–33.57 · The cabin dims, the flight deck appears, and only now does
+    # a timer pulse begin. It follows the visible countdown and route motion.
+    add_scene_hit(mix, 26.07, gain=0.076)
+    add_synth_pluck(mix, 26.10, 146.83, gain=0.043, pan=0.0, duration=2.4, decay=1.35)
+    add_noise_gesture(mix, 28.32, 0.58, gain=0.018, seed=0x2887, reverse=True)
+    add_riser(mix, 28.43, 0.56, 82.0, 132.0, gain=0.048)
+    add_scene_hit(mix, 28.87, gain=0.082)
 
-    # The final product mark gets one confident, bright electronic resolution.
-    add_ui_click(mix, 43.00, gain=0.050)
+    flight_ticks = (29.83, 30.30, 30.77, 31.30, 31.80, 32.30, 32.53, 33.03)
+    for index, at in enumerate(flight_ticks):
+        if index % 2 == 0:
+            add_kick(mix, at, gain=0.080)
+            add_bass_note(mix, at, 73.42, gain=0.055)
+        else:
+            add_rim(mix, at, gain=0.020, pan=0.10)
+        add_hat(mix, at + 0.23, gain=0.007, pan=-0.16 if index % 2 == 0 else 0.16)
+        add_synth_pluck(
+            mix,
+            at + 0.02,
+            motif[index % len(motif)],
+            gain=0.020,
+            pan=-0.14 if index % 2 == 0 else 0.14,
+            duration=0.72,
+            decay=4.1,
+        )
+
+    # 33.57–38.97 · The pulse cuts with “No feeds”, the second statement
+    # answers it, and the landing/stamp sequence carries the resolution.
+    add_scene_hit(mix, 33.57, gain=0.074)
+    add_synth_pluck(mix, 33.60, 293.66, gain=0.031, pan=-0.10, duration=1.8, decay=1.8)
+    add_split_flap(mix, 34.70, pitch=520.0, gain=0.038, pan=0.10)
+    add_synth_pluck(mix, 34.72, 440.00, gain=0.029, pan=0.10, duration=1.5, decay=2.0)
+    add_riser(mix, 35.72, 0.55, 128.0, 76.0, gain=0.044)
+    add_scene_hit(mix, 36.27, gain=0.072)
+    add_bell(mix, 36.36, 349.23, 0.76, gain=0.029, pan=-0.12)
+    add_bell(mix, 36.88, 293.66, 0.80, gain=0.025, pan=0.12)
+    add_noise_gesture(mix, 37.13, 0.34, gain=0.018, seed=0x3747, reverse=True)
+    add_stamp(mix, 37.47)
+    add_noise_gesture(mix, 38.72, 0.34, gain=0.021, seed=0x3897, pan=0.10)
+    add_scene_hit(mix, 38.97, gain=0.065)
+
+    # 38.97–43.07 · Passport details animate in a four-note reprise.
+    passport_events = (39.93, 40.63, 41.60, 42.37)
+    passport_notes = (392.00, 659.25, 440.00, 293.66)
+    for index, (at, frequency) in enumerate(zip(passport_events, passport_notes)):
+        add_ui_click(mix, at, gain=0.025, pan=-0.16 + index * 0.10)
+        add_synth_pluck(
+            mix,
+            at + 0.015,
+            frequency,
+            gain=0.022,
+            pan=-0.14 if index % 2 == 0 else 0.14,
+            duration=1.1,
+            decay=2.8,
+        )
+    add_scene_hit(mix, 43.07, gain=0.078)
+
+    # 43.07–50.50 · The promise, the wordmark, then the sonic logo. The final
+    # chord arrives with the identity rather than running underneath it.
+    add_synth_pluck(mix, 43.10, 146.83, gain=0.044, pan=0.0, duration=2.4, decay=1.35)
+    add_noise_gesture(mix, 45.30, 0.62, gain=0.016, seed=0x4590, reverse=True)
+    add_scene_hit(mix, 45.90, gain=0.078)
     for note_index, frequency in enumerate((293.66, 369.99, 440.00, 659.25)):
         add_synth_pluck(
             mix,
-            45.05 + note_index * 0.11,
+            45.92 + note_index * 0.08,
             frequency,
-            gain=0.048 - note_index * 0.004,
+            gain=0.041 - note_index * 0.003,
             pan=-0.18 + note_index * 0.12,
-            duration=3.2,
-            decay=1.25,
+            duration=3.0,
+            decay=1.30,
         )
-    add_synth_pluck(
-        mix,
-        48.55,
-        587.33,
-        gain=0.028,
-        pan=0.0,
-        duration=1.6,
-        decay=2.0,
-    )
+    for index, at in enumerate((47.23, 47.48, 47.90)):
+        add_split_flap(
+            mix,
+            at,
+            pitch=620.0 + index * 85.0,
+            gain=0.030,
+            pan=-0.12 + index * 0.12,
+        )
+    add_bell(mix, 48.27, 587.33, 1.40, gain=0.023)
 
     master_fade = np.ones(FRAME_COUNT, dtype=np.float32)
     master_fade[: round(0.7 * SAMPLE_RATE)] = smoothstep(
         np.linspace(0.0, 1.0, round(0.7 * SAMPLE_RATE), dtype=np.float32)
     )
-    master_fade[-round(1.25 * SAMPLE_RATE) :] = smoothstep(
-        np.linspace(1.0, 0.0, round(1.25 * SAMPLE_RATE), dtype=np.float32)
+    master_fade[-round(1.40 * SAMPLE_RATE) :] = smoothstep(
+        np.linspace(1.0, 0.0, round(1.40 * SAMPLE_RATE), dtype=np.float32)
     )
     mix *= master_fade[:, None]
 
