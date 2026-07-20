@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Render the original, procedural score for the WindowSeat launch film.
 
-The score is intentionally sparse. A calm piano progression carries the edit;
-product sounds appear only when a matching event is visible on screen.
+The score uses a focused electronic pulse, instrument-panel textures, and the
+app's own tonal language. Every accent is either on the musical grid or tied to
+a visible product event.
 """
 
 from __future__ import annotations
@@ -18,8 +19,9 @@ import numpy as np
 SAMPLE_RATE = 48_000
 DURATION = 50.5
 FRAME_COUNT = round(SAMPLE_RATE * DURATION)
-TEMPO = 72.0
+TEMPO = 105.0
 BEAT = 60.0 / TEMPO
+SCORE_START = 0.43
 
 
 def smoothstep(values: np.ndarray) -> np.ndarray:
@@ -66,43 +68,94 @@ def add_mono(
     mix[start_frame:end_frame, 1] += signal * right
 
 
-def add_piano_note(
+def add_kick(mix: np.ndarray, at: float, gain: float) -> None:
+    duration = 0.34
+    count = round(duration * SAMPLE_RATE)
+    time = np.arange(count, dtype=np.float64) / SAMPLE_RATE
+    frequency = 48.0 + 52.0 * np.exp(-18.0 * time)
+    phase = 2.0 * math.pi * np.cumsum(frequency) / SAMPLE_RATE
+    shape = (1.0 - np.exp(-150.0 * time)) * np.exp(-11.0 * time)
+    voice = (np.sin(phase) + 0.18 * np.sin(phase * 2.0)) * shape
+    add_mono(mix, voice.astype(np.float32), at, gain=gain)
+
+
+def add_rim(mix: np.ndarray, at: float, gain: float, pan: float = 0.0) -> None:
+    duration = 0.11
+    count = round(duration * SAMPLE_RATE)
+    time = np.arange(count, dtype=np.float64) / SAMPLE_RATE
+    shape = (1.0 - np.exp(-260.0 * time)) * np.exp(-42.0 * time)
+    voice = (
+        np.sin(2.0 * math.pi * 1_180.0 * time)
+        + 0.62 * np.sin(2.0 * math.pi * 1_790.0 * time + 0.2)
+        + 0.24 * np.sin(2.0 * math.pi * 2_620.0 * time + 0.7)
+    ) * shape
+    add_mono(mix, voice.astype(np.float32), at, gain=gain, pan=pan)
+
+
+def add_hat(mix: np.ndarray, at: float, gain: float, pan: float) -> None:
+    duration = 0.065
+    count = round(duration * SAMPLE_RATE)
+    time = np.arange(count, dtype=np.float64) / SAMPLE_RATE
+    generator = np.random.default_rng(0x5748 + round(at * 100))
+    noise = generator.standard_normal(count).astype(np.float32)
+    high = np.empty_like(noise)
+    high[0] = noise[0]
+    high[1:] = noise[1:] - noise[:-1] * 0.92
+    shape = ((1.0 - np.exp(-320.0 * time)) * np.exp(-58.0 * time)).astype(np.float32)
+    add_mono(mix, high * shape, at, gain=gain, pan=pan)
+
+
+def add_bass_note(
     mix: np.ndarray,
     at: float,
     frequency: float,
     gain: float,
-    duration: float,
-    decay: float,
-    pan: float = 0.0,
+) -> None:
+    duration = BEAT * 1.35
+    count = round(duration * SAMPLE_RATE)
+    time = np.arange(count, dtype=np.float64) / SAMPLE_RATE
+    shape = ((1.0 - np.exp(-95.0 * time)) * np.exp(-2.9 * time)).astype(np.float32)
+    voice = (
+        np.sin(2.0 * math.pi * frequency * time)
+        + 0.20 * np.sin(2.0 * math.pi * frequency * 2.0 * time)
+    ).astype(np.float32)
+    add_mono(mix, voice * shape, at, gain=gain)
+
+
+def add_synth_pluck(
+    mix: np.ndarray,
+    at: float,
+    frequency: float,
+    gain: float,
+    pan: float,
+    duration: float = 0.92,
+    decay: float = 4.2,
 ) -> None:
     count = round(duration * SAMPLE_RATE)
     time = np.arange(count, dtype=np.float64) / SAMPLE_RATE
-    key_attack = (1.0 - np.exp(-115.0 * time)).astype(np.float32)
-    natural_decay = np.exp(-decay * time).astype(np.float32)
-    release = envelope(count, attack=0.004, release=min(0.45, duration * 0.22))
-
-    # Slightly detuned strings and faster-decaying upper partials create a
-    # warm felt-piano character without relying on a sampled instrument.
+    carrier = 2.0 * math.pi * frequency * time
+    modulation = 1.35 * np.exp(-7.5 * time) * np.sin(carrier * 2.01)
+    shape = (1.0 - np.exp(-190.0 * time)) * np.exp(-decay * time)
     voice = (
-        np.sin(2.0 * math.pi * frequency * time)
-        + 0.16 * np.sin(2.0 * math.pi * frequency * 1.0015 * time + 0.22)
-        + 0.30
-        * np.sin(2.0 * math.pi * frequency * 2.006 * time + 0.11)
-        * np.exp(-0.85 * time)
-        + 0.11
-        * np.sin(2.0 * math.pi * frequency * 3.012 * time + 0.37)
-        * np.exp(-1.55 * time)
-        + 0.04
-        * np.sin(2.0 * math.pi * frequency * 4.021 * time)
-        * np.exp(-2.25 * time)
-    ).astype(np.float32)
-    voice *= key_attack * natural_decay * release
+        np.sin(carrier + modulation)
+        + 0.16 * np.sin(carrier * 2.0 + 0.18)
+        + 0.05 * np.sin(carrier * 3.0 + 0.42)
+    ) * shape
+    voice = voice.astype(np.float32)
     add_mono(mix, voice, at, gain=gain, pan=pan)
+    add_mono(mix, voice, at + 0.105, gain=gain * 0.11, pan=-pan * 0.65)
 
-    # A very small, asymmetric room reflection keeps the piano from sounding
-    # pasted on while avoiding a persistent ambient bed.
-    add_mono(mix, voice, at + 0.075, gain=gain * 0.085, pan=-pan * 0.7)
-    add_mono(mix, voice, at + 0.145, gain=gain * 0.045, pan=pan * 0.5)
+
+def add_ui_click(mix: np.ndarray, at: float, gain: float, pan: float = 0.0) -> None:
+    duration = 0.052
+    count = round(duration * SAMPLE_RATE)
+    time = np.arange(count, dtype=np.float64) / SAMPLE_RATE
+    shape = ((1.0 - np.exp(-420.0 * time)) * np.exp(-72.0 * time)).astype(np.float32)
+    voice = (
+        np.sin(2.0 * math.pi * 1_480.0 * time)
+        + 0.42 * np.sin(2.0 * math.pi * 2_310.0 * time + 0.3)
+    ).astype(np.float32)
+    add_mono(mix, voice * shape, at, gain=gain, pan=pan)
 
 
 def add_bell(
@@ -157,78 +210,143 @@ def add_stamp(mix: np.ndarray, at: float) -> None:
 def render_score() -> np.ndarray:
     mix = np.zeros((FRAME_COUNT, 2), dtype=np.float32)
 
-    # Fifteen four-beat phrases fill the film without looping. The harmony
-    # begins in D minor, opens up through the product journey, and resolves to
-    # D major/add9 on the WindowSeat mark.
+    # Twenty-two compact phrases follow the film's motion at 105 BPM. The
+    # arrangement moves like a focus session: choose, commit, work, arrive.
     bars = (
-        (73.42, 110.00, (293.66, 349.23, 440.00, 659.25), (0, 1), 0.62),
-        (73.42, 110.00, (293.66, 349.23, 440.00, 659.25), (0, 2, 1), 0.68),
-        (58.27, 87.31, (233.08, 293.66, 349.23, 440.00), (0, 1, 2, 3), 0.74),
-        (87.31, 130.81, (220.00, 261.63, 349.23, 392.00), (1, 2, 3, 2), 0.78),
-        (65.41, 98.00, (261.63, 293.66, 392.00, 523.25), (0, 1, 2, 1), 0.80),
-        (73.42, 110.00, (293.66, 349.23, 440.00, 659.25), (0, 1, 2, 3), 0.84),
-        (58.27, 87.31, (233.08, 293.66, 349.23, 440.00), (0, 2, 1, 3), 0.86),
-        (87.31, 130.81, (220.00, 261.63, 349.23, 392.00), (1, 2, 3, 2), 0.90),
-        (73.42, 110.00, (293.66, 349.23, 440.00, 659.25), (0, 1, 2, 3), 0.94),
-        (65.41, 98.00, (261.63, 293.66, 392.00, 523.25), (0, 2, 1, 3), 0.92),
-        (58.27, 87.31, (233.08, 293.66, 349.23, 440.00), (0, 1, 2, 3), 0.90),
-        (65.41, 98.00, (261.63, 293.66, 392.00, 523.25), (2, 1, 0, 1), 0.86),
-        (98.00, 146.83, (196.00, 233.08, 293.66, 440.00), (0, 1, 2), 0.78),
-        (55.00, 73.42, (293.66, 329.63, 440.00, 587.33), (0, 1, 2), 0.72),
-        (73.42, 110.00, (293.66, 369.99, 440.00, 659.25), (0, 1, 2), 0.68),
+        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 2), 0.48),
+        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 1), 0.56),
+        (58.27, (233.08, 293.66, 349.23, 440.00), (0, 1, 2, 3), 0.66),
+        (65.41, (261.63, 293.66, 392.00, 523.25), (0, 2, 1, 3), 0.69),
+        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 1, 2, 3), 0.72),
+        (87.31, (220.00, 261.63, 349.23, 392.00), (1, 2, 3, 2), 0.74),
+        (65.41, (261.63, 293.66, 392.00, 523.25), (0, 1, 2, 1), 0.76),
+        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 2, 1, 3), 0.80),
+        (98.00, (196.00, 233.08, 293.66, 440.00), (0, 1, 2, 3), 0.80),
+        (58.27, (233.08, 293.66, 349.23, 440.00), (0, 2), 0.68),
+        (65.41, (261.63, 293.66, 392.00, 523.25), (0, 1), 0.64),
+        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 1, 2), 0.74),
+        (73.42, (293.66, 349.23, 440.00, 659.25), (0, 1, 2, 3), 0.88),
+        (65.41, (261.63, 293.66, 392.00, 523.25), (0, 2, 1, 3), 0.90),
+        (58.27, (233.08, 293.66, 349.23, 440.00), (0, 1, 2, 3), 0.92),
+        (87.31, (220.00, 261.63, 349.23, 392.00), (1, 2, 3, 2), 0.90),
+        (65.41, (261.63, 293.66, 392.00, 523.25), (2, 1, 0, 1), 0.84),
+        (98.00, (196.00, 233.08, 293.66, 440.00), (0, 2), 0.68),
+        (58.27, (233.08, 293.66, 349.23, 440.00), (0, 1), 0.70),
+        (73.42, (293.66, 369.99, 440.00, 659.25), (0, 1, 2, 3), 0.80),
+        (65.41, (261.63, 329.63, 392.00, 587.33), (0, 2, 1, 3), 0.74),
+        (73.42, (293.66, 369.99, 440.00, 659.25), (0, 1), 0.66),
     )
 
     bar_duration = BEAT * 4.0
-    for bar_index, (root, fifth, notes, pattern, dynamic) in enumerate(bars):
-        bar_start = bar_index * bar_duration + 0.12
-        add_piano_note(
-            mix,
-            bar_start,
-            root,
-            gain=0.115 * dynamic,
-            duration=4.4,
-            decay=0.55,
-            pan=-0.10,
-        )
-        add_piano_note(
-            mix,
-            bar_start + BEAT * 2.0,
-            fifth,
-            gain=0.070 * dynamic,
-            duration=3.2,
-            decay=0.72,
-            pan=0.08,
-        )
+    for bar_index, (root, notes, pattern, dynamic) in enumerate(bars):
+        bar_start = SCORE_START + bar_index * bar_duration
+
+        if bar_index in {1, 2, 3, 4, 5, 6, 7, 8, 12, 13, 14, 15, 16, 18, 19, 20}:
+            add_bass_note(mix, bar_start, root, gain=0.105 * dynamic)
+            add_bass_note(mix, bar_start + BEAT * 2.0, root, gain=0.075 * dynamic)
+        elif bar_index == 21:
+            add_bass_note(mix, bar_start, root, gain=0.095 * dynamic)
+
+        if bar_index == 1:
+            for beat in (0.0, 2.0):
+                add_kick(mix, bar_start + BEAT * beat, gain=0.085)
+        elif 2 <= bar_index <= 8:
+            for beat in (0.0, 2.0 if bar_index % 2 == 0 else 2.5):
+                add_kick(mix, bar_start + BEAT * beat, gain=0.10)
+            for beat in (1.0, 3.0):
+                add_rim(mix, bar_start + BEAT * beat, gain=0.024, pan=0.08)
+            for hat_index, beat in enumerate((0.5, 1.5, 2.5, 3.5)):
+                add_hat(
+                    mix,
+                    bar_start + BEAT * beat,
+                    gain=0.010,
+                    pan=-0.20 if hat_index % 2 == 0 else 0.20,
+                )
+        elif bar_index in {9, 10}:
+            add_kick(mix, bar_start, gain=0.076)
+            for beat in (1.5, 3.5):
+                add_hat(mix, bar_start + BEAT * beat, gain=0.008, pan=0.14)
+        elif bar_index == 11:
+            add_kick(mix, bar_start, gain=0.082)
+            for hat_index, beat in enumerate((2.5, 3.0, 3.5)):
+                add_hat(
+                    mix,
+                    bar_start + BEAT * beat,
+                    gain=0.009 + hat_index * 0.002,
+                    pan=-0.12 + hat_index * 0.12,
+                )
+        elif 12 <= bar_index <= 16:
+            for beat in (0.0, 2.5):
+                add_kick(mix, bar_start + BEAT * beat, gain=0.115)
+            for beat in (1.0, 3.0):
+                add_rim(mix, bar_start + BEAT * beat, gain=0.027, pan=0.10)
+            for hat_index, beat in enumerate((0.5, 1.5, 2.0, 3.5)):
+                add_hat(
+                    mix,
+                    bar_start + BEAT * beat,
+                    gain=0.012,
+                    pan=-0.22 if hat_index % 2 == 0 else 0.22,
+                )
+        elif bar_index in {18, 19, 20}:
+            for beat in (0.0, 2.0):
+                add_kick(mix, bar_start + BEAT * beat, gain=0.082)
+            add_rim(mix, bar_start + BEAT * 3.0, gain=0.020, pan=0.08)
 
         spacing = 3.0 / max(1, len(pattern) - 1) if len(pattern) > 1 else 0.0
         for note_index, note_position in enumerate(pattern):
             note_at = bar_start + BEAT * (0.48 + spacing * note_index)
-            add_piano_note(
+            add_synth_pluck(
                 mix,
                 note_at,
                 notes[note_position],
-                gain=0.052 * dynamic,
-                duration=2.25,
-                decay=1.05,
-                pan=-0.14 if note_index % 2 == 0 else 0.14,
+                gain=0.045 * dynamic,
+                pan=-0.18 if note_index % 2 == 0 else 0.18,
             )
 
-    # Only four product events interrupt the piano, and each is visible:
-    # boarding, takeoff, arrival, and the passport stamp.
+    # Interface feedback is tied to visible state changes rather than every cut.
+    add_ui_click(mix, 5.00, gain=0.052, pan=-0.12)
+    add_ui_click(mix, 10.50, gain=0.045, pan=0.12)
+    add_ui_click(mix, 13.00, gain=0.042, pan=-0.08)
+    add_ui_click(mix, 13.15, gain=0.035, pan=0.08)
+    add_ui_click(mix, 17.00, gain=0.048, pan=0.10)
+
+    # Boarding, takeoff, arrival, and stamping retain the app's sonic language.
     add_bell(mix, 21.65, 440.00, 0.52, gain=0.070, pan=-0.16)
     add_bell(mix, 22.03, 554.37, 0.59, gain=0.070, pan=0.16)
-    add_riser(mix, 26.2, 1.65, 82.0, 132.0, gain=0.060)
-    add_riser(mix, 38.25, 1.55, 128.0, 76.0, gain=0.052)
+    add_riser(mix, 26.2, 1.65, 82.0, 132.0, gain=0.056)
+    add_riser(mix, 38.25, 1.55, 128.0, 76.0, gain=0.048)
     add_bell(mix, 38.38, 349.23, 0.76, gain=0.030, pan=-0.12)
     add_bell(mix, 38.92, 293.66, 0.80, gain=0.026, pan=0.12)
     add_stamp(mix, 40.05)
+
+    # The final product mark gets one confident, bright electronic resolution.
+    add_ui_click(mix, 43.00, gain=0.050)
+    for note_index, frequency in enumerate((293.66, 369.99, 440.00, 659.25)):
+        add_synth_pluck(
+            mix,
+            45.05 + note_index * 0.11,
+            frequency,
+            gain=0.048 - note_index * 0.004,
+            pan=-0.18 + note_index * 0.12,
+            duration=3.2,
+            decay=1.25,
+        )
+    add_synth_pluck(
+        mix,
+        48.55,
+        587.33,
+        gain=0.028,
+        pan=0.0,
+        duration=1.6,
+        decay=2.0,
+    )
 
     master_fade = np.ones(FRAME_COUNT, dtype=np.float32)
     master_fade[: round(0.7 * SAMPLE_RATE)] = smoothstep(
         np.linspace(0.0, 1.0, round(0.7 * SAMPLE_RATE), dtype=np.float32)
     )
-    master_fade[-round(2.0 * SAMPLE_RATE) :] = smoothstep(
-        np.linspace(1.0, 0.0, round(2.0 * SAMPLE_RATE), dtype=np.float32)
+    master_fade[-round(1.25 * SAMPLE_RATE) :] = smoothstep(
+        np.linspace(1.0, 0.0, round(1.25 * SAMPLE_RATE), dtype=np.float32)
     )
     mix *= master_fade[:, None]
 
