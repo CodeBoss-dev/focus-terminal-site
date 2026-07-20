@@ -24,6 +24,26 @@ const STARS = (() => {
 
 const FLIGHT_SECONDS = FLIGHT.minutes * 60;
 
+function StarField() {
+  return (
+    <div className="absolute inset-0" aria-hidden="true">
+      {STARS.map((st, i) => (
+        <i
+          key={i}
+          className="absolute rounded-full bg-starlight"
+          style={{
+            left: `${st.x}%`,
+            top: `${st.y}%`,
+            width: st.s,
+            height: st.s,
+            opacity: st.o,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 /**
  * The in-flight beat: the real TKS → HND great-circle drawn in route cyan,
  * a plane scrubbed along it, glass HUD capsules at the edges and the big
@@ -41,7 +61,7 @@ export default function InFlight() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
         const drawn = root.current!.querySelector<SVGPathElement>("[data-arc-drawn]");
         const apply = (fp: number) => {
           if (drawn) drawn.style.strokeDashoffset = String(100 - fp * 100);
@@ -104,31 +124,17 @@ export default function InFlight() {
 
   return (
     <section id="in-flight" ref={root} data-mood="dark" className="pin-section relative h-[200vh]">
-      <div className="sticky top-0 h-[100svh] overflow-hidden">
-        <div data-flight-stage className="bg-night-grad-flip absolute inset-0">
+      <div className="sticky top-0 h-[100svh] overflow-hidden max-lg:bg-nighttop">
+        <div data-flight-stage className="bg-night-grad-flip absolute inset-0 max-lg:hidden">
           {/* Stars */}
-          <div className="absolute inset-0" aria-hidden="true">
-            {STARS.map((st, i) => (
-              <i
-                key={i}
-                className="absolute rounded-full bg-starlight"
-                style={{
-                  left: `${st.x}%`,
-                  top: `${st.y}%`,
-                  width: st.s,
-                  height: st.s,
-                  opacity: st.o,
-                }}
-              />
-            ))}
-          </div>
+          <StarField />
 
           <div
             data-flight-intro
             className="glass absolute left-1/2 top-24 z-10 w-[min(560px,88vw)] -translate-x-1/2 rounded-2xl border-instrument/25 px-6 py-4 max-md:top-44"
           >
             <p className="board-caption text-instrument">03 · FOCUS IN FLIGHT</p>
-            <p className="body-sm mt-1 text-starlight/75">
+            <p className="section-deck mt-2 text-starlight/78">
               The countdown becomes a live route. Keep working while the plane advances; the
               menu bar can keep the flight visible when WindowSeat is in the background.
             </p>
@@ -266,6 +272,117 @@ export default function InFlight() {
             <span className="glass rounded-full border-turbulence/40 px-4 py-2">
               <span className="board-caption text-turbulence">DIVERT</span>
             </span>
+          </div>
+        </div>
+
+        {/* Phones and tablets get the complete instrument panel in natural
+            reading order. The desktop stage above remains the scrubbed scene. */}
+        <div className="bg-night-grad-flip relative hidden overflow-hidden px-gutter py-24 text-starlight max-lg:block max-md:px-m max-md:py-20">
+          <StarField />
+          <div className="relative z-10 mx-auto max-w-[900px]">
+            <div className="flex items-start justify-between gap-m border-b border-starlight/15 pb-m">
+              <div>
+                <p className="board-caption text-instrument">03 · FOCUS IN FLIGHT</p>
+                <p className="board-micro mt-2 text-starlight/40">LIVE ROUTE / CABIN MODE ON</p>
+              </div>
+              <div className="text-right">
+                <p className="board-sm font-bold tracking-[2px] text-instrument">CRUISE</p>
+                <p className="board-micro tnum mt-1 text-starlight/45">FL370 · 37,000 FT</p>
+              </div>
+            </div>
+
+            <div className="mt-l grid grid-cols-[220px_1fr] gap-l max-md:grid-cols-1 max-md:gap-m">
+              <div className="glass rounded-2xl p-m">
+                <p className="board-sm tnum font-bold">{FLIGHT.number}</p>
+                <p className="board mt-2">
+                  <span className="text-instrument">●</span> {FLIGHT.origin.iata} → {FLIGHT.dest.iata}
+                </p>
+                <div className="mt-m border-t border-starlight/15 pt-m">
+                  <p className="board-micro text-starlight/40">TASK</p>
+                  <p className="board-sm mt-1">{FLIGHT.task}</p>
+                  <p className="board-micro mt-m text-boarding">● CABIN MODE ON</p>
+                </div>
+              </div>
+              <div className="self-center">
+                <h2 className="text-[clamp(32px,5vw,54px)] font-semibold leading-[1.02] tracking-[-0.04em]">
+                  Your focus becomes a route you can watch move.
+                </h2>
+                <p className="section-deck mt-m max-w-[620px] text-starlight/72">
+                  Keep working in any app while the aircraft and countdown advance. WindowSeat
+                  keeps the flight visible without asking you to keep the main window open.
+                </p>
+              </div>
+            </div>
+
+            <div className="relative mt-l overflow-hidden border-y border-starlight/15 py-m">
+              <svg viewBox="0 0 1000 520" className="w-full" aria-hidden="true">
+                <path
+                  d={gcPathD()}
+                  fill="none"
+                  stroke="var(--color-starlight)"
+                  strokeOpacity="0.22"
+                  strokeWidth="2"
+                  strokeDasharray="4 12"
+                />
+                <path
+                  d={gcPathD()}
+                  pathLength={100}
+                  fill="none"
+                  stroke="var(--color-route)"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeDasharray="100"
+                  strokeDashoffset="50"
+                  style={{ filter: "drop-shadow(0 0 7px rgba(90,200,250,0.65))" }}
+                />
+                <circle cx="140" cy="420" r="7" fill="var(--color-starlight)" fillOpacity="0.65" />
+                <text
+                  x="140"
+                  y="460"
+                  textAnchor="middle"
+                  fill="var(--color-starlight)"
+                  fillOpacity="0.7"
+                  style={{ font: "600 18px ui-monospace, monospace", letterSpacing: 3 }}
+                >
+                  TKS
+                </text>
+                <circle cx="859.9" cy="180" r="7" fill="var(--color-instrument)" />
+                <text
+                  x="859.9"
+                  y="140"
+                  textAnchor="middle"
+                  fill="var(--color-instrument)"
+                  style={{ font: "600 18px ui-monospace, monospace", letterSpacing: 3 }}
+                >
+                  HND
+                </text>
+                <g transform="translate(519.4,287.9) rotate(-18)">
+                  <polygon
+                    points="16,0 -9,8 -4,0 -9,-8"
+                    fill="var(--color-route)"
+                    style={{ filter: "drop-shadow(0 0 8px rgba(90,200,250,0.9))" }}
+                  />
+                </g>
+              </svg>
+            </div>
+
+            <div className="mt-l grid grid-cols-[1fr_1.5fr] gap-m max-sm:grid-cols-1">
+              <div className="glass rounded-2xl p-m">
+                <p className="board-micro text-starlight/45">DISTANCE TO GO</p>
+                <p className="board tnum mt-2">249 KM · 155 MI</p>
+              </div>
+              <div className="glass rounded-2xl p-m text-center">
+                <div className="h-0.5 overflow-hidden rounded-full bg-starlight/15">
+                  <div className="h-full w-1/2 bg-route" />
+                </div>
+                <p className="instrument tnum mt-3 text-[clamp(46px,10vw,72px)] leading-none text-instrument">
+                  00:25:00
+                </p>
+                <p className="board-caption mt-2 text-starlight/45">
+                  TO {FLIGHT.dest.iata} · {FLIGHT.dest.airport} {FLIGHT.dest.city}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

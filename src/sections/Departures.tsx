@@ -26,7 +26,7 @@ export default function Departures() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
         const rows = gsap.utils.toArray<HTMLElement>("[data-board-row]");
         const picked = root.current!.querySelector<HTMLElement>("[data-picked]");
         const others = rows.filter((r) => !r.hasAttribute("data-picked"));
@@ -69,11 +69,11 @@ export default function Departures() {
     <section id="departures" ref={root} data-mood="light" className="pin-section relative h-[190vh]">
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden bg-paper px-gutter py-16 text-ink max-md:px-m">
         <div data-board-head>
-          <div className="flex items-baseline justify-between">
+          <div className="flex items-baseline justify-between max-sm:block">
             <p className="board-caption text-ink/50">
               {FLIGHT.origin.airport} · {FLIGHT.origin.iata}
             </p>
-            <p className="board-sm tnum font-bold">
+            <p className="board-sm tnum font-bold max-sm:mt-2">
               {FLIGHT.origin.iata} {clock}
             </p>
           </div>
@@ -84,13 +84,13 @@ export default function Departures() {
                 <SplitFlap text="DEPARTURES" className="font-sans" />
               </h2>
             </div>
-            <p className="body-sm max-w-[390px] pb-1 text-ink/55 max-md:mt-s">
+            <p className="section-deck max-w-[430px] pb-1 text-ink/68 max-md:mt-s">
               Start with the time you want to protect. WindowSeat pairs it with a real route and
               destination, turning an abstract timer into somewhere to arrive.
             </p>
           </div>
 
-          <div className="board-caption mt-l grid grid-cols-[110px_1fr_130px_110px_70px_90px_110px] gap-4 pb-3 text-ink/40 max-lg:grid-cols-[90px_1fr_90px_110px] max-md:grid-cols-[80px_1fr_100px]">
+          <div className="board-caption mt-l grid grid-cols-[110px_1fr_130px_110px_70px_90px_110px] gap-4 pb-3 text-ink/40 max-lg:grid-cols-[90px_1fr_90px_110px] max-md:grid-cols-[80px_1fr_100px] max-sm:grid-cols-[64px_minmax(0,1fr)_76px] max-sm:gap-2">
             <span>FLIGHT</span>
             <span>DESTINATION</span>
             <span className="max-lg:hidden">ROUTE</span>
@@ -107,15 +107,20 @@ export default function Departures() {
               <div
                 data-board-row
                 {...(row.picked ? { "data-picked": "" } : {})}
-                className={`relative grid grid-cols-[110px_1fr_130px_110px_70px_90px_110px] items-center gap-4 py-4 max-lg:grid-cols-[90px_1fr_90px_110px] max-md:grid-cols-[80px_1fr_100px] ${
+                className={`relative grid grid-cols-[110px_1fr_130px_110px_70px_90px_110px] items-center gap-4 py-4 max-lg:grid-cols-[90px_1fr_90px_110px] max-md:grid-cols-[80px_1fr_100px] max-sm:grid-cols-[64px_minmax(0,1fr)_76px] max-sm:gap-2 ${
                   row.standby ? "bg-lifted" : ""
-                } ${row.picked ? "row-shimmer" : ""} hairline-b`}
+                } ${
+                  row.picked
+                    ? "row-shimmer max-lg:bg-lifted max-lg:shadow-[0_10px_28px_rgba(20,22,26,0.08)]"
+                    : ""
+                } hairline-b`}
               >
                 {(row.picked || row.standby) && (
                   <span
                     data-picked-bar={row.picked ? "" : undefined}
-                    className="absolute inset-y-0 left-0 w-1 origin-bottom bg-signal"
-                    style={row.picked ? { transform: "scaleY(0)" } : undefined}
+                    className={`absolute inset-y-0 left-0 w-1 origin-bottom bg-signal ${
+                      row.picked ? "scale-y-0 max-lg:scale-y-100" : ""
+                    }`}
                   />
                 )}
                 <span className="min-w-0 pl-2">
@@ -149,7 +154,7 @@ export default function Departures() {
                 </span>
                 <span className="board-sm tnum max-lg:hidden">{row.duration}</span>
                 <span
-                  className={`board-status text-right ${
+                  className={`board-status text-right max-sm:text-[10px] ${
                     row.remark === "BOARDING"
                       ? "text-boarding"
                       : row.standby

@@ -20,8 +20,8 @@ const COLUMNS = [
   {
     title: "PAPERWORK",
     links: [
-      { label: "PRIVACY POLICY", href: "privacy.html" },
-      { label: "DATA & PRIVACY", href: "privacy.html" },
+      { label: "PRIVACY POLICY", href: "https://codeboss-dev.github.io/windowseat-site/privacy.html" },
+      { label: "DATA & PRIVACY", href: "https://codeboss-dev.github.io/windowseat-site/privacy.html" },
     ],
   },
 ];
@@ -30,7 +30,7 @@ export default function Footer() {
   return (
     <footer data-mood="dark" className="bg-nighttop px-gutter py-xl text-starlight max-md:px-m">
       <div className="mx-auto max-w-[1320px]">
-        <div className="flex items-center gap-4 border-y border-starlight/15 py-4">
+        <div className="flex items-center gap-4 border-y border-starlight/15 py-4 max-sm:gap-2">
           <span className="h-2 w-2 rounded-full bg-starlight/60" />
           <span className="board-caption">TKS</span>
           <span className="h-px flex-1 bg-starlight/15" />
@@ -78,7 +78,7 @@ export default function Footer() {
         </div>
 
         <div className="flex justify-between border-t border-starlight/15 pt-m max-md:block">
-          <p className="board-micro text-starlight/25">© 2026 WINDOWSEAT · MADE FOR MACOS 26+</p>
+          <p className="board-micro text-starlight/25">© 2026 WINDOWSEAT · NATIVE MACOS 14+</p>
           <p className="board-micro text-starlight/25 max-md:mt-s">
             DESIGN TOKENS &amp; TYPE / WINDOWSEAT UI SYSTEM
           </p>

@@ -26,7 +26,7 @@ export default function PassportStamp() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: root.current,
@@ -66,7 +66,7 @@ export default function PassportStamp() {
 
   return (
     <section id="passport" ref={root} data-mood="light" className="pin-section relative h-[170vh]">
-      <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden bg-paper px-gutter py-16 text-ink max-md:px-m">
+      <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden bg-paper px-gutter py-16 text-ink max-lg:py-24 max-md:px-m">
         <div data-passport-head className="flex items-end justify-between gap-l max-md:block">
           <div>
             <p className="board-caption text-ink/50">
@@ -75,14 +75,14 @@ export default function PassportStamp() {
             <p className="board-micro mt-s text-ink/40">05 · KEEP THE JOURNEY</p>
             <h2 className="signage signage-lg mt-xs">PASSPORT</h2>
           </div>
-          <p className="body-sm max-w-[420px] pb-1 text-ink/55 max-md:mt-s">
+          <p className="section-deck max-w-[460px] pb-1 text-ink/68 max-md:mt-s">
             Each completed focus flight is logged by route, time, and distance. Reach a new
             country and its stamp joins your passport.
           </p>
         </div>
 
         <div className="mt-l flex flex-wrap items-start justify-between gap-l">
-          <div className="flex gap-xl max-md:gap-l">
+          <div className="flex gap-xl max-md:gap-l max-sm:grid max-sm:grid-cols-2 max-sm:gap-x-l max-sm:gap-y-m">
             {HEADLINE_STATS.map((s) => (
               <div key={s.label} data-passport-stat>
                 <p className="board-caption text-ink/40">{s.label}</p>
@@ -115,7 +115,7 @@ export default function PassportStamp() {
 
         <div data-stamp-teaser className="hairline-t mt-l pt-m">
           <p className="board-caption text-ink/40">STAMPS · COUNTRIES VISITED — ROOM FOR MORE</p>
-          <div className="mt-s flex items-center gap-l max-md:gap-m">
+          <div className="mt-s flex items-center gap-l max-md:grid max-md:grid-cols-3 max-md:items-start max-md:gap-m max-sm:gap-s">
             {[
               { code: "KR", name: "SOUTH KOREA" },
               { code: "TW", name: "TAIWAN" },
@@ -125,7 +125,7 @@ export default function PassportStamp() {
                 <span className="flex h-16 w-16 items-center justify-center rounded-full border border-dashed border-ink/25">
                   <span className="board-sm text-ink/30">{s.code}</span>
                 </span>
-                <span className="board-micro text-ink/30">{s.name}</span>
+                <span className="board-micro text-ink/30 max-md:text-center">{s.name}</span>
               </div>
             ))}
             <p className="board-caption ml-auto text-ink/40 max-md:hidden">

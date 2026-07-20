@@ -21,7 +21,7 @@ export default function Landing() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: root.current,
@@ -49,7 +49,7 @@ export default function Landing() {
 
   return (
     <section ref={root} data-mood="dark" className="pin-section relative h-[150vh]">
-      <div className="bg-night-grad sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden px-gutter max-md:px-m">
+      <div className="bg-night-grad sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden px-gutter max-lg:py-24 max-md:px-m">
         {/* dawn at the horizon — arrival light */}
         <div
           aria-hidden="true"
@@ -65,9 +65,9 @@ export default function Landing() {
             <span className="h-2.5 w-2.5 rounded-full bg-boarding" aria-hidden="true" />
             <SplitFlap text="SAFE LANDING" className="board-display text-starlight" />
           </div>
-          <p className="body-sm mx-auto mt-m max-w-[520px] text-starlight/60">
-            Landing closes the loop: the time is complete, the route is recorded, and your
-            progress has somewhere to live.
+          <p className="section-deck mx-auto mt-m max-w-[610px] text-starlight/72">
+            When the timer ends, WindowSeat records your task, focus time, route, and distance—so
+            every completed flight becomes visible progress.
           </p>
         </div>
 

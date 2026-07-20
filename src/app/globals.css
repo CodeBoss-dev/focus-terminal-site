@@ -163,6 +163,16 @@ section[id] {
     line-height: 1.55;
   }
 
+  /* Plain-language explanation beneath the flight-deck storytelling.
+     Utility copy stays mono and compact; product meaning should not. */
+  .section-deck {
+    font-family: var(--font-sans);
+    font-size: clamp(16px, 1.25vw, 18px);
+    font-weight: 450;
+    letter-spacing: -0.012em;
+    line-height: 1.58;
+  }
+
   .instrument {
     font-family: ui-rounded, var(--font-sans);
     font-weight: 500;
@@ -285,18 +295,22 @@ section[id] {
   }
 }
 
-/* Small screens read the story in normal document flow. This prevents the
-   app-derived panels from being cropped inside a pinned viewport. */
-@media (max-width: 767px) {
+/* Phones and tablets read the story in normal document flow. Desktop keeps
+   the full scroll choreography; smaller canvases get complete, uncropped
+   product panels without paying extra scroll distance. */
+@media (max-width: 63.999rem) {
   .pin-section {
     height: auto !important;
-    min-height: 100svh;
+    min-height: 0;
   }
   .pin-section > .sticky {
     position: relative !important;
     top: auto !important;
     height: auto !important;
-    min-height: 100svh;
+    min-height: 0;
     overflow: visible;
+  }
+  .pin-section > .sticky.compact-cabin-stage {
+    min-height: 55svh;
   }
 }

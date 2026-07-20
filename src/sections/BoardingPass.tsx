@@ -30,7 +30,7 @@ export default function BoardingPass() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: root.current,
@@ -70,10 +70,14 @@ export default function BoardingPass() {
 
   return (
     <section ref={root} data-mood="light" className="pin-section relative h-[190vh]">
-      <div className="sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden bg-paper px-gutter py-16 text-ink max-md:px-m">
-        <p data-pass-eyebrow className="board-caption mb-l text-ink/50">
-          02 · BOARD WITH AN INTENTION · YOUR TASK BECOMES THE ITINERARY
-        </p>
+      <div className="sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden bg-paper px-gutter py-16 text-ink max-lg:py-24 max-md:px-m">
+        <div data-pass-eyebrow className="mb-l text-center max-sm:mb-m">
+          <p className="board-caption text-ink/50">02 · BOARD WITH AN INTENTION</p>
+          <p className="section-deck mx-auto mt-s max-w-[620px] text-ink/68">
+            Choose one task. WindowSeat turns the next {FLIGHT.minutes} minutes into a flight you
+            can finish.
+          </p>
+        </div>
 
         <div data-pass-wrap className="grid w-full max-w-[920px] grid-cols-[1fr_240px] max-md:grid-cols-1">
           {/* Main piece */}

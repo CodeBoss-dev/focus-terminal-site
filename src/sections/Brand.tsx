@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import Barcode from "@/components/Barcode";
+import EmailSignup from "@/components/EmailSignup";
 import { MULTI_LEG } from "@/lib/flight";
 
 export function Manifesto() {
@@ -23,19 +24,19 @@ export function Manifesto() {
           <div className="col-span-5 flex min-h-[390px] flex-col justify-between border-r border-ink/15 py-l pr-l max-lg:min-h-0 max-lg:border-b max-lg:border-r-0 max-lg:pr-0">
             <p data-reveal className="board-caption text-ink/40">THE OLD OBJECT</p>
             <p data-reveal className="outline-display tnum py-l">50:00</p>
-            <p data-reveal className="body-sm max-w-[360px] text-ink/50">
+            <p data-reveal className="section-deck max-w-[390px] text-ink/65">
               A number going down. Useful, but with nothing waiting at the other end.
             </p>
           </div>
 
           <div className="col-span-7 flex min-h-[390px] flex-col justify-between py-l pl-l max-lg:min-h-0 max-lg:pl-0">
             <p data-reveal className="board-caption text-ink/40">THE WINDOWSEAT OBJECT</p>
-            <p data-reveal className="route-display py-l">
+            <p data-reveal className="route-display py-l max-sm:text-[44px]">
               TKS <span className="text-ink/25">→</span> HND
             </p>
             <div data-reveal className="flex max-w-[590px] items-center gap-5">
               <span className="h-3 w-3 shrink-0 rounded-full bg-boarding" />
-              <p className="body-sm text-ink/55">
+              <p className="section-deck text-ink/68">
                 A task with a departure, progress you can see, and a landing worth reaching.
               </p>
             </div>
@@ -70,15 +71,15 @@ export function Numbers() {
   const root = useReveal<HTMLElement>();
   return (
     <section ref={root} data-mood="dark" className="bg-nighttop border-y border-starlight/15 text-starlight">
-      <div className="grid grid-cols-[110px_repeat(4,1fr)] max-lg:grid-cols-2">
-        <div className="flex items-center justify-center border-r border-starlight/15 bg-signal text-ink max-lg:col-span-2 max-lg:min-h-16 max-lg:border-b max-lg:border-r-0">
+      <div className="grid grid-cols-[110px_repeat(4,1fr)] max-lg:grid-cols-2 max-sm:grid-cols-1">
+        <div className="flex items-center justify-center border-r border-starlight/15 bg-signal text-ink max-lg:col-span-2 max-lg:min-h-16 max-lg:border-b max-lg:border-r-0 max-sm:col-span-1">
           <p className="board-caption lg:-rotate-90">AIRCRAFT / SPECS</p>
         </div>
         {NUMBERS.map((number, index) => (
           <div
             key={number.label}
             data-reveal
-            className={`min-h-[300px] px-l py-xl ${index > 0 ? "border-l border-starlight/15" : ""} ${index === 2 ? "max-lg:border-l-0 max-lg:border-t" : ""} ${index === 3 ? "max-lg:border-t" : ""} max-md:min-h-[240px] max-md:px-m max-md:py-l`}
+            className={`min-h-[300px] px-l py-xl ${index > 0 ? "border-l border-starlight/15 max-sm:border-l-0 max-sm:border-t" : ""} ${index === 2 ? "max-lg:border-l-0 max-lg:border-t" : ""} ${index === 3 ? "max-lg:border-t" : ""} max-md:min-h-[240px] max-md:px-m max-md:py-l max-sm:min-h-[210px]`}
           >
             <div className="flex items-center justify-between">
               <p className="board-micro text-starlight/30">DATA / 00{index + 1}</p>
@@ -166,9 +167,9 @@ const CRAFT: {
     note: "STATUS / ALWAYS NEAR",
     vignette: (
       <div className="border border-ink/15 bg-lifted">
-        <div className="flex items-center justify-between border-b border-ink/10 px-4 py-2">
-          <span className="board-micro text-ink/30">FINDER&ensp; FILE&ensp; EDIT&ensp; VIEW</span>
-          <span className="board-sm tnum bg-ink px-3 py-1 font-bold text-paper">
+        <div className="flex items-center justify-between border-b border-ink/10 px-4 py-2 max-sm:justify-end">
+          <span className="board-micro text-ink/30 max-sm:hidden">FINDER&ensp; FILE&ensp; EDIT&ensp; VIEW</span>
+          <span className="board-sm tnum bg-ink px-3 py-1 font-bold text-paper max-sm:text-[12px]">
             ✈ WS214 · 42m → HND
           </span>
         </div>
@@ -213,7 +214,7 @@ const CRAFT: {
           { key: "⌘.", label: "DIVERT" },
           { key: "F", label: "PURE MODE" },
         ].map((shortcut, index) => (
-          <div key={shortcut.key} className={`p-m ${index > 0 ? "border-l border-ink/10" : ""}`}>
+          <div key={shortcut.key} className={`p-m max-sm:p-s ${index > 0 ? "border-l border-ink/10" : ""}`}>
             <p className="text-[clamp(26px,3vw,42px)] font-semibold tracking-tight">{shortcut.key}</p>
             <p className="board-micro mt-s text-ink/45">{shortcut.label}</p>
           </div>
@@ -243,7 +244,7 @@ export function Craft() {
             >
               The details that keep a flight on course.
             </h2>
-            <p data-reveal className="body-text mt-l max-w-[570px] text-ink/55">
+            <p data-reveal className="section-deck mt-l max-w-[620px] text-ink/68">
               The aviation metaphor is not a skin. It shapes how long sessions break, how
               distractions feel, and how progress stays visible while you work elsewhere.
             </p>
@@ -255,7 +256,7 @@ export function Craft() {
             <article
               key={feature.eyebrow}
               data-reveal
-              className="grid grid-cols-[92px_4fr_5fr] gap-l border-t border-ink/15 py-xl max-lg:grid-cols-[64px_1fr] max-md:gap-m max-md:py-l"
+              className="grid grid-cols-[92px_4fr_5fr] gap-l border-t border-ink/15 py-xl max-lg:grid-cols-[64px_1fr] max-md:gap-m max-md:py-l max-sm:grid-cols-1 max-sm:gap-s"
             >
               <div>
                 <p className="instrument tnum text-[30px] text-ink/20">0{index + 1}</p>
@@ -266,10 +267,10 @@ export function Craft() {
                 <h3 className="mt-m max-w-[430px] text-[clamp(28px,3.6vw,48px)] font-semibold leading-[1.02] tracking-[-0.04em]">
                   {feature.title}
                 </h3>
-                <p className="body-text mt-m max-w-[440px] text-ink/55">{feature.body}</p>
+                <p className="section-deck mt-m max-w-[470px] text-ink/68">{feature.body}</p>
                 <p className="board-micro mt-l text-ink/30">{feature.note}</p>
               </div>
-              <div className="self-center max-lg:col-start-2 max-lg:mt-m">{feature.vignette}</div>
+              <div className="self-center max-lg:col-start-2 max-lg:mt-m max-lg:min-w-0 max-sm:col-start-1">{feature.vignette}</div>
             </article>
           ))}
         </div>
@@ -289,13 +290,13 @@ export function CTABand() {
     >
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-3 bg-ink" />
       <div className="mx-auto max-w-[1320px]">
-        <div className="flex items-end justify-between border-b border-ink/25 pb-5">
+        <div className="flex items-end justify-between border-b border-ink/25 pb-5 max-sm:block">
           <p className="board-caption">FINAL CALL / GATE YOURS</p>
-          <p className="board-micro text-ink/55">BOARDING STATUS · OPEN</p>
+          <p className="board-micro text-ink/55 max-sm:mt-2">BOARDING STATUS · OPEN</p>
         </div>
         <h2
           data-reveal
-          className="mt-l text-[clamp(66px,11vw,168px)] font-black leading-[0.78] tracking-[-0.075em]"
+          className="mt-l text-[clamp(66px,11vw,168px)] font-black leading-[0.78] tracking-[-0.075em] max-sm:text-[56px]"
         >
           YOUR GATE
           <span className="block">IS OPEN.</span>
@@ -303,26 +304,21 @@ export function CTABand() {
 
         <div
           data-reveal
-          className="relative z-10 ml-auto mt-xl grid w-full max-w-[940px] rotate-[-1.5deg] grid-cols-[1fr_240px] shadow-[0_30px_80px_rgba(20,22,26,0.24)] transition-transform duration-300 hover:rotate-0 max-md:grid-cols-1"
+          className="relative z-10 ml-auto mt-xl grid w-full max-w-[940px] rotate-[-1.5deg] grid-cols-[1fr_240px] shadow-[0_30px_80px_rgba(20,22,26,0.24)] transition-transform duration-300 hover:rotate-0 max-md:rotate-0 max-md:grid-cols-1"
         >
           <div className="paper-texture relative p-l max-md:p-m">
             <span className="absolute inset-y-0 left-0 w-1.5 bg-ink" />
-            <div className="flex items-baseline justify-between">
+            <div className="flex items-baseline justify-between gap-m max-sm:block">
               <p className="board-caption text-ink/50">WINDOWSEAT AIR · NOW BOARDING</p>
-              <p className="board-caption text-ink/50">GATE · YOURS</p>
+              <p className="board-caption text-ink/50 max-sm:mt-2">GATE · YOURS</p>
             </div>
             <h3 className="mt-m text-[clamp(34px,5vw,58px)] font-bold tracking-[-0.045em]">
-              Bring the next task.
+              Be first to board.
             </h3>
-            <p className="body-text mt-s max-w-[500px] text-ink/55">
-              Give it a departure, a route, and somewhere satisfying to arrive.
+            <p className="section-deck mt-s max-w-[540px] text-ink/68">
+              Leave your email and we&apos;ll let you know when WindowSeat is ready for departure.
             </p>
-            <a
-              href="#"
-              className="board-sm mt-l inline-flex items-center gap-4 bg-ink px-8 py-4 font-bold text-paper transition-[gap] hover:gap-6"
-            >
-              GET WINDOWSEAT <span>→</span>
-            </a>
+            <EmailSignup />
           </div>
           <div className="paper-texture border-l border-dashed border-ink/30 p-m max-md:border-l-0 max-md:border-t">
             <p className="board-sm font-bold">TKS → ???</p>

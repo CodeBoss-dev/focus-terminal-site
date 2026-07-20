@@ -47,7 +47,7 @@ export default function Briefing() {
             A timer counts down.
             <span className="mt-3 block text-instrument">A flight moves forward.</span>
           </h2>
-          <p data-reveal className="mt-l max-w-[460px] text-[17px] leading-relaxed text-starlight/58">
+          <p data-reveal className="section-deck mt-l max-w-[480px] text-starlight/72">
             Both measure the same minutes. Only one gives those minutes a departure, a horizon,
             and a reason to stay until arrival.
           </p>
@@ -73,7 +73,7 @@ export default function Briefing() {
                 <h3 className="mt-2 text-[clamp(24px,2.8vw,38px)] font-semibold tracking-[-0.035em] text-starlight">
                   {step.title}
                 </h3>
-                <p className="body-sm mt-2 max-w-[520px] text-starlight/55">{step.copy}</p>
+                <p className="body-text mt-2 max-w-[520px] text-starlight/68">{step.copy}</p>
               </div>
               <p className="board-micro self-center text-right text-starlight/35 max-sm:col-start-2 max-sm:text-left">
                 {step.status} ✓
