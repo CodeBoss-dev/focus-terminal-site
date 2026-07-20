@@ -2,8 +2,9 @@
 """Render the original, procedural score for the WindowSeat launch film.
 
 The score uses a focused electronic pulse, instrument-panel textures, and the
-app's own tonal language. Every accent is either on the musical grid or tied to
-a visible product event.
+app's own tonal language. Every accent is tied to a visible product event, while
+scene-shaped harmonic air and diffused tails keep those accents from feeling
+like disconnected audio cuts.
 """
 
 from __future__ import annotations
@@ -205,6 +206,59 @@ def add_noise_gesture(
     add_mono(mix, texture * shape, start, gain=gain, pan=pan)
 
 
+def add_focus_pad(
+    mix: np.ndarray,
+    start: float,
+    duration: float,
+    root: float,
+    gain: float,
+    phase_offset: float,
+) -> None:
+    """Add a quiet, scene-bound electronic cushion with soft crossfade edges."""
+    count = round(duration * SAMPLE_RATE)
+    time = np.arange(count, dtype=np.float64) / SAMPLE_RATE
+    attack = min(0.72, duration * 0.24)
+    release = min(0.92, duration * 0.30)
+    shape = envelope(count, attack=attack, release=release)
+    breath = 0.84 + 0.16 * np.sin(
+        2.0 * math.pi * 0.17 * time + phase_offset
+    )
+    drift = 0.075 * np.sin(2.0 * math.pi * 0.11 * time + phase_offset)
+
+    left = (
+        0.62 * np.sin(2.0 * math.pi * root * 0.997 * time + drift)
+        + 0.29 * np.sin(2.0 * math.pi * root * 1.498 * time + 0.6)
+        + 0.16 * np.sin(2.0 * math.pi * root * 2.247 * time + 1.1)
+    )
+    right = (
+        0.62 * np.sin(2.0 * math.pi * root * 1.003 * time - drift)
+        + 0.29 * np.sin(2.0 * math.pi * root * 1.502 * time + 0.9)
+        + 0.16 * np.sin(2.0 * math.pi * root * 2.253 * time + 1.4)
+    )
+    pad_shape = (shape * breath).astype(np.float32)
+    add_mono(mix, left.astype(np.float32) * pad_shape, start, gain=gain, pan=-0.28)
+    add_mono(mix, right.astype(np.float32) * pad_shape, start, gain=gain, pan=0.28)
+
+
+def add_diffused_tails(mix: np.ndarray) -> None:
+    """Give short cues a restrained room tail without moving their attack."""
+    source = mix.copy()
+    taps = (
+        (0.073, 0.105, False),
+        (0.149, 0.070, True),
+        (0.271, 0.044, False),
+        (0.463, 0.027, True),
+        (0.697, 0.015, False),
+    )
+    for delay, gain, crossfeed in taps:
+        frames = round(delay * SAMPLE_RATE)
+        if crossfeed:
+            mix[frames:, 0] += source[:-frames, 1] * gain
+            mix[frames:, 1] += source[:-frames, 0] * gain
+        else:
+            mix[frames:] += source[:-frames] * gain
+
+
 def add_scene_hit(mix: np.ndarray, at: float, gain: float) -> None:
     add_kick(mix, at, gain=gain)
     add_synth_pluck(
@@ -271,6 +325,29 @@ def render_score() -> np.ndarray:
     mix = np.zeros((FRAME_COUNT, 2), dtype=np.float32)
 
     motif = (293.66, 440.00, 659.25, 392.00)
+
+    # Each cushion belongs to one shot or thought. Their overlaps crossfade at
+    # the edit points, creating continuity without an independent backing track.
+    scene_pads = (
+        (0.55, 4.82, 146.83, 0.0068),
+        (4.60, 6.30, 110.00, 0.0072),
+        (10.24, 7.18, 164.81, 0.0068),
+        (16.76, 5.16, 196.00, 0.0064),
+        (21.26, 5.17, 146.83, 0.0070),
+        (25.76, 8.18, 110.00, 0.0074),
+        (33.24, 6.10, 164.81, 0.0067),
+        (38.64, 4.82, 196.00, 0.0064),
+        (42.76, 7.32, 146.83, 0.0072),
+    )
+    for index, (start, duration, root, gain) in enumerate(scene_pads):
+        add_focus_pad(
+            mix,
+            start,
+            duration,
+            root,
+            gain,
+            phase_offset=index * 0.71,
+        )
 
     # 00.00–04.97 · The hook assembles character by character. The flap
     # mechanics become the rhythm, then the amber line completes the motif.
@@ -453,6 +530,10 @@ def render_score() -> np.ndarray:
             pan=-0.12 + index * 0.12,
         )
     add_bell(mix, 48.27, 587.33, 1.40, gain=0.023)
+
+    # Preserve the exact attack of every frame-locked cue while extending its
+    # decay into the surrounding scene. This is intentionally subtle.
+    add_diffused_tails(mix)
 
     master_fade = np.ones(FRAME_COUNT, dtype=np.float32)
     master_fade[: round(0.7 * SAMPLE_RATE)] = smoothstep(
