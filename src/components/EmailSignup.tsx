@@ -29,8 +29,12 @@ export default function EmailSignup() {
 
   return (
     <div className="mt-l">
-      <form onSubmit={submit} className="flex max-w-[580px] max-sm:flex-col" aria-label="WindowSeat launch updates">
-        <input type="hidden" name="_subject" value="New WindowSeat passenger" />
+      <form
+        onSubmit={submit}
+        className="flex max-w-[580px] max-sm:flex-col"
+        aria-label="WindowSeat Mac App Store launch updates"
+      >
+        <input type="hidden" name="_subject" value="New WindowSeat launch subscriber" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
         <input type="hidden" name="source" value="WindowSeat website" />
@@ -52,7 +56,7 @@ export default function EmailSignup() {
           required
           autoComplete="email"
           placeholder="YOU@EXAMPLE.COM"
-          className="board-sm min-h-14 min-w-0 flex-1 border border-ink bg-paper px-5 text-ink placeholder:text-ink/35"
+          className="board-sm min-h-14 min-w-0 flex-1 border border-ink bg-paper px-5 text-ink placeholder:text-ink/60"
           onChange={() => status !== "idle" && setStatus("idle")}
         />
         <button
@@ -60,12 +64,14 @@ export default function EmailSignup() {
           disabled={status === "submitting"}
           className="board-sm min-h-14 bg-ink px-8 font-bold text-paper transition-colors hover:bg-nightbottom disabled:cursor-wait disabled:opacity-65"
         >
-          {status === "submitting" ? "BOARDING…" : "JOIN EARLY ACCESS →"}
+          {status === "submitting" ? "SENDING…" : "GET LAUNCH UPDATES →"}
         </button>
       </form>
       <div className="mt-s min-h-5" aria-live="polite">
         {status === "success" && (
-          <p className="board-micro text-ink/65">YOU&apos;RE ON THE PASSENGER LIST. WATCH YOUR INBOX.</p>
+          <p className="board-micro text-ink/70">
+            YOU&apos;RE ON THE LAUNCH LIST. WE&apos;LL EMAIL YOU WHEN BOARDING OPENS.
+          </p>
         )}
         {status === "error" && (
           <p className="board-micro text-turbulence">
@@ -73,8 +79,11 @@ export default function EmailSignup() {
           </p>
         )}
         {status === "idle" && (
-          <p className="board-micro text-ink/45">
-            LAUNCH UPDATES ONLY · NO ACCOUNT · <a href="https://codeboss-dev.github.io/windowseat-site/privacy.html" className="underline underline-offset-2">PRIVACY</a>
+          <p className="board-micro text-ink/70">
+            LAUNCH UPDATES ONLY · UNSUBSCRIBE ANY TIME ·{" "}
+            <a href="privacy.html" className="underline underline-offset-2">
+              PRIVACY
+            </a>
           </p>
         )}
       </div>

@@ -283,11 +283,11 @@ export default function InFlight() {
             <div className="flex items-start justify-between gap-m border-b border-starlight/15 pb-m">
               <div>
                 <p className="board-caption text-instrument">03 · FOCUS IN FLIGHT</p>
-                <p className="board-micro mt-2 text-starlight/40">LIVE ROUTE / CABIN MODE ON</p>
+                <p className="board-micro mt-2 text-starlight/65">LIVE ROUTE / CABIN MODE ON</p>
               </div>
               <div className="text-right">
                 <p className="board-sm font-bold tracking-[2px] text-instrument">CRUISE</p>
-                <p className="board-micro tnum mt-1 text-starlight/45">FL370 · 37,000 FT</p>
+                <p className="board-micro tnum mt-1 text-starlight/65">FL370 · 37,000 FT</p>
               </div>
             </div>
 
@@ -298,7 +298,7 @@ export default function InFlight() {
                   <span className="text-instrument">●</span> {FLIGHT.origin.iata} → {FLIGHT.dest.iata}
                 </p>
                 <div className="mt-m border-t border-starlight/15 pt-m">
-                  <p className="board-micro text-starlight/40">TASK</p>
+                  <p className="board-micro text-starlight/65">TASK</p>
                   <p className="board-sm mt-1">{FLIGHT.task}</p>
                   <p className="board-micro mt-m text-boarding">● CABIN MODE ON</p>
                 </div>
@@ -368,7 +368,7 @@ export default function InFlight() {
 
             <div className="mt-l grid grid-cols-[1fr_1.5fr] gap-m max-sm:grid-cols-1">
               <div className="glass rounded-2xl p-m">
-                <p className="board-micro text-starlight/45">DISTANCE TO GO</p>
+                <p className="board-micro text-starlight/65">DISTANCE TO GO</p>
                 <p className="board tnum mt-2">249 KM · 155 MI</p>
               </div>
               <div className="glass rounded-2xl p-m text-center">
@@ -378,7 +378,7 @@ export default function InFlight() {
                 <p className="instrument tnum mt-3 text-[clamp(46px,10vw,72px)] leading-none text-instrument">
                   00:25:00
                 </p>
-                <p className="board-caption mt-2 text-starlight/45">
+                <p className="board-caption mt-2 text-starlight/65">
                   TO {FLIGHT.dest.iata} · {FLIGHT.dest.airport} {FLIGHT.dest.city}
                 </p>
               </div>

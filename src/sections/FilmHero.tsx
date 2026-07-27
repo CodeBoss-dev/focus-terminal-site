@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import BrandMark from "@/components/BrandMark";
 
 const STARS = (() => {
@@ -20,17 +20,25 @@ const STARS = (() => {
 
 export default function FilmHero() {
   const [open, setOpen] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const filmTriggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
+
+    const dialog = dialogRef.current;
+    const filmTrigger = filmTriggerRef.current;
+    const previousOverflow = document.body.style.overflow;
+
+    if (dialog && !dialog.open) dialog.showModal();
     window.__lenis?.stop();
     document.body.style.overflow = "hidden";
-    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);
-    window.addEventListener("keydown", onKey);
+
     return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      if (dialog?.open) dialog.close();
+      document.body.style.overflow = previousOverflow;
       window.__lenis?.start();
+      requestAnimationFrame(() => filmTrigger?.focus());
     };
   }, [open]);
 
@@ -65,6 +73,8 @@ export default function FilmHero() {
           <span className="max-sm:hidden"> / FLIGHT CONTROL</span>
         </p>
         <button
+          ref={filmTriggerRef}
+          type="button"
           onClick={() => setOpen(true)}
           className="group flex items-center gap-3 border-l border-starlight/15 pl-5 text-left max-lg:min-h-11"
         >
@@ -72,7 +82,7 @@ export default function FilmHero() {
             ▶
           </span>
           <span>
-            <span className="board-micro block text-starlight/40 max-sm:hidden">00:50 · SOUND ON</span>
+            <span className="board-micro block text-starlight/65 max-sm:hidden">00:50 · SOUND ON</span>
             <span className="board-caption text-starlight">WATCH THE FILM</span>
           </span>
         </button>
@@ -80,7 +90,9 @@ export default function FilmHero() {
 
       <div className="relative z-10 mx-auto grid w-full max-w-[1440px] flex-1 grid-cols-12 items-center gap-6 py-12 max-lg:grid-cols-1 max-lg:gap-10 max-lg:py-20 max-md:pb-20 max-md:pt-16">
         <div className="col-span-9 max-xl:col-span-8 max-lg:col-span-1">
-          <p className="board-caption mb-6 text-instrument">NEXT DEPARTURE · WHEN YOU&apos;RE READY</p>
+          <p className="mb-6 text-[clamp(16px,1.35vw,20px)] font-semibold tracking-[-0.01em] text-instrument">
+            Native Mac focus app <span className="text-starlight/65">· macOS 14+</span>
+          </p>
           <h1 className="hero-display text-starlight max-sm:text-[clamp(46px,15vw,58px)] max-sm:leading-[0.86]">
             <span className="block">YOUR NEXT</span>
             <span className="block">HOUR HAS</span>
@@ -90,39 +102,44 @@ export default function FilmHero() {
         </div>
 
         <aside className="col-span-3 self-end border-l border-starlight/15 pb-4 pl-6 max-xl:col-span-4 max-lg:col-span-1 max-lg:border-l-0 max-lg:border-t max-lg:pb-0 max-lg:pl-0 max-lg:pt-6">
-          <p className="board-micro text-starlight/40">FLIGHT PLAN / WS 214</p>
+          <p className="board-micro text-starlight/65">FLIGHT PLAN / WS 214</p>
           <p className="instrument tnum mt-3 text-[clamp(48px,5vw,76px)] leading-none text-starlight">
             50:00
           </p>
           <div className="mt-5 grid grid-cols-2 gap-y-4 border-y border-starlight/15 py-4">
             <div>
-              <p className="board-micro text-starlight/35">TASK</p>
+              <p className="board-micro text-starlight/65">TASK</p>
               <p className="board-sm mt-1 text-starlight">DEEP WORK</p>
             </div>
             <div>
-              <p className="board-micro text-starlight/35">ROUTE</p>
+              <p className="board-micro text-starlight/65">ROUTE</p>
               <p className="board-sm mt-1 text-starlight">TKS → HND</p>
             </div>
             <div>
-              <p className="board-micro text-starlight/35">CABIN</p>
+              <p className="board-micro text-starlight/65">CABIN</p>
               <p className="board-sm mt-1 text-boarding">READY</p>
             </div>
             <div>
-              <p className="board-micro text-starlight/35">SEAT</p>
+              <p className="board-micro text-starlight/65">SEAT</p>
               <p className="board-sm mt-1 text-starlight">WINDOW</p>
             </div>
           </div>
           <p className="section-deck mt-5 text-starlight/72">
-            WindowSeat turns time you mean to protect into a flight you want to finish.
+            WindowSeat turns each focus session into a flight you want to finish.
           </p>
-          <p className="board-micro mt-3 text-starlight/45">
-            NATIVE MACOS 14+ · NO ACCOUNT · DATA STAYS ON YOUR MAC
-          </p>
+          <div className="mt-4 border-l-2 border-instrument pl-4">
+            <p className="text-[clamp(16px,1.2vw,18px)] font-semibold leading-snug text-starlight">
+              No Subscription
+            </p>
+            <p className="body-sm mt-2 text-starlight/75">
+              Launching on the Mac App Store · No account · Your focus data stays on your Mac
+            </p>
+          </div>
           <a
             href="#briefing"
             className="board-caption mt-6 inline-flex items-center gap-3 bg-signal px-5 py-3 font-bold text-ink transition-[gap] hover:gap-5 max-lg:min-h-11"
           >
-            BOARD THE STORY <span aria-hidden="true">↓</span>
+            SEE HOW IT WORKS <span aria-hidden="true">↓</span>
           </a>
         </aside>
 
@@ -154,26 +171,33 @@ export default function FilmHero() {
       <div className="relative z-20 mx-auto flex w-full max-w-[1440px] items-end justify-between gap-8 border-t border-starlight/15 pt-4 max-sm:flex-col max-sm:items-start max-sm:gap-3">
         <div className="flex gap-10">
           <div className="max-sm:hidden">
-            <p className="board-micro text-starlight/30">ORIGIN</p>
+            <p className="board-micro text-starlight/60">ORIGIN</p>
             <p className="board-caption mt-1 text-starlight">TKS · TOKUSHIMA</p>
           </div>
           <div>
-            <p className="board-micro text-starlight/30">DESTINATION</p>
+            <p className="board-micro text-starlight/60">DESTINATION</p>
             <p className="board-caption mt-1 text-instrument">HND · HANEDA</p>
           </div>
         </div>
-        <p className="board-caption shrink-0 text-starlight/45">SCROLL / PUSH BACK ↓</p>
+        <p className="board-caption shrink-0 text-starlight/65">SCROLL / PUSH BACK ↓</p>
       </div>
 
       {open && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-nighttop/90 p-m backdrop-blur-md"
-          onClick={() => setOpen(false)}
-          role="dialog"
-          aria-modal="true"
-          aria-label="WindowSeat film"
+        <dialog
+          ref={dialogRef}
+          aria-labelledby="film-dialog-title"
+          onCancel={(event) => {
+            event.preventDefault();
+            setOpen(false);
+          }}
+          onClose={() => setOpen(false)}
+          onClick={(event) => event.target === event.currentTarget && setOpen(false)}
+          className="fixed inset-0 m-0 h-[100dvh] max-h-none w-screen max-w-none border-0 bg-transparent p-m text-starlight backdrop:bg-nighttop/90 backdrop:backdrop-blur-md"
         >
-          <div className="w-[min(1100px,94vw)]" onClick={(event) => event.stopPropagation()}>
+          <div className="mx-auto flex h-full w-[min(1100px,94vw)] flex-col justify-center">
+            <h2 id="film-dialog-title" className="sr-only">
+              WindowSeat film
+            </h2>
             <video
               src="film/windowseat-ad.mp4"
               controls
@@ -183,12 +207,17 @@ export default function FilmHero() {
             />
             <div className="mt-s flex items-center justify-between">
               <p className="board-caption text-starlight/60">WINDOWSEAT — THE FILM · 50 SEC</p>
-              <button onClick={() => setOpen(false)} className="glass px-4 py-2" autoFocus>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="glass px-4 py-2"
+                autoFocus
+              >
                 <span className="board-caption text-starlight">CLOSE ✕</span>
               </button>
             </div>
           </div>
-        </div>
+        </dialog>
       )}
     </section>
   );

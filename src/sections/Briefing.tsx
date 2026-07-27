@@ -75,7 +75,7 @@ export default function Briefing() {
                 </h3>
                 <p className="body-text mt-2 max-w-[520px] text-starlight/68">{step.copy}</p>
               </div>
-              <p className="board-micro self-center text-right text-starlight/35 max-sm:col-start-2 max-sm:text-left">
+              <p className="board-micro self-center text-right text-starlight/65 max-sm:col-start-2 max-sm:text-left">
                 {step.status} ✓
               </p>
             </div>

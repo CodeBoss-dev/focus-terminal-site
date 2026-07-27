@@ -20,8 +20,8 @@ const COLUMNS = [
   {
     title: "PAPERWORK",
     links: [
-      { label: "PRIVACY POLICY", href: "https://codeboss-dev.github.io/windowseat-site/privacy.html" },
-      { label: "DATA & PRIVACY", href: "https://codeboss-dev.github.io/windowseat-site/privacy.html" },
+      { label: "PRIVACY POLICY", href: "privacy.html" },
+      { label: "DATA & PRIVACY", href: "privacy.html#app-data" },
     ],
   },
 ];
@@ -44,28 +44,28 @@ export default function Footer() {
           <div className="col-span-6">
             <div className="flex items-center gap-3">
               <BrandMark size={44} />
-              <p className="board-micro text-starlight/35">WINDOWSEAT / MACOS</p>
+              <p className="board-micro text-starlight/65">WINDOWSEAT / MACOS</p>
             </div>
             <p className="mt-m text-[clamp(48px,7vw,92px)] font-black leading-[0.82] tracking-[-0.065em]">
               FOCUS
               <span className="block text-instrument">SESSIONS, FLOWN.</span>
             </p>
-            <p className="body-sm mt-l max-w-[400px] text-starlight/45">
+            <p className="body-sm mt-l max-w-[440px] text-starlight/70">
               A native Mac focus app that turns protected time into routes, landings, and passport
-              stamps.
+              stamps. Launching on the Mac App Store as a one-time purchase, with no subscription.
             </p>
           </div>
 
           <div className="col-span-6 grid grid-cols-3 gap-l self-end max-sm:grid-cols-2">
             {COLUMNS.map((column) => (
               <div key={column.title}>
-                <p className="board-micro mb-m text-starlight/30">{column.title}</p>
+                <p className="board-micro mb-m text-starlight/60">{column.title}</p>
                 <ul className="space-y-s">
                   {column.links.map((link) => (
                     <li key={link.label}>
                       <a
                         href={link.href}
-                        className="board-caption text-starlight/60 transition-colors hover:text-instrument"
+                        className="board-caption text-starlight/75 transition-colors hover:text-instrument"
                       >
                         {link.label}
                       </a>
@@ -78,8 +78,8 @@ export default function Footer() {
         </div>
 
         <div className="flex justify-between border-t border-starlight/15 pt-m max-md:block">
-          <p className="board-micro text-starlight/25">© 2026 WINDOWSEAT · NATIVE MACOS 14+</p>
-          <p className="board-micro text-starlight/25 max-md:mt-s">
+          <p className="board-micro text-starlight/55">© 2026 WINDOWSEAT · NATIVE MACOS 14+</p>
+          <p className="board-micro text-starlight/55 max-md:mt-s">
             DESIGN TOKENS &amp; TYPE / WINDOWSEAT UI SYSTEM
           </p>
         </div>

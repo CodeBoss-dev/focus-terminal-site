@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="board-micro text-ink/40">{label}</p>
+      <p className="board-micro text-ink/60">{label}</p>
       <p className="board-sm tnum mt-1 font-bold">{value}</p>
     </div>
   );
@@ -72,7 +72,7 @@ export default function BoardingPass() {
     <section ref={root} data-mood="light" className="pin-section relative h-[190vh]">
       <div className="sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden bg-paper px-gutter py-16 text-ink max-lg:py-24 max-md:px-m">
         <div data-pass-eyebrow className="mb-l text-center max-sm:mb-m">
-          <p className="board-caption text-ink/50">02 · BOARD WITH AN INTENTION</p>
+          <p className="board-caption text-ink/60">02 · BOARD WITH AN INTENTION</p>
           <p className="section-deck mx-auto mt-s max-w-[620px] text-ink/68">
             Choose one task. WindowSeat turns the next {FLIGHT.minutes} minutes into a flight you
             can finish.
@@ -87,16 +87,16 @@ export default function BoardingPass() {
           >
             <span className="absolute inset-y-0 left-0 w-1.5 rounded-l-2xl bg-signal" />
             <div className="flex items-baseline justify-between" data-pass-field>
-              <p className="board-caption text-ink/50">WINDOWSEAT AIR</p>
-              <p className="board-caption tnum text-ink/50">{times.date}</p>
+              <p className="board-caption text-ink/60">WINDOWSEAT AIR</p>
+              <p className="board-caption tnum text-ink/60">{times.date}</p>
             </div>
             <p className="signage signage-md mt-m" data-pass-field>
               {FLIGHT.origin.iata} <span className="font-light text-ink/40">→</span>{" "}
               {FLIGHT.dest.iata}
             </p>
             <div className="mt-1 flex items-baseline justify-between" data-pass-field>
-              <p className="board-micro text-ink/50">{FLIGHT.origin.city}</p>
-              <p className="board-micro text-ink/50">
+              <p className="board-micro text-ink/60">{FLIGHT.origin.city}</p>
+              <p className="board-micro text-ink/60">
                 {FLIGHT.origin.iata} → {FLIGHT.dest.iata}
               </p>
             </div>
@@ -131,7 +131,7 @@ export default function BoardingPass() {
             </div>
             <div className="mt-l" data-pass-field>
               <Barcode className="h-12 w-full" />
-              <p className="board-micro tnum mt-2 text-ink/40">
+              <p className="board-micro tnum mt-2 text-ink/60">
                 {FLIGHT.number.replace(" ", "-")} · {FLIGHT.minutes} MIN ·{" "}
                 {FLIGHT.origin.iata}
                 {FLIGHT.dest.iata}
@@ -140,7 +140,7 @@ export default function BoardingPass() {
           </div>
         </div>
 
-        <p data-tear-caption className="board-caption mt-xl text-ink/50">
+        <p data-tear-caption className="board-caption mt-xl text-ink/60">
           THE TEAR IS THE COMMITMENT — ONCE IT&apos;S TORN, YOU&apos;RE FLYING
         </p>
       </div>

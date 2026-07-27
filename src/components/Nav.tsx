@@ -88,6 +88,7 @@ export default function Nav() {
   return (
     <nav
       aria-hidden={!visible}
+      inert={!visible}
       className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
         visible ? "opacity-100" : "pointer-events-none opacity-0 -translate-y-2"
       } ${
@@ -104,7 +105,7 @@ export default function Nav() {
         >
           <BrandMark size={28} />
           <span>WINDOWSEAT</span>
-          <span className={`board-micro border-l pl-3 font-normal max-md:hidden ${light ? "border-ink/15 text-ink/35" : "border-starlight/15 text-starlight/35"}`}>
+          <span className={`board-micro border-l pl-3 font-normal max-md:hidden ${light ? "border-ink/15 text-ink/60" : "border-starlight/15 text-starlight/60"}`}>
             TKS → ???
           </span>
         </a>
@@ -125,8 +126,8 @@ export default function Nav() {
             href="#board"
             className="board-caption bg-signal px-5 py-2.5 font-bold text-ink transition-transform hover:-translate-y-0.5 max-lg:inline-flex max-lg:min-h-11 max-lg:items-center max-sm:px-3"
           >
-            <span className="max-sm:hidden">GET WINDOWSEAT</span>
-            <span className="sm:hidden">GET APP</span>
+            <span className="max-sm:hidden">LAUNCH UPDATES</span>
+            <span className="sm:hidden">UPDATES</span>
           </a>
           <button
             type="button"
@@ -166,7 +167,7 @@ export default function Nav() {
             light ? "border-ink/10 bg-paper/95" : "border-starlight/15 bg-nighttop/95"
           }`}
         >
-          <p className={`board-micro px-3 py-2 ${light ? "text-ink/35" : "text-starlight/35"}`}>
+          <p className={`board-micro px-3 py-2 ${light ? "text-ink/65" : "text-starlight/65"}`}>
             FLIGHT PLAN / CHOOSE A CHAPTER
           </p>
           {LINKS.map((link, index) => (
@@ -179,7 +180,7 @@ export default function Nav() {
               }`}
             >
               <span className="board-caption">{link.label}</span>
-              <span className={`board-micro ${light ? "text-ink/35" : "text-starlight/35"}`}>
+              <span className={`board-micro ${light ? "text-ink/65" : "text-starlight/65"}`}>
                 0{index + 1} →
               </span>
             </a>

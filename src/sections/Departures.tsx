@@ -70,7 +70,7 @@ export default function Departures() {
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden bg-paper px-gutter py-16 text-ink max-md:px-m">
         <div data-board-head>
           <div className="flex items-baseline justify-between max-sm:block">
-            <p className="board-caption text-ink/50">
+            <p className="board-caption text-ink/60">
               {FLIGHT.origin.airport} · {FLIGHT.origin.iata}
             </p>
             <p className="board-sm tnum font-bold max-sm:mt-2">
@@ -79,7 +79,7 @@ export default function Departures() {
           </div>
           <div className="mt-s flex items-end justify-between gap-l max-md:block">
             <div>
-              <p className="board-micro mb-xs text-ink/40">01 · BOOK YOUR FOCUS SESSION</p>
+              <p className="board-micro mb-xs text-ink/60">01 · BOOK YOUR FOCUS SESSION</p>
               <h2 className="signage signage-lg">
                 <SplitFlap text="DEPARTURES" className="font-sans" />
               </h2>
@@ -90,7 +90,7 @@ export default function Departures() {
             </p>
           </div>
 
-          <div className="board-caption mt-l grid grid-cols-[110px_1fr_130px_110px_70px_90px_110px] gap-4 pb-3 text-ink/40 max-lg:grid-cols-[90px_1fr_90px_110px] max-md:grid-cols-[80px_1fr_100px] max-sm:grid-cols-[64px_minmax(0,1fr)_76px] max-sm:gap-2">
+          <div className="board-caption mt-l grid grid-cols-[110px_1fr_130px_110px_70px_90px_110px] gap-4 pb-3 text-ink/60 max-lg:grid-cols-[90px_1fr_90px_110px] max-md:grid-cols-[80px_1fr_100px] max-sm:grid-cols-[64px_minmax(0,1fr)_76px] max-sm:gap-2">
             <span>FLIGHT</span>
             <span>DESTINATION</span>
             <span className="max-lg:hidden">ROUTE</span>
@@ -125,13 +125,13 @@ export default function Departures() {
                 )}
                 <span className="min-w-0 pl-2">
                   <span className="board-sm tnum block font-bold">{row.flight}</span>
-                  <span className="board-micro text-ink/40">GATE {row.gate}</span>
+                  <span className="board-micro text-ink/60">GATE {row.gate}</span>
                 </span>
                 <span className="min-w-0">
                   <span className="board block font-bold">
                     <SplitFlap text={row.dest} />
                   </span>
-                  <span className="board-micro block truncate text-ink/50">
+                  <span className="board-micro block truncate text-ink/60">
                     {row.sub}
                     {row.newStamp && (
                       <span className="ml-2 inline-flex items-center gap-1">
@@ -158,7 +158,7 @@ export default function Departures() {
                     row.remark === "BOARDING"
                       ? "text-boarding"
                       : row.standby
-                        ? "text-ink/40"
+                        ? "text-ink/60"
                         : "text-ink/60"
                   }`}
                 >
@@ -191,7 +191,7 @@ export default function Departures() {
                       </text>
                     </svg>
                     <div>
-                      <p className="board-caption text-ink/50">
+                      <p className="board-caption text-ink/60">
                         A 50-MINUTE SESSION BOOKS A REAL ROUTE
                       </p>
                       <p className="signage signage-sm mt-1">
@@ -214,7 +214,7 @@ export default function Departures() {
           ))}
         </div>
 
-        <p className="board-caption mt-m text-ink/40">
+        <p className="board-caption mt-m text-ink/60">
           IN THE APP, THIS BOARD IS LIVE · CHOOSE A ROUTE OR START FROM SCRATCH
         </p>
       </div>

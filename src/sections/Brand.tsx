@@ -16,13 +16,13 @@ export function Manifesto() {
     >
       <div className="mx-auto max-w-[1320px]">
         <div data-reveal className="flex items-center justify-between border-b border-ink/15 pb-4">
-          <p className="board-caption text-ink/45">AFTER ARRIVAL / WHY IT WORKS</p>
-          <p className="board-micro text-ink/35">SAME MINUTES · DIFFERENT GRAVITY</p>
+          <p className="board-caption text-ink/65">AFTER ARRIVAL / WHY IT WORKS</p>
+          <p className="board-micro text-ink/60">SAME MINUTES · DIFFERENT GRAVITY</p>
         </div>
 
         <div className="grid grid-cols-12 border-b border-ink/15 max-lg:grid-cols-1">
           <div className="col-span-5 flex min-h-[390px] flex-col justify-between border-r border-ink/15 py-l pr-l max-lg:min-h-0 max-lg:border-b max-lg:border-r-0 max-lg:pr-0">
-            <p data-reveal className="board-caption text-ink/40">THE OLD OBJECT</p>
+            <p data-reveal className="board-caption text-ink/60">THE OLD OBJECT</p>
             <p data-reveal className="outline-display tnum py-l">50:00</p>
             <p data-reveal className="section-deck max-w-[390px] text-ink/65">
               A number going down. Useful, but with nothing waiting at the other end.
@@ -30,7 +30,7 @@ export function Manifesto() {
           </div>
 
           <div className="col-span-7 flex min-h-[390px] flex-col justify-between py-l pl-l max-lg:min-h-0 max-lg:pl-0">
-            <p data-reveal className="board-caption text-ink/40">THE WINDOWSEAT OBJECT</p>
+            <p data-reveal className="board-caption text-ink/60">THE WINDOWSEAT OBJECT</p>
             <p data-reveal className="route-display py-l max-sm:text-[44px]">
               TKS <span className="text-ink/25">→</span> HND
             </p>
@@ -44,7 +44,7 @@ export function Manifesto() {
         </div>
 
         <div className="grid grid-cols-12 gap-6 pt-xl max-lg:grid-cols-1">
-          <p data-reveal className="board-caption col-span-3 text-ink/40">
+          <p data-reveal className="board-caption col-span-3 text-ink/60">
             THE DIFFERENCE
           </p>
           <h2
@@ -52,7 +52,7 @@ export function Manifesto() {
             className="col-span-9 max-w-[980px] text-[clamp(43px,6vw,86px)] font-bold leading-[0.98] tracking-[-0.055em]"
           >
             Same fifty minutes.
-            <span className="block text-ink/35">A much better reason to finish.</span>
+            <span className="block text-ink/50">A much better reason to finish.</span>
           </h2>
         </div>
       </div>
@@ -82,14 +82,14 @@ export function Numbers() {
             className={`min-h-[300px] px-l py-xl ${index > 0 ? "border-l border-starlight/15 max-sm:border-l-0 max-sm:border-t" : ""} ${index === 2 ? "max-lg:border-l-0 max-lg:border-t" : ""} ${index === 3 ? "max-lg:border-t" : ""} max-md:min-h-[240px] max-md:px-m max-md:py-l max-sm:min-h-[210px]`}
           >
             <div className="flex items-center justify-between">
-              <p className="board-micro text-starlight/30">DATA / 00{index + 1}</p>
+              <p className="board-micro text-starlight/60">DATA / 00{index + 1}</p>
               <span className="h-1.5 w-1.5 rounded-full bg-route" />
             </div>
             <p className="instrument tnum mt-xl text-[clamp(46px,5vw,76px)] leading-none text-instrument">
               {number.value}
             </p>
             <p className="board-sm mt-m text-starlight">{number.label}</p>
-            <p className="board-micro mt-2 max-w-[220px] leading-relaxed text-starlight/35">
+            <p className="board-micro mt-2 max-w-[220px] leading-relaxed text-starlight/65">
               {number.detail}
             </p>
           </div>
@@ -107,9 +107,9 @@ function LegChip({
 }: (typeof MULTI_LEG)[number] & { isBreak?: boolean }) {
   return (
     <div className={`border-l-2 px-4 py-3 ${isBreak ? "border-signal bg-signal/10" : "border-ink/20"}`}>
-      <p className="board-micro text-ink/40">{label}</p>
+      <p className="board-micro text-ink/65">{label}</p>
       <p className="board-sm mt-1 font-bold">{route}</p>
-      <p className="board-micro mt-1 text-ink/50">{detail}</p>
+      <p className="board-micro mt-1 text-ink/65">{detail}</p>
     </div>
   );
 }
@@ -156,7 +156,7 @@ const CRAFT: {
             )
           )}
         </div>
-        <p className="board-micro mt-m text-starlight/40">PINK NOISE / FILTERED / NO FILE LOOP</p>
+        <p className="board-micro mt-m text-starlight/65">PINK NOISE / FILTERED / NO FILE LOOP</p>
       </div>
     ),
   },
@@ -168,7 +168,7 @@ const CRAFT: {
     vignette: (
       <div className="border border-ink/15 bg-lifted">
         <div className="flex items-center justify-between border-b border-ink/10 px-4 py-2 max-sm:justify-end">
-          <span className="board-micro text-ink/30 max-sm:hidden">FINDER&ensp; FILE&ensp; EDIT&ensp; VIEW</span>
+          <span className="board-micro text-ink/60 max-sm:hidden">FINDER&ensp; FILE&ensp; EDIT&ensp; VIEW</span>
           <span className="board-sm tnum bg-ink px-3 py-1 font-bold text-paper max-sm:text-[12px]">
             ✈ WS214 · 42m → HND
           </span>
@@ -176,7 +176,7 @@ const CRAFT: {
         <div className="grid grid-cols-3 px-4 py-m">
           {[["FLIGHT", "WS 214"], ["REMAINING", "42 MIN"], ["DEST", "HND"]].map(([label, value]) => (
             <div key={label}>
-              <p className="board-micro text-ink/35">{label}</p>
+              <p className="board-micro text-ink/65">{label}</p>
               <p className="board-sm mt-1">{value}</p>
             </div>
           ))}
@@ -193,7 +193,7 @@ const CRAFT: {
       <div className="bg-night-grad border border-turbulence/35 p-m text-starlight">
         <div className="flex items-center justify-between">
           <p className="board-caption text-turbulence">● TURBULENCE AHEAD</p>
-          <p className="board-micro text-starlight/35">CABIN MODE</p>
+          <p className="board-micro text-starlight/65">CABIN MODE</p>
         </div>
         <p className="mt-m text-[18px] font-medium">Slack has been open for a while.</p>
         <p className="body-sm mt-2 max-w-[500px] text-starlight/55">
@@ -216,7 +216,7 @@ const CRAFT: {
         ].map((shortcut, index) => (
           <div key={shortcut.key} className={`p-m max-sm:p-s ${index > 0 ? "border-l border-ink/10" : ""}`}>
             <p className="text-[clamp(26px,3vw,42px)] font-semibold tracking-tight">{shortcut.key}</p>
-            <p className="board-micro mt-s text-ink/45">{shortcut.label}</p>
+            <p className="board-micro mt-s text-ink/65">{shortcut.label}</p>
           </div>
         ))}
       </div>
@@ -235,7 +235,7 @@ export function Craft() {
       <div className="mx-auto max-w-[1320px]">
         <div className="grid grid-cols-12 gap-6 pb-xl max-lg:grid-cols-1">
           <div className="col-span-4">
-            <p data-reveal className="board-caption text-ink/40">CABIN MANUAL / FIVE SYSTEMS</p>
+            <p data-reveal className="board-caption text-ink/60">CABIN MANUAL / FIVE SYSTEMS</p>
           </div>
           <div className="col-span-8">
             <h2
@@ -263,12 +263,12 @@ export function Craft() {
                 <span className="mt-3 block h-px w-8 bg-signal" />
               </div>
               <div>
-                <p className="board-caption text-ink/40">{feature.eyebrow}</p>
+                <p className="board-caption text-ink/65">{feature.eyebrow}</p>
                 <h3 className="mt-m max-w-[430px] text-[clamp(28px,3.6vw,48px)] font-semibold leading-[1.02] tracking-[-0.04em]">
                   {feature.title}
                 </h3>
                 <p className="section-deck mt-m max-w-[470px] text-ink/68">{feature.body}</p>
-                <p className="board-micro mt-l text-ink/30">{feature.note}</p>
+                <p className="board-micro mt-l text-ink/60">{feature.note}</p>
               </div>
               <div className="self-center max-lg:col-start-2 max-lg:mt-m max-lg:min-w-0 max-sm:col-start-1">{feature.vignette}</div>
             </article>
@@ -291,15 +291,15 @@ export function CTABand() {
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-3 bg-ink" />
       <div className="mx-auto max-w-[1320px]">
         <div className="flex items-end justify-between border-b border-ink/25 pb-5 max-sm:block">
-          <p className="board-caption">FINAL CALL / GATE YOURS</p>
-          <p className="board-micro text-ink/55 max-sm:mt-2">BOARDING STATUS · OPEN</p>
+          <p className="board-caption">LAUNCH MANIFEST / MAC APP STORE</p>
+          <p className="board-micro text-ink/70 max-sm:mt-2">AVAILABILITY · COMING SOON</p>
         </div>
         <h2
           data-reveal
           className="mt-l text-[clamp(66px,11vw,168px)] font-black leading-[0.78] tracking-[-0.075em] max-sm:text-[56px]"
         >
-          YOUR GATE
-          <span className="block">IS OPEN.</span>
+          SAVE YOUR
+          <span className="block">WINDOW SEAT.</span>
         </h2>
 
         <div
@@ -309,33 +309,37 @@ export function CTABand() {
           <div className="paper-texture relative p-l max-md:p-m">
             <span className="absolute inset-y-0 left-0 w-1.5 bg-ink" />
             <div className="flex items-baseline justify-between gap-m max-sm:block">
-              <p className="board-caption text-ink/50">WINDOWSEAT AIR · NOW BOARDING</p>
-              <p className="board-caption text-ink/50 max-sm:mt-2">GATE · YOURS</p>
+              <p className="board-caption text-ink/65">WINDOWSEAT AIR · LAUNCH UPDATES</p>
+              <p className="board-caption text-ink/65 max-sm:mt-2">DESTINATION · MAC APP STORE</p>
             </div>
             <h3 className="mt-m text-[clamp(34px,5vw,58px)] font-bold tracking-[-0.045em]">
-              Be first to board.
+              Know when boarding opens.
             </h3>
             <p className="section-deck mt-s max-w-[540px] text-ink/68">
-              Leave your email and we&apos;ll let you know when WindowSeat is ready for departure.
+              WindowSeat is preparing for launch. Join the list and we&apos;ll email you when it
+              becomes available on the Mac App Store.
+            </p>
+            <p className="board-caption mt-m font-bold text-ink">
+              ONE-TIME PURCHASE · NO SUBSCRIPTION
             </p>
             <EmailSignup />
           </div>
           <div className="paper-texture border-l border-dashed border-ink/30 p-m max-md:border-l-0 max-md:border-t">
             <p className="board-sm font-bold">TKS → ???</p>
-            <p className="board-micro mt-1 text-ink/40">DESTINATION · YOUR CHOICE</p>
+            <p className="board-micro mt-1 text-ink/65">DESTINATION · YOUR CHOICE</p>
             <div className="mt-m grid grid-cols-2 gap-m">
               <div>
-                <p className="board-micro text-ink/40">SEAT</p>
+                <p className="board-micro text-ink/65">SEAT</p>
                 <p className="board-sm mt-1 font-bold">WINDOW</p>
               </div>
               <div>
-                <p className="board-micro text-ink/40">STATUS</p>
-                <p className="board-sm mt-1 font-bold text-boarding">READY</p>
+                <p className="board-micro text-ink/65">STATUS</p>
+                <p className="board-sm mt-1 font-bold">PRE-LAUNCH</p>
               </div>
             </div>
             <div className="mt-l">
               <Barcode data="WINDOWSEAT MACOS FOCUS FLIGHT" className="h-12 w-full" />
-              <p className="board-micro mt-2 text-ink/40">FOCUS SESSIONS, FLOWN.</p>
+              <p className="board-micro mt-2 text-ink/65">FOCUS SESSIONS, FLOWN.</p>
             </div>
           </div>
         </div>

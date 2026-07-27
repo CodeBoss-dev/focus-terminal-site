@@ -69,10 +69,10 @@ export default function PassportStamp() {
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden bg-paper px-gutter py-16 text-ink max-lg:py-24 max-md:px-m">
         <div data-passport-head className="flex items-end justify-between gap-l max-md:block">
           <div>
-            <p className="board-caption text-ink/50">
+            <p className="board-caption text-ink/60">
               ISSUED AT {FLIGHT.origin.airport} · {FLIGHT.origin.iata}
             </p>
-            <p className="board-micro mt-s text-ink/40">05 · KEEP THE JOURNEY</p>
+            <p className="board-micro mt-s text-ink/60">05 · KEEP THE JOURNEY</p>
             <h2 className="signage signage-lg mt-xs">PASSPORT</h2>
           </div>
           <p className="section-deck max-w-[460px] pb-1 text-ink/68 max-md:mt-s">
@@ -85,11 +85,11 @@ export default function PassportStamp() {
           <div className="flex gap-xl max-md:gap-l max-sm:grid max-sm:grid-cols-2 max-sm:gap-x-l max-sm:gap-y-m">
             {HEADLINE_STATS.map((s) => (
               <div key={s.label} data-passport-stat>
-                <p className="board-caption text-ink/40">{s.label}</p>
+                <p className="board-caption text-ink/60">{s.label}</p>
                 <p className="signage signage-sm tnum mt-1">
                   {s.value}
                   {s.suffix && (
-                    <span className="board-caption ml-1 align-super text-ink/40">{s.suffix}</span>
+                    <span className="board-caption ml-1 align-super text-ink/60">{s.suffix}</span>
                   )}
                 </p>
               </div>
@@ -114,7 +114,7 @@ export default function PassportStamp() {
         </div>
 
         <div data-stamp-teaser className="hairline-t mt-l pt-m">
-          <p className="board-caption text-ink/40">STAMPS · COUNTRIES VISITED — ROOM FOR MORE</p>
+          <p className="board-caption text-ink/60">STAMPS · COUNTRIES VISITED — ROOM FOR MORE</p>
           <div className="mt-s flex items-center gap-l max-md:grid max-md:grid-cols-3 max-md:items-start max-md:gap-m max-sm:gap-s">
             {[
               { code: "KR", name: "SOUTH KOREA" },
@@ -123,12 +123,12 @@ export default function PassportStamp() {
             ].map((s) => (
               <div key={s.code} className="flex flex-col items-center gap-2">
                 <span className="flex h-16 w-16 items-center justify-center rounded-full border border-dashed border-ink/25">
-                  <span className="board-sm text-ink/30">{s.code}</span>
+                  <span className="board-sm text-ink/60">{s.code}</span>
                 </span>
-                <span className="board-micro text-ink/30 max-md:text-center">{s.name}</span>
+                <span className="board-micro text-ink/60 max-md:text-center">{s.name}</span>
               </div>
             ))}
-            <p className="board-caption ml-auto text-ink/40 max-md:hidden">
+            <p className="board-caption ml-auto text-ink/60 max-md:hidden">
               ECONOMY → PREMIUM → BUSINESS → FIRST · 40,000 MI TO FIRST
             </p>
           </div>
