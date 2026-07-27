@@ -74,7 +74,7 @@ export default function BoardingPass() {
         <div data-pass-eyebrow className="mb-l text-center max-sm:mb-m">
           <p className="board-caption text-ink/60">02 · BOARD WITH AN INTENTION</p>
           <p className="section-deck mx-auto mt-s max-w-[620px] text-ink/68">
-            Choose one task. WindowSeat turns the next {FLIGHT.minutes} minutes into a flight you
+            Choose one task. Focus Terminal turns the next {FLIGHT.minutes} minutes into a flight you
             can finish.
           </p>
         </div>
@@ -87,7 +87,7 @@ export default function BoardingPass() {
           >
             <span className="absolute inset-y-0 left-0 w-1.5 rounded-l-2xl bg-signal" />
             <div className="flex items-baseline justify-between" data-pass-field>
-              <p className="board-caption text-ink/60">WINDOWSEAT AIR</p>
+              <p className="board-caption text-ink/60">FOCUS TERMINAL AIR</p>
               <p className="board-caption tnum text-ink/60">{times.date}</p>
             </div>
             <p className="signage signage-md mt-m" data-pass-field>

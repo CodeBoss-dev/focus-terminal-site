@@ -3,13 +3,13 @@
  * airports from the app's airports.json, distances great-circle, durations
  * from the app's formula (km / 850 km/h + 15 min taxi).
  *
- * WS 214 · TKS → HND · 498 km / 309 mi · 50 MIN — a 50-minute session,
+ * FT 214 · TKS → HND · 498 km / 309 mi · 50 MIN — a 50-minute session,
  * Tokushima to Tokyo Haneda. Eight minutes after takeoff the menu bar
- * reads "WS214 · 42m → HND", exactly like PLAN.md's example.
+ * reads "FT214 · 42m → HND", exactly like PLAN.md's example.
  */
 
 export const FLIGHT = {
-  number: "WS 214",
+  number: "FT 214",
   origin: {
     iata: "TKS",
     city: "TOKUSHIMA",
@@ -49,7 +49,7 @@ export type BoardRow = {
 /* All real routes out of TKS; durations computed with the app formula. */
 export const BOARD_ROWS: BoardRow[] = [
   {
-    flight: "WS 181",
+    flight: "FT 181",
     gate: "A7",
     dest: "TAIPEI",
     sub: "TAOYUAN INTL · TAIWAN",
@@ -60,7 +60,7 @@ export const BOARD_ROWS: BoardRow[] = [
     remark: "ON TIME",
   },
   {
-    flight: "WS 214",
+    flight: "FT 214",
     gate: "B4",
     dest: "TOKYO",
     sub: "HANEDA INTL · JAPAN",
@@ -72,7 +72,7 @@ export const BOARD_ROWS: BoardRow[] = [
     picked: true,
   },
   {
-    flight: "WS 353",
+    flight: "FT 353",
     gate: "C2",
     dest: "BUSAN",
     sub: "GIMHAE INTL · SOUTH KOREA",
@@ -84,7 +84,7 @@ export const BOARD_ROWS: BoardRow[] = [
     newStamp: true,
   },
   {
-    flight: "WS ···",
+    flight: "FT ···",
     gate: "—",
     dest: "ANYWHERE",
     sub: "RANDOM DESTINATION",

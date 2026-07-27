@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { withBasePath } from "@/lib/site";
 
 export default function BrandMark({
   size = 28,
@@ -11,7 +12,7 @@ export default function BrandMark({
 }) {
   return (
     <Image
-      src="/windowseat-icon.png"
+      src={withBasePath("/focus-terminal-icon.png")}
       alt=""
       width={size}
       height={size}

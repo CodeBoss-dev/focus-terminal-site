@@ -16,7 +16,7 @@ function RowLocalTime({ tz }: { tz: string | null }) {
 
 /**
  * The departures board, recreated from the app's own screen, then the
- * booking beat: scrolling picks the WS 214 row and the fare unfolds
+ * booking beat: scrolling picks the FT 214 row and the fare unfolds
  * beneath it — a 50-minute session mapped to a real route.
  */
 export default function Departures() {
@@ -85,7 +85,7 @@ export default function Departures() {
               </h2>
             </div>
             <p className="section-deck max-w-[430px] pb-1 text-ink/68 max-md:mt-s">
-              Start with the time you want to protect. WindowSeat pairs it with a real route and
+              Start with the time you want to protect. Focus Terminal pairs it with a real route and
               destination, turning an abstract timer into somewhere to arrive.
             </p>
           </div>

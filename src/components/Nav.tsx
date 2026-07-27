@@ -104,7 +104,7 @@ export default function Nav() {
           className="board-sm flex items-center gap-3 font-bold max-lg:min-h-11 max-sm:gap-2 max-sm:text-[12px]"
         >
           <BrandMark size={28} />
-          <span>WINDOWSEAT</span>
+          <span>FOCUS TERMINAL</span>
           <span className={`board-micro border-l pl-3 font-normal max-md:hidden ${light ? "border-ink/15 text-ink/60" : "border-starlight/15 text-starlight/60"}`}>
             TKS → ???
           </span>

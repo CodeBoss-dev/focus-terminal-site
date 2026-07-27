@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the original, procedural score for the WindowSeat launch film.
+"""Render the original, procedural score for the Focus Terminal launch film.
 
 The score uses a focused electronic pulse, instrument-panel textures, and the
 app's own tonal language. Every accent is tied to a visible product event, while

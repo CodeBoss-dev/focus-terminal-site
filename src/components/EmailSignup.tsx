@@ -32,12 +32,12 @@ export default function EmailSignup() {
       <form
         onSubmit={submit}
         className="flex max-w-[580px] max-sm:flex-col"
-        aria-label="WindowSeat Mac App Store launch updates"
+        aria-label="Focus Terminal Mac App Store launch updates"
       >
-        <input type="hidden" name="_subject" value="New WindowSeat launch subscriber" />
+        <input type="hidden" name="_subject" value="New Focus Terminal launch subscriber" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="source" value="WindowSeat website" />
+        <input type="hidden" name="source" value="Focus Terminal website" />
         <input
           type="text"
           name="_honey"

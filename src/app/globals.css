@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /*
- * WindowSeat design tokens, ported 1:1 from the app's WS enum
- * (WindowSeat/UI/DesignSystem.swift). No other color, size, or spacing
+ * Focus Terminal design tokens, ported 1:1 from the app's FT enum
+ * (FocusTerminal/UI/DesignSystem.swift). No other color, size, or spacing
  * value may be hardcoded in components.
  */
 @theme {

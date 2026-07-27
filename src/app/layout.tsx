@@ -1,29 +1,28 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { withBasePath } from "@/lib/site";
 
-const title = "WindowSeat — Focus sessions, flown.";
+const title = "Focus Terminal — Focus sessions, flown.";
 const description =
   "A native macOS 14+ focus app that turns each session into a flight. Launching on the Mac App Store as a one-time purchase, with no subscription or account.";
 
-// Canonical and social-image URLs must describe the real deployment. This
-// export currently supports a root-domain deployment only: its chunks, media,
-// and public assets use root-relative URLs.
+// Canonical and social-image URLs must describe the real deployment.
 const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 const siteUrl = rawSiteUrl ? new URL(rawSiteUrl) : undefined;
 
-if (siteUrl && (siteUrl.pathname !== "/" || siteUrl.search || siteUrl.hash)) {
+if (siteUrl && (siteUrl.search || siteUrl.hash)) {
   throw new Error(
-    "NEXT_PUBLIC_SITE_URL must be a root-domain URL until basePath and asset-prefix support are configured."
+    "NEXT_PUBLIC_SITE_URL must not contain a query string or hash."
   );
 }
 
 const socialImage = siteUrl
-  ? new URL("windowseat-social-preview.png", siteUrl).toString()
+  ? new URL("focus-terminal-social-preview.png", siteUrl).toString()
   : undefined;
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
-  applicationName: "WindowSeat",
+  applicationName: "Focus Terminal",
   title,
   description,
   keywords: [
@@ -37,13 +36,13 @@ export const metadata: Metadata = {
   creator: "Waaridh Borpujari",
   publisher: "Waaridh Borpujari",
   icons: {
-    icon: "/windowseat-icon.png",
-    apple: "/windowseat-icon.png",
+    icon: withBasePath("/focus-terminal-icon.png"),
+    apple: withBasePath("/focus-terminal-icon.png"),
   },
-  alternates: siteUrl ? { canonical: siteUrl } : undefined,
+  alternates: siteUrl ? { canonical: siteUrl.toString() } : undefined,
   openGraph: {
     type: "website",
-    siteName: "WindowSeat",
+    siteName: "Focus Terminal",
     locale: "en_US",
     title,
     description,
@@ -54,7 +53,7 @@ export const metadata: Metadata = {
             url: socialImage,
             width: 1200,
             height: 630,
-            alt: "WindowSeat turns deep work into a flight on Mac",
+            alt: "Focus Terminal turns deep work into a flight on Mac",
           },
         ]
       : undefined,

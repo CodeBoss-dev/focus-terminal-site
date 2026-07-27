@@ -66,7 +66,7 @@ export default function Landing() {
             <SplitFlap text="SAFE LANDING" className="board-display text-starlight" />
           </div>
           <p className="section-deck mx-auto mt-m max-w-[610px] text-starlight/72">
-            When the timer ends, WindowSeat records your task, focus time, route, and distance—so
+            When the timer ends, Focus Terminal records your task, focus time, route, and distance—so
             every completed flight becomes visible progress.
           </p>
         </div>

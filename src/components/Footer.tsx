@@ -44,7 +44,7 @@ export default function Footer() {
           <div className="col-span-6">
             <div className="flex items-center gap-3">
               <BrandMark size={44} />
-              <p className="board-micro text-starlight/65">WINDOWSEAT / MACOS</p>
+              <p className="board-micro text-starlight/65">FOCUS TERMINAL / MACOS</p>
             </div>
             <p className="mt-m text-[clamp(48px,7vw,92px)] font-black leading-[0.82] tracking-[-0.065em]">
               FOCUS
@@ -78,9 +78,9 @@ export default function Footer() {
         </div>
 
         <div className="flex justify-between border-t border-starlight/15 pt-m max-md:block">
-          <p className="board-micro text-starlight/55">© 2026 WINDOWSEAT · NATIVE MACOS 14+</p>
+          <p className="board-micro text-starlight/55">© 2026 FOCUS TERMINAL · NATIVE MACOS 14+</p>
           <p className="board-micro text-starlight/55 max-md:mt-s">
-            DESIGN TOKENS &amp; TYPE / WINDOWSEAT UI SYSTEM
+            DESIGN TOKENS &amp; TYPE / FOCUS TERMINAL UI SYSTEM
           </p>
         </div>
       </div>

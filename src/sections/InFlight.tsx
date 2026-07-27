@@ -136,7 +136,7 @@ export default function InFlight() {
             <p className="board-caption text-instrument">03 · FOCUS IN FLIGHT</p>
             <p className="section-deck mt-2 text-starlight/78">
               The countdown becomes a live route. Keep working while the plane advances; the
-              menu bar can keep the flight visible when WindowSeat is in the background.
+              menu bar can keep the flight visible when Focus Terminal is in the background.
             </p>
           </div>
 
@@ -264,7 +264,7 @@ export default function InFlight() {
             className="absolute bottom-10 right-10 flex gap-2 max-md:hidden"
             aria-hidden="true"
           >
-            {["WINDOW SEAT", "AUDIO", "PURE"].map((b) => (
+            {["CABIN VIEW", "AUDIO", "PURE"].map((b) => (
               <span key={b} className="glass rounded-full px-4 py-2">
                 <span className="board-caption text-starlight/85">{b}</span>
               </span>
@@ -308,7 +308,7 @@ export default function InFlight() {
                   Your focus becomes a route you can watch move.
                 </h2>
                 <p className="section-deck mt-m max-w-[620px] text-starlight/72">
-                  Keep working in any app while the aircraft and countdown advance. WindowSeat
+                  Keep working in any app while the aircraft and countdown advance. Focus Terminal
                   keeps the flight visible without asking you to keep the main window open.
                 </p>
               </div>

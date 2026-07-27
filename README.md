@@ -18,6 +18,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Production metadata
+
+Set `NEXT_PUBLIC_SITE_URL` to the final public URL before running the production build, including its trailing repository path when applicable, for example `https://codeboss-dev.github.io/focus-terminal-site/`. The build uses that verified URL for the canonical link and absolute Open Graph/Twitter image URL; it deliberately omits them when the deployment URL is unknown.
+
+For GitHub Pages, set `NEXT_PUBLIC_BASE_PATH=/focus-terminal-site`. `next.config.ts` and the public-asset helper apply that prefix consistently while local development continues to use the root path.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

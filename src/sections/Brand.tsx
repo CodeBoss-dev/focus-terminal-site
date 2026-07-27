@@ -30,7 +30,7 @@ export function Manifesto() {
           </div>
 
           <div className="col-span-7 flex min-h-[390px] flex-col justify-between py-l pl-l max-lg:min-h-0 max-lg:pl-0">
-            <p data-reveal className="board-caption text-ink/60">THE WINDOWSEAT OBJECT</p>
+            <p data-reveal className="board-caption text-ink/60">THE FLIGHT OBJECT</p>
             <p data-reveal className="route-display py-l max-sm:text-[44px]">
               TKS <span className="text-ink/25">→</span> HND
             </p>
@@ -163,18 +163,18 @@ const CRAFT: {
   {
     eyebrow: "MENU BAR",
     title: "The flight follows you to work.",
-    body: "Leave WindowSeat in the background. Flight number, remaining minutes, and destination stay visible at the top of your Mac.",
+    body: "Leave Focus Terminal in the background. Flight number, remaining minutes, and destination stay visible at the top of your Mac.",
     note: "STATUS / ALWAYS NEAR",
     vignette: (
       <div className="border border-ink/15 bg-lifted">
         <div className="flex items-center justify-between border-b border-ink/10 px-4 py-2 max-sm:justify-end">
           <span className="board-micro text-ink/60 max-sm:hidden">FINDER&ensp; FILE&ensp; EDIT&ensp; VIEW</span>
           <span className="board-sm tnum bg-ink px-3 py-1 font-bold text-paper max-sm:text-[12px]">
-            ✈ WS214 · 42m → HND
+            ✈ FT214 · 42m → HND
           </span>
         </div>
         <div className="grid grid-cols-3 px-4 py-m">
-          {[["FLIGHT", "WS 214"], ["REMAINING", "42 MIN"], ["DEST", "HND"]].map(([label, value]) => (
+          {[["FLIGHT", "FT 214"], ["REMAINING", "42 MIN"], ["DEST", "HND"]].map(([label, value]) => (
             <div key={label}>
               <p className="board-micro text-ink/65">{label}</p>
               <p className="board-sm mt-1">{value}</p>
@@ -298,8 +298,8 @@ export function CTABand() {
           data-reveal
           className="mt-l text-[clamp(66px,11vw,168px)] font-black leading-[0.78] tracking-[-0.075em] max-sm:text-[56px]"
         >
-          SAVE YOUR
-          <span className="block">WINDOW SEAT.</span>
+          BOARD YOUR
+          <span className="block">NEXT FOCUS.</span>
         </h2>
 
         <div
@@ -309,14 +309,14 @@ export function CTABand() {
           <div className="paper-texture relative p-l max-md:p-m">
             <span className="absolute inset-y-0 left-0 w-1.5 bg-ink" />
             <div className="flex items-baseline justify-between gap-m max-sm:block">
-              <p className="board-caption text-ink/65">WINDOWSEAT AIR · LAUNCH UPDATES</p>
+              <p className="board-caption text-ink/65">FOCUS TERMINAL AIR · LAUNCH UPDATES</p>
               <p className="board-caption text-ink/65 max-sm:mt-2">DESTINATION · MAC APP STORE</p>
             </div>
             <h3 className="mt-m text-[clamp(34px,5vw,58px)] font-bold tracking-[-0.045em]">
               Know when boarding opens.
             </h3>
             <p className="section-deck mt-s max-w-[540px] text-ink/68">
-              WindowSeat is preparing for launch. Join the list and we&apos;ll email you when it
+              Focus Terminal is preparing for launch. Join the list and we&apos;ll email you when it
               becomes available on the Mac App Store.
             </p>
             <p className="board-caption mt-m font-bold text-ink">
@@ -338,7 +338,7 @@ export function CTABand() {
               </div>
             </div>
             <div className="mt-l">
-              <Barcode data="WINDOWSEAT MACOS FOCUS FLIGHT" className="h-12 w-full" />
+              <Barcode data="FOCUS TERMINAL MACOS FOCUS FLIGHT" className="h-12 w-full" />
               <p className="board-micro mt-2 text-ink/65">FOCUS SESSIONS, FLOWN.</p>
             </div>
           </div>

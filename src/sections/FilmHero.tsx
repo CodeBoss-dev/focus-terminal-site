@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import BrandMark from "@/components/BrandMark";
+import { withBasePath } from "@/lib/site";
 
 const STARS = (() => {
   let seed = 181;
@@ -69,7 +70,7 @@ export default function FilmHero() {
       <div className="relative z-20 mx-auto flex w-full max-w-[1440px] items-center justify-between border-b border-starlight/15 pb-4">
         <p className="board-caption flex items-center gap-2 text-starlight/65">
           <BrandMark size={26} priority />
-          <span>WINDOWSEAT</span>
+          <span>FOCUS TERMINAL</span>
           <span className="max-sm:hidden"> / FLIGHT CONTROL</span>
         </p>
         <button
@@ -102,7 +103,7 @@ export default function FilmHero() {
         </div>
 
         <aside className="col-span-3 self-end border-l border-starlight/15 pb-4 pl-6 max-xl:col-span-4 max-lg:col-span-1 max-lg:border-l-0 max-lg:border-t max-lg:pb-0 max-lg:pl-0 max-lg:pt-6">
-          <p className="board-micro text-starlight/65">FLIGHT PLAN / WS 214</p>
+          <p className="board-micro text-starlight/65">FLIGHT PLAN / FT 214</p>
           <p className="instrument tnum mt-3 text-[clamp(48px,5vw,76px)] leading-none text-starlight">
             50:00
           </p>
@@ -125,7 +126,7 @@ export default function FilmHero() {
             </div>
           </div>
           <p className="section-deck mt-5 text-starlight/72">
-            WindowSeat turns each focus session into a flight you want to finish.
+            Focus Terminal turns each focus session into a flight you want to finish.
           </p>
           <div className="mt-4 border-l-2 border-instrument pl-4">
             <p className="text-[clamp(16px,1.2vw,18px)] font-semibold leading-snug text-starlight">
@@ -196,17 +197,17 @@ export default function FilmHero() {
         >
           <div className="mx-auto flex h-full w-[min(1100px,94vw)] flex-col justify-center">
             <h2 id="film-dialog-title" className="sr-only">
-              WindowSeat film
+              Focus Terminal film
             </h2>
             <video
-              src="film/windowseat-ad.mp4"
+              src={withBasePath("/film/focus-terminal-ad.mp4")}
               controls
               autoPlay
               playsInline
               className="w-full rounded-xl shadow-2xl"
             />
             <div className="mt-s flex items-center justify-between">
-              <p className="board-caption text-starlight/60">WINDOWSEAT — THE FILM · 50 SEC</p>
+              <p className="board-caption text-starlight/60">FOCUS TERMINAL — THE FILM · 50 SEC</p>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
