@@ -3,19 +3,21 @@
 import Script from "next/script";
 
 /**
- * Lemon Squeezy overlay checkout.
+ * Gumroad overlay checkout.
  *
- * `lemonsqueezy.js` upgrades any link whose href points at a LS checkout and
- * carries the `lemonsqueezy-button` class into a modal that renders on top of
- * this page, so the buyer never leaves the site. Without the script the link
- * still works — it just navigates to the hosted checkout instead.
+ * `gumroad.js` upgrades any link that points at a Gumroad product and carries
+ * `data-gumroad-overlay-checkout` into a modal rendered on top of this page, so
+ * the buyer never leaves the site. Without the script the link still works — it
+ * just navigates to the hosted product page instead.
  *
- * Set NEXT_PUBLIC_LS_CHECKOUT_URL to the product's checkout URL.
+ * Set NEXT_PUBLIC_GUMROAD_PRODUCT_URL to the product URL. Pass the bare product
+ * URL (no `?wanted=true`): that parameter forces Gumroad's own checkout page and
+ * defeats the overlay.
  */
-const CHECKOUT_URL = process.env.NEXT_PUBLIC_LS_CHECKOUT_URL ?? "";
+const PRODUCT_URL = process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL ?? "";
 
 export default function BuyButton() {
-  if (!CHECKOUT_URL) {
+  if (!PRODUCT_URL) {
     return (
       <p className="board-caption mt-l font-bold text-ink/50">
         CHECKOUT UNAVAILABLE · CONFIGURATION PENDING
@@ -23,15 +25,16 @@ export default function BuyButton() {
     );
   }
 
-  // `embed=1` tells LS to render the overlay rather than a full page load.
-  const href = `${CHECKOUT_URL}${CHECKOUT_URL.includes("?") ? "&" : "?"}embed=1`;
+  // Strip `wanted=true` so the overlay is used even if it is supplied.
+  const href = PRODUCT_URL.split("?")[0];
 
   return (
     <>
-      <Script src="https://app.lemonsqueezy.com/js/lemon.js" strategy="afterInteractive" />
+      <Script src="https://gumroad.com/js/gumroad.js" strategy="afterInteractive" />
       <a
         href={href}
-        className="lemonsqueezy-button board-caption mt-l inline-flex min-h-12 items-center gap-3 bg-ink px-6 py-4 font-bold text-paper transition-[gap] hover:gap-5"
+        data-gumroad-overlay-checkout="true"
+        className="board-caption mt-l inline-flex min-h-12 items-center gap-3 bg-ink px-6 py-4 font-bold text-paper transition-[gap] hover:gap-5"
       >
         BUY FOCUS TERMINAL · $1.99 <span aria-hidden="true">→</span>
       </a>

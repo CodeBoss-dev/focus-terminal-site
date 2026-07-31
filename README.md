@@ -24,14 +24,16 @@ Set `NEXT_PUBLIC_SITE_URL` to the final public URL before running the production
 
 For GitHub Pages, set `NEXT_PUBLIC_BASE_PATH=/focus-terminal-site`. `next.config.ts` and the public-asset helper apply that prefix consistently while local development continues to use the root path.
 
-Set `NEXT_PUBLIC_LS_CHECKOUT_URL` to the Lemon Squeezy checkout URL for the paid
+Set `NEXT_PUBLIC_GUMROAD_PRODUCT_URL` to the Gumroad product URL for the paid
 product. Without it the buy button renders a disabled "checkout unavailable"
-state, so it must be present in every production build.
+state, so it must be present in every production build. Use the bare product URL
+— appending `?wanted=true` forces Gumroad's hosted checkout page and defeats the
+on-domain overlay.
 
 The full GitHub Pages build is therefore:
 
 ```bash
-NEXT_PUBLIC_LS_CHECKOUT_URL=https://focusterminal.lemonsqueezy.com/checkout/buy/a40c304f-8e91-4525-bdb4-2dfd4eec61fa \
+NEXT_PUBLIC_GUMROAD_PRODUCT_URL=https://waaridev.gumroad.com/l/focusterminal \
 NEXT_PUBLIC_BASE_PATH=/focus-terminal-site \
 NEXT_PUBLIC_SITE_URL=https://codeboss-dev.github.io/focus-terminal-site/ \
 npm run build
