@@ -4,7 +4,7 @@ import { withBasePath } from "@/lib/site";
 
 const title = "Focus Terminal — Focus sessions, flown.";
 const description =
-  "A native macOS 14+ focus app that turns each session into a flight. Launching on the Mac App Store as a one-time purchase, with no subscription or account.";
+  "A native macOS 14+ focus app that turns each session into a flight. A one-time $1.99 purchase, with no subscription or account.";
 
 // Canonical and social-image URLs must describe the real deployment.
 const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;

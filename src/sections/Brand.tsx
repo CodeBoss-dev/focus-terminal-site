@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import Barcode from "@/components/Barcode";
-import EmailSignup from "@/components/EmailSignup";
+import BuyButton from "@/components/BuyButton";
 import { MULTI_LEG } from "@/lib/flight";
 
 export function Manifesto() {
@@ -309,20 +309,36 @@ export function CTABand() {
           <div className="paper-texture relative p-l max-md:p-m">
             <span className="absolute inset-y-0 left-0 w-1.5 bg-ink" />
             <div className="flex items-baseline justify-between gap-m max-sm:block">
-              <p className="board-caption text-ink/65">FOCUS TERMINAL AIR · LAUNCH UPDATES</p>
-              <p className="board-caption text-ink/65 max-sm:mt-2">DESTINATION · MAC APP STORE</p>
+              <p className="board-caption text-ink/65">FOCUS TERMINAL AIR · NOW BOARDING</p>
+              <p className="board-caption text-ink/65 max-sm:mt-2">STATUS · AVAILABLE NOW</p>
             </div>
             <h3 className="mt-m text-[clamp(34px,5vw,58px)] font-bold tracking-[-0.045em]">
-              Know when boarding opens.
+              Boarding is open.
             </h3>
             <p className="section-deck mt-s max-w-[540px] text-ink/68">
-              Focus Terminal is preparing for launch. Join the list and we&apos;ll email you when it
-              becomes available on the Mac App Store.
+              Buy once, download instantly, and fly your first focus session in under a minute. No
+              account, no subscription, no trial to remember to cancel.
             </p>
-            <p className="board-caption mt-m font-bold text-ink">
+            <div className="mt-m">
+              <div className="flex items-baseline gap-3">
+                <p className="text-[clamp(38px,5vw,52px)] font-black leading-none tracking-[-0.05em] text-ink">
+                  $1.99
+                </p>
+                <p className="board-caption font-bold text-stampfresh">PROMOTIONAL OFFER</p>
+              </div>
+              <div className="mt-2 flex items-baseline gap-3">
+                <p className="text-[clamp(24px,3vw,32px)] font-bold leading-none tracking-[-0.03em] text-ink/55">
+                  $2.99
+                </p>
+                <p className="board-caption font-bold text-ink/65">
+                  ONCE THE PROMOTIONAL PERIOD ENDS
+                </p>
+              </div>
+            </div>
+            <p className="board-caption mt-m text-ink/65">
               ONE-TIME PURCHASE · NO SUBSCRIPTION
             </p>
-            <EmailSignup />
+            <BuyButton />
           </div>
           <div className="paper-texture border-l border-dashed border-ink/30 p-m max-md:border-l-0 max-md:border-t">
             <p className="board-sm font-bold">TKS → ???</p>

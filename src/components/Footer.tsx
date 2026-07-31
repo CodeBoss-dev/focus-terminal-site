@@ -20,8 +20,9 @@ const COLUMNS = [
   {
     title: "PAPERWORK",
     links: [
+      { label: "TERMS OF SALE", href: "terms.html" },
+      { label: "REFUND POLICY", href: "refunds.html" },
       { label: "PRIVACY POLICY", href: "privacy.html" },
-      { label: "DATA & PRIVACY", href: "privacy.html#app-data" },
     ],
   },
 ];
@@ -52,7 +53,7 @@ export default function Footer() {
             </p>
             <p className="body-sm mt-l max-w-[440px] text-starlight/70">
               A native Mac focus app that turns protected time into routes, landings, and passport
-              stamps. Launching on the Mac App Store as a one-time purchase, with no subscription.
+              stamps. A one-time purchase, with no subscription.
             </p>
           </div>
 

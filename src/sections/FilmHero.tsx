@@ -133,7 +133,7 @@ export default function FilmHero() {
               No Subscription
             </p>
             <p className="body-sm mt-2 text-starlight/75">
-              Launching on the Mac App Store · No account · Your focus data stays on your Mac
+              $1.99 promotional offer · No account · Your focus data stays on your Mac
             </p>
           </div>
           <a
