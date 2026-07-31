@@ -1,6 +1,6 @@
 "use client";
 
-import Script from "next/script";
+import { useEffect } from "react";
 
 /**
  * Gumroad overlay checkout.
@@ -10,13 +10,29 @@ import Script from "next/script";
  * the buyer never leaves the site. Without the script the link still works — it
  * just navigates to the hosted product page instead.
  *
+ * The script is injected from an effect rather than via `next/script` because
+ * this is a static export: `next/script` defers the tag into a client chunk, and
+ * on the exported HTML the loader never ran, so clicks fell through to Gumroad's
+ * hosted checkout.
+ *
  * Set NEXT_PUBLIC_GUMROAD_PRODUCT_URL to the product URL. Pass the bare product
  * URL (no `?wanted=true`): that parameter forces Gumroad's own checkout page and
  * defeats the overlay.
  */
 const PRODUCT_URL = process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL ?? "";
+const GUMROAD_SCRIPT = "https://gumroad.com/js/gumroad.js";
 
 export default function BuyButton() {
+  useEffect(() => {
+    if (!PRODUCT_URL) return;
+    if (document.querySelector(`script[src="${GUMROAD_SCRIPT}"]`)) return;
+
+    const script = document.createElement("script");
+    script.src = GUMROAD_SCRIPT;
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
   if (!PRODUCT_URL) {
     return (
       <p className="board-caption mt-l font-bold text-ink/50">
@@ -30,7 +46,6 @@ export default function BuyButton() {
 
   return (
     <>
-      <Script src="https://gumroad.com/js/gumroad.js" strategy="afterInteractive" />
       <a
         href={href}
         data-gumroad-overlay-checkout="true"
