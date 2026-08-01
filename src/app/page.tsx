@@ -1,7 +1,7 @@
 import SmoothScroll from "@/components/SmoothScroll";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import FilmHero from "@/sections/FilmHero";
+import Hero from "@/sections/Hero";
 import PlainTerms from "@/sections/PlainTerms";
 import Briefing from "@/sections/Briefing";
 import Departures from "@/sections/Departures";
@@ -27,7 +27,7 @@ export default function Home() {
     <SmoothScroll>
       <Nav />
       <main>
-        <FilmHero />
+        <Hero />
         <PlainTerms />
         <Briefing />
         <Departures />

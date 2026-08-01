@@ -17,7 +17,7 @@ declare global {
  * Lenis smooth scroll wired into GSAP's ticker so ScrollTrigger and Lenis
  * share one clock. Skipped entirely under prefers-reduced-motion — native
  * scrolling is the reduced-motion variant. The instance is exposed on
- * window.__lenis so the film lightbox can stop/start it.
+ * window.__lenis so the nav can jump the page without fighting the smoother.
  */
 export default function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {

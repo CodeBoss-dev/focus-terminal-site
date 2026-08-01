@@ -1,8 +1,4 @@
-"use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
 import BrandMark from "@/components/BrandMark";
-import { withBasePath } from "@/lib/site";
 
 const STARS = (() => {
   let seed = 181;
@@ -27,56 +23,15 @@ const PROOF = [
   "macOS 14+ · Apple silicon & Intel",
 ];
 
-export default function FilmHero() {
-  const [open, setOpen] = useState(false);
-  const [soundOn, setSoundOn] = useState(false);
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const filmTriggerRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const dialog = dialogRef.current;
-    const filmTrigger = filmTriggerRef.current;
-    const previousOverflow = document.body.style.overflow;
-
-    if (dialog && !dialog.open) dialog.showModal();
-    window.__lenis?.stop();
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      if (dialog?.open) dialog.close();
-      document.body.style.overflow = previousOverflow;
-      window.__lenis?.start();
-      requestAnimationFrame(() => filmTrigger?.focus());
-    };
-  }, [open]);
-
-  /* The film opens silent. Reviewers consistently found the score unpleasant,
-     so sound is opt-in and starts well below full volume. Muting through the
-     DOM property rather than the React prop keeps the static export honest —
-     the attribute is not serialised into the exported HTML. */
-  const attachVideo = useCallback((node: HTMLVideoElement | null) => {
-    videoRef.current = node;
-    if (node) {
-      node.muted = true;
-      node.volume = 0.55;
-    }
-  }, []);
-
-  const toggleSound = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    const next = !soundOn;
-    video.muted = !next;
-    video.volume = 0.55;
-    setSoundOn(next);
-  };
-
+/**
+ * The hero. Deliberately a server component — with the film lightbox gone there
+ * is no state, no effect and no event handler left here, so none of it needs to
+ * reach the browser as JavaScript.
+ */
+export default function Hero() {
   return (
     <section
-      id="film"
+      id="hero"
       data-mood="dark"
       className="bg-night-grad relative flex min-h-[100svh] flex-col overflow-hidden px-gutter pb-10 pt-8 max-md:px-m max-md:pb-8 max-sm:pt-5"
     >
@@ -104,22 +59,7 @@ export default function FilmHero() {
           <span>FOCUS TERMINAL</span>
           <span className="max-sm:hidden"> / FOCUS APP FOR MAC</span>
         </p>
-        <button
-          ref={filmTriggerRef}
-          type="button"
-          onClick={() => setOpen(true)}
-          className="group flex items-center gap-3 border-l border-starlight/15 pl-5 text-left max-lg:min-h-11"
-        >
-          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-starlight/25 text-[10px] text-starlight transition-colors group-hover:border-instrument group-hover:text-instrument">
-            ▶
-          </span>
-          <span>
-            <span className="board-micro block text-starlight/65 max-sm:hidden">
-              50 SEC · PLAYS SILENT
-            </span>
-            <span className="board-caption text-starlight">WATCH THE FILM</span>
-          </span>
-        </button>
+        <p className="board-micro text-starlight/55 max-sm:hidden">FT 214 · TKS → HND</p>
       </div>
 
       <div className="relative z-10 mx-auto grid w-full max-w-[1440px] flex-1 grid-cols-12 items-center gap-x-10 gap-y-12 py-12 max-lg:grid-cols-1 max-lg:py-16 max-md:pb-20 max-md:pt-12">
@@ -157,7 +97,7 @@ export default function FilmHero() {
               GET FOCUS TERMINAL · $1.99 <span aria-hidden="true">→</span>
             </a>
             <a
-              href="#briefing"
+              href="#what-it-is"
               className="board-caption inline-flex min-h-12 items-center gap-3 border border-starlight/30 px-6 py-4 text-starlight transition-colors hover:border-starlight/60"
             >
               SEE HOW IT WORKS <span aria-hidden="true">↓</span>
@@ -255,59 +195,6 @@ export default function FilmHero() {
         </div>
         <p className="board-caption shrink-0 text-starlight/65">SCROLL / PUSH BACK ↓</p>
       </div>
-
-      {open && (
-        <dialog
-          ref={dialogRef}
-          aria-labelledby="film-dialog-title"
-          onCancel={(event) => {
-            event.preventDefault();
-            setOpen(false);
-          }}
-          onClose={() => setOpen(false)}
-          onClick={(event) => event.target === event.currentTarget && setOpen(false)}
-          className="fixed inset-0 m-0 h-[100dvh] max-h-none w-screen max-w-none border-0 bg-transparent p-m text-starlight backdrop:bg-nighttop/90 backdrop:backdrop-blur-md"
-        >
-          <div className="mx-auto flex h-full w-[min(1100px,94vw)] flex-col justify-center">
-            <h2 id="film-dialog-title" className="sr-only">
-              Focus Terminal film
-            </h2>
-            <video
-              ref={attachVideo}
-              src={withBasePath("/film/focus-terminal-ad.mp4")}
-              controls
-              autoPlay
-              playsInline
-              className="w-full rounded-xl shadow-2xl"
-            />
-            <div className="mt-s flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-stretch">
-              <p className="board-caption text-starlight/60">
-                FOCUS TERMINAL — THE FILM · 50 SEC
-              </p>
-              <div className="flex items-center gap-3 max-sm:justify-between">
-                <button
-                  type="button"
-                  onClick={toggleSound}
-                  aria-pressed={soundOn}
-                  className="glass px-4 py-2"
-                >
-                  <span className="board-caption text-starlight">
-                    {soundOn ? "🔊 SOUND ON" : "🔇 SOUND OFF · TURN ON"}
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="glass px-4 py-2"
-                  autoFocus
-                >
-                  <span className="board-caption text-starlight">CLOSE ✕</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </dialog>
-      )}
     </section>
   );
 }

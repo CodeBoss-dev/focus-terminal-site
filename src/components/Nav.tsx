@@ -22,10 +22,10 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const film = document.getElementById("film");
+    const hero = document.getElementById("hero");
     const onScroll = () => {
-      if (!film) return;
-      setVisible(window.scrollY > film.offsetTop + film.offsetHeight - window.innerHeight);
+      if (!hero) return;
+      setVisible(window.scrollY > hero.offsetTop + hero.offsetHeight - window.innerHeight);
       const distance = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(distance > 0 ? Math.min(1, window.scrollY / distance) : 0);
     };
@@ -100,8 +100,8 @@ export default function Nav() {
     >
       <div className="mx-auto flex h-16 max-w-[1320px] items-center justify-between px-gutter max-md:h-14 max-md:px-m max-sm:px-s">
         <a
-          href="#film"
-          onClick={(event) => jumpTo(event, "#film")}
+          href="#hero"
+          onClick={(event) => jumpTo(event, "#hero")}
           className="board-sm flex items-center gap-3 font-bold max-lg:min-h-11 max-sm:gap-2 max-sm:text-[12px]"
         >
           <BrandMark size={28} />

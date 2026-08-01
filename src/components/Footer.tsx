@@ -5,7 +5,6 @@ const COLUMNS = [
     title: "FLIGHT PLAN",
     links: [
       { label: "WHAT IT IS", href: "#what-it-is" },
-      { label: "THE FILM", href: "#film" },
       { label: "DEPARTURES", href: "#departures" },
       { label: "IN-FLIGHT", href: "#in-flight" },
       { label: "PASSPORT", href: "#passport" },
