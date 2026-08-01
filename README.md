@@ -30,17 +30,37 @@ state, so it must be present in every production build. Use the bare product URL
 — appending `?wanted=true` forces Gumroad's hosted checkout page and defeats the
 on-domain overlay.
 
-The full GitHub Pages build is therefore:
+## Deploying
 
 ```bash
-NEXT_PUBLIC_GUMROAD_PRODUCT_URL=https://waaridev.gumroad.com/l/focusterminal \
-NEXT_PUBLIC_BASE_PATH=/focus-terminal-site \
-NEXT_PUBLIC_SITE_URL=https://codeboss-dev.github.io/focus-terminal-site/ \
-npm run build
+npm run deploy
 ```
 
-The contents of `out/` are then published to the `gh-pages` branch, which is what
-GitHub Pages serves.
+That is the whole procedure. It builds with the three values above already set,
+then publishes `out/` to the `gh-pages` branch that GitHub Pages serves. The
+publish happens in a temporary git worktree, so your working tree and current
+branch are untouched. Pages takes 30–60 seconds to serve the new build.
+
+To deploy somewhere else, override any of the values inline:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://example.com/ npm run deploy
+```
+
+### Why `.nojekyll` matters
+
+GitHub Pages runs published files through Jekyll, and Jekyll strips every
+directory whose name begins with an underscore. Next.js emits all of its
+JavaScript and CSS into `_next/`, so without an empty `.nojekyll` file at the
+root of `gh-pages`, the site publishes as HTML with no styling and no
+JavaScript — and the deploy still looks like it succeeded, because `index.html`
+itself is served fine.
+
+`next build` does not create this file, and it wipes `out/` on every run. The
+`postbuild` script in `package.json` recreates it, and `scripts/deploy.sh`
+refuses to publish if it is missing. Both exist because the deploy mirrors
+`out/` with `rsync --delete`, which would otherwise remove the `.nojekyll`
+already on `gh-pages` and take the live site down.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
