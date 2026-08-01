@@ -304,7 +304,7 @@ export default function InFlight() {
                 </div>
               </div>
               <div className="self-center">
-                <h2 className="text-[clamp(32px,5vw,54px)] font-semibold leading-[1.02] tracking-[-0.04em]">
+                <h2 className="headline-md">
                   Your focus becomes a route you can watch move.
                 </h2>
                 <p className="section-deck mt-m max-w-[620px] text-starlight/72">

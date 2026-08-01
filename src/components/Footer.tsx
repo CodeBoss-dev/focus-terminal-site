@@ -4,6 +4,7 @@ const COLUMNS = [
   {
     title: "FLIGHT PLAN",
     links: [
+      { label: "WHAT IT IS", href: "#what-it-is" },
       { label: "THE FILM", href: "#film" },
       { label: "DEPARTURES", href: "#departures" },
       { label: "IN-FLIGHT", href: "#in-flight" },
@@ -47,9 +48,9 @@ export default function Footer() {
               <BrandMark size={44} />
               <p className="board-micro text-starlight/65">FOCUS TERMINAL / MACOS</p>
             </div>
-            <p className="mt-m text-[clamp(48px,7vw,92px)] font-black leading-[0.82] tracking-[-0.065em]">
-              FOCUS
-              <span className="block text-instrument">SESSIONS, FLOWN.</span>
+            <p className="headline-lg mt-m">
+              Focus sessions,
+              <span className="block text-instrument">flown.</span>
             </p>
             <p className="body-sm mt-l max-w-[440px] text-starlight/70">
               A native Mac focus app that turns protected time into routes, landings, and passport

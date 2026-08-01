@@ -47,10 +47,7 @@ export function Manifesto() {
           <p data-reveal className="board-caption col-span-3 text-ink/60">
             THE DIFFERENCE
           </p>
-          <h2
-            data-reveal
-            className="col-span-9 max-w-[980px] text-[clamp(43px,6vw,86px)] font-bold leading-[0.98] tracking-[-0.055em]"
-          >
+          <h2 data-reveal className="headline-lg col-span-9 max-w-[980px]">
             Same fifty minutes.
             <span className="block text-ink/50">A much better reason to finish.</span>
           </h2>
@@ -238,10 +235,7 @@ export function Craft() {
             <p data-reveal className="board-caption text-ink/60">CABIN MANUAL / FIVE SYSTEMS</p>
           </div>
           <div className="col-span-8">
-            <h2
-              data-reveal
-              className="max-w-[850px] text-[clamp(43px,5.6vw,78px)] font-bold leading-[0.98] tracking-[-0.055em]"
-            >
+            <h2 data-reveal className="headline-lg max-w-[850px]">
               The details that keep a flight on course.
             </h2>
             <p data-reveal className="section-deck mt-l max-w-[620px] text-ink/68">
@@ -264,9 +258,7 @@ export function Craft() {
               </div>
               <div>
                 <p className="board-caption text-ink/65">{feature.eyebrow}</p>
-                <h3 className="mt-m max-w-[430px] text-[clamp(28px,3.6vw,48px)] font-semibold leading-[1.02] tracking-[-0.04em]">
-                  {feature.title}
-                </h3>
+                <h3 className="headline-md mt-m max-w-[430px]">{feature.title}</h3>
                 <p className="section-deck mt-m max-w-[470px] text-ink/68">{feature.body}</p>
                 <p className="board-micro mt-l text-ink/60">{feature.note}</p>
               </div>
@@ -290,21 +282,24 @@ export function CTABand() {
     >
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-3 bg-ink" />
       <div className="mx-auto max-w-[1320px]">
+        {/* The band used to say MAC APP STORE / COMING SOON / PRE-LAUNCH while
+            the pass beside it said AVAILABLE NOW. It is a direct Gumroad
+            download that ships today, and every line here now says so. */}
         <div className="flex items-end justify-between border-b border-ink/25 pb-5 max-sm:block">
-          <p className="board-caption">LAUNCH MANIFEST / MAC APP STORE</p>
-          <p className="board-micro text-ink/70 max-sm:mt-2">AVAILABILITY · COMING SOON</p>
+          <p className="board-caption">GET FOCUS TERMINAL / DIRECT DOWNLOAD</p>
+          <p className="board-micro text-ink/70 max-sm:mt-2">AVAILABILITY · DOWNLOAD NOW</p>
         </div>
-        <h2
-          data-reveal
-          className="mt-l text-[clamp(66px,11vw,168px)] font-black leading-[0.78] tracking-[-0.075em] max-sm:text-[56px]"
-        >
-          BOARD YOUR
-          <span className="block">NEXT FOCUS.</span>
+        <h2 data-reveal className="display mt-l max-w-[900px]">
+          Board your next focus.
         </h2>
+        <p data-reveal className="section-deck mt-m max-w-[520px] text-ink/70">
+          A one-time purchase for a Mac app that makes protected time easier to start and much
+          harder to abandon.
+        </p>
 
         <div
           data-reveal
-          className="relative z-10 ml-auto mt-xl grid w-full max-w-[940px] rotate-[-1.5deg] grid-cols-[1fr_240px] shadow-[0_30px_80px_rgba(20,22,26,0.24)] transition-transform duration-300 hover:rotate-0 max-md:rotate-0 max-md:grid-cols-1"
+          className="relative z-10 ml-auto mt-l grid w-full max-w-[940px] rotate-[-1.5deg] grid-cols-[1fr_240px] shadow-[0_30px_80px_rgba(20,22,26,0.24)] transition-transform duration-300 hover:rotate-0 max-md:rotate-0 max-md:grid-cols-1"
         >
           <div className="paper-texture relative p-l max-md:p-m">
             <span className="absolute inset-y-0 left-0 w-1.5 bg-ink" />
@@ -312,16 +307,14 @@ export function CTABand() {
               <p className="board-caption text-ink/65">FOCUS TERMINAL AIR · NOW BOARDING</p>
               <p className="board-caption text-ink/65 max-sm:mt-2">STATUS · AVAILABLE NOW</p>
             </div>
-            <h3 className="mt-m text-[clamp(34px,5vw,58px)] font-bold tracking-[-0.045em]">
-              Boarding is open.
-            </h3>
+            <h3 className="headline-md mt-m">Boarding is open.</h3>
             <p className="section-deck mt-s max-w-[540px] text-ink/68">
               Buy once, download instantly, and fly your first focus session in under a minute. No
               account, no subscription, no trial to remember to cancel.
             </p>
             <div className="mt-m">
               <div className="flex items-baseline gap-3">
-                <p className="text-[clamp(38px,5vw,52px)] font-black leading-none tracking-[-0.05em] text-ink">
+                <p className="text-[clamp(38px,5vw,52px)] font-extrabold leading-none tracking-[-0.05em] text-ink">
                   $1.99
                 </p>
                 <p className="board-caption font-bold text-stampfresh">PROMOTIONAL OFFER</p>
@@ -350,7 +343,7 @@ export function CTABand() {
               </div>
               <div>
                 <p className="board-micro text-ink/65">STATUS</p>
-                <p className="board-sm mt-1 font-bold">PRE-LAUNCH</p>
+                <p className="board-sm mt-1 font-bold">CONFIRMED</p>
               </div>
             </div>
             <div className="mt-l">

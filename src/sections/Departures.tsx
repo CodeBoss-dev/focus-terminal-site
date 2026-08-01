@@ -128,9 +128,10 @@ export default function Departures() {
                   <span className="board-micro text-ink/60">GATE {row.gate}</span>
                 </span>
                 <span className="min-w-0">
-                  <span className="board block font-bold">
-                    <SplitFlap text={row.dest} />
-                  </span>
+                  {/* Static. Eight rows split-flapping at once was the single
+                      biggest source of the "everything is flashing" reaction —
+                      only the board heading animates now. */}
+                  <span className="board block font-bold">{row.dest}</span>
                   <span className="board-micro block truncate text-ink/60">
                     {row.sub}
                     {row.newStamp && (

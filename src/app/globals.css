@@ -74,46 +74,71 @@ section[id] {
 }
 
 @layer components {
-  /* ------ Type roles (4 fixed roles, no ad-hoc sizes) ------ */
+  /* ------ Type roles ------
+     Headlines are sentence case and top out around 76px. The airport board
+     furniture (.board-*, .signage) stays mono/caps because that is the app's
+     identity, but caps is confined to short labels — a wall of 140px caps
+     reads as shouting, not signage. */
+
+  /* Airport-board signage: caps, but never larger than a real gate sign. */
   .signage {
-    font-weight: 800;
-    letter-spacing: -1px;
-    line-height: 1.02;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.04;
   }
   .signage-lg {
-    font-size: clamp(40px, 7vw, 64px);
+    font-size: clamp(34px, 4.4vw, 52px);
   }
   .signage-md {
-    font-size: clamp(32px, 5vw, 48px);
+    font-size: clamp(28px, 3.6vw, 42px);
   }
   .signage-sm {
-    font-size: clamp(27px, 4vw, 34px);
+    font-size: clamp(24px, 2.8vw, 31px);
   }
 
-  .hero-display {
-    font-size: clamp(58px, 8.8vw, 142px);
-    font-weight: 900;
-    letter-spacing: -0.055em;
-    line-height: 0.83;
-    word-spacing: 0.06em;
+  /* Sentence-case headline scale — one named role per level so sections
+     stop inventing their own clamps. */
+  .display {
+    font-size: clamp(38px, 5.2vw, 76px);
+    font-weight: 700;
+    letter-spacing: -0.032em;
+    line-height: 1.04;
+  }
+  .headline-lg {
+    font-size: clamp(31px, 4vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+  .headline-md {
+    font-size: clamp(25px, 2.9vw, 38px);
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    line-height: 1.14;
+  }
+  .headline-sm {
+    font-size: clamp(20px, 2.1vw, 27px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.22;
   }
 
   .outline-display {
     color: transparent;
     font-family: var(--font-mono);
-    font-size: clamp(58px, 8vw, 118px);
+    font-size: clamp(46px, 5.6vw, 82px);
     font-weight: 700;
-    letter-spacing: -0.07em;
-    line-height: 0.9;
-    -webkit-text-stroke: 1.5px rgba(20, 22, 26, 0.32);
+    letter-spacing: -0.06em;
+    line-height: 0.96;
+    -webkit-text-stroke: 1.5px rgba(20, 22, 26, 0.3);
   }
 
   .route-display {
     font-family: var(--font-mono);
-    font-size: clamp(55px, 8vw, 118px);
-    font-weight: 800;
-    letter-spacing: -0.075em;
-    line-height: 0.9;
+    font-size: clamp(44px, 5.6vw, 82px);
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    line-height: 0.96;
   }
 
   .board {
@@ -256,11 +281,13 @@ section[id] {
     background: linear-gradient(
       105deg,
       transparent 42%,
-      rgba(255, 196, 0, 0.1) 50%,
+      rgba(255, 196, 0, 0.07) 50%,
       transparent 58%
     );
     transform: translateX(-100%);
-    animation: ws-shimmer 3.4s ease-in-out infinite;
+    /* Slow and faint. A bright sweep every 3.4s reads as a blinking alert
+       rather than as a highlighted row. */
+    animation: ws-shimmer 6s ease-in-out infinite;
   }
   @keyframes ws-shimmer {
     0% {

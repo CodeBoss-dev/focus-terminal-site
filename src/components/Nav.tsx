@@ -4,6 +4,7 @@ import { type MouseEvent, useEffect, useState } from "react";
 import BrandMark from "@/components/BrandMark";
 
 const LINKS = [
+  { href: "#what-it-is", label: "WHAT IT IS" },
   { href: "#departures", label: "DEPARTURES" },
   { href: "#in-flight", label: "IN-FLIGHT" },
   { href: "#passport", label: "PASSPORT" },
@@ -126,8 +127,8 @@ export default function Nav() {
             href="#board"
             className="board-caption bg-signal px-5 py-2.5 font-bold text-ink transition-transform hover:-translate-y-0.5 max-lg:inline-flex max-lg:min-h-11 max-lg:items-center max-sm:px-3"
           >
-            <span className="max-sm:hidden">LAUNCH UPDATES</span>
-            <span className="sm:hidden">UPDATES</span>
+            <span className="max-sm:hidden">GET IT · $1.99</span>
+            <span className="sm:hidden">$1.99</span>
           </a>
           <button
             type="button"

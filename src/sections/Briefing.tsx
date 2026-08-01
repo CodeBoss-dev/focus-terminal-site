@@ -29,6 +29,9 @@ const STEPS = [
   },
 ];
 
+/* Gradient direction alternates down the dark run so consecutive sections always
+   meet on the same hex: the hero ends on nightbottom, PlainTerms runs back up to
+   nighttop, and this section picks up from there. */
 export default function Briefing() {
   const root = useReveal<HTMLElement>();
   return (
@@ -36,14 +39,14 @@ export default function Briefing() {
       id="briefing"
       ref={root}
       data-mood="dark"
-      className="bg-night-grad-flip relative overflow-hidden px-gutter py-[15vh] max-md:px-m max-md:py-24"
+      className="bg-night-grad relative overflow-hidden px-gutter py-[15vh] max-md:px-m max-md:py-24"
     >
       <div className="mx-auto grid max-w-[1320px] grid-cols-12 gap-x-8 max-lg:grid-cols-1">
         <header className="col-span-5 pr-xl max-lg:pr-0">
           <p data-reveal className="board-caption text-instrument">
-            PRE-FLIGHT BRIEFING / THE IDEA
+            HOW IT WORKS / FOUR STEPS
           </p>
-          <h2 data-reveal className="mt-l text-[clamp(46px,6.5vw,94px)] font-bold leading-[0.94] tracking-[-0.055em] text-starlight">
+          <h2 data-reveal className="headline-lg mt-l text-starlight">
             A timer counts down.
             <span className="mt-3 block text-instrument">A flight moves forward.</span>
           </h2>
@@ -70,9 +73,7 @@ export default function Briefing() {
               </span>
               <div>
                 <p className="board-micro text-route">{step.callout}</p>
-                <h3 className="mt-2 text-[clamp(24px,2.8vw,38px)] font-semibold tracking-[-0.035em] text-starlight">
-                  {step.title}
-                </h3>
+                <h3 className="headline-md mt-2 text-starlight">{step.title}</h3>
                 <p className="body-text mt-2 max-w-[520px] text-starlight/68">{step.copy}</p>
               </div>
               <p className="board-micro self-center text-right text-starlight/65 max-sm:col-start-2 max-sm:text-left">

@@ -5,17 +5,23 @@ import { useEffect, useRef, useState } from "react";
 const CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·—→";
 
 /**
- * The app's signature element: split-flap character flips, 40ms stagger,
- * ease-out (each cell cycles then settles). Renders the target text by
- * default (SSR, no-JS, reduced motion) and only scrambles while animating.
- * Plays once when scrolled into view.
+ * The app's signature element: split-flap character flips. Renders the target
+ * text by default (SSR, no-JS, reduced motion) and only scrambles while
+ * animating. Plays once when scrolled into view.
+ *
+ * Deliberately restrained: cells that have not started flapping yet show their
+ * final character rather than a blank, so the word is legible for the whole
+ * animation. The earlier version blanked the line and cycled seven times per
+ * cell, which read as flashing rather than as a board refresh. Reserve this for
+ * one element per section — several running at once is what made the
+ * departures board unreadable.
  */
 export default function SplitFlap({
   text,
   className,
-  stagger = 40,
-  cycleMs = 45,
-  cycles = 7,
+  stagger = 26,
+  cycleMs = 70,
+  cycles = 3,
 }: {
   text: string;
   className?: string;
@@ -53,7 +59,7 @@ export default function SplitFlap({
             if (c === " ") return " ";
             const begin = i * stagger;
             const end = begin + cycles * cycleMs;
-            if (t < begin) return " ";
+            if (t < begin) return c;
             if (t < end) {
               settled = false;
               const step = Math.floor((t - begin) / cycleMs) + i * 3;
