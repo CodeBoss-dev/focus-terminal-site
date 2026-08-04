@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { withBasePath } from "@/lib/site";
+import { APP_STORE_PRICE, withBasePath } from "@/lib/site";
 
 const title = "Focus Terminal — Focus sessions, flown.";
 const description =
-  "A native macOS 14+ focus app that turns each session into a flight. A one-time $1.99 purchase, with no subscription or account.";
+  `A native macOS 14+ focus app that turns each session into a flight. On the Mac App Store for a one-time ${APP_STORE_PRICE}, with no subscription or account.`;
 
 // Canonical and social-image URLs must describe the real deployment.
 const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -31,6 +31,8 @@ export const metadata: Metadata = {
     "focus timer",
     "deep work",
     "Pomodoro alternative",
+    "flight focus timer",
+    "native Mac app no subscription",
   ],
   category: "productivity",
   creator: "Waaridh Borpujari",

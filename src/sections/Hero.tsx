@@ -1,4 +1,5 @@
 import BrandMark from "@/components/BrandMark";
+import { APP_STORE_PRICE } from "@/lib/site";
 
 const STARS = (() => {
   let seed = 181;
@@ -18,7 +19,7 @@ const STARS = (() => {
 /* Skimmers read these before they read the headline, so each one has to be a
    complete claim on its own rather than a fragment of the metaphor. */
 const PROOF = [
-  "One-time $1.99 — no subscription",
+  `One-time ${APP_STORE_PRICE} on the Mac App Store — no subscription`,
   "No account, nothing leaves your Mac",
   "macOS 14+ · Apple silicon & Intel",
 ];
@@ -94,7 +95,7 @@ export default function Hero() {
               href="#board"
               className="board-caption inline-flex min-h-12 items-center gap-3 bg-signal px-6 py-4 font-bold text-ink transition-[gap] hover:gap-5"
             >
-              GET FOCUS TERMINAL · $1.99 <span aria-hidden="true">→</span>
+              GET FOCUS TERMINAL · {APP_STORE_PRICE} <span aria-hidden="true">→</span>
             </a>
             <a
               href="#what-it-is"

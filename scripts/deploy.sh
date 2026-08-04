@@ -4,12 +4,16 @@
 #
 #   npm run deploy
 #
-# The production build needs three public values. They are not secrets — the
-# product URL and the Pages URL are both visible on the live site — so they are
-# defaulted here rather than kept in a file someone has to remember to create.
-# Override any of them inline if the deployment target changes:
+# The production build needs two public values. They are not secrets — the Pages
+# URL is visible on the live site — so they are defaulted here rather than kept
+# in a file someone has to remember to create. Override either inline if the
+# deployment target changes:
 #
 #   NEXT_PUBLIC_SITE_URL=https://example.com npm run deploy
+#
+# The App Store URL and price are not env vars: they are constants in
+# src/lib/site.ts, because a missing env var once shipped a live site whose buy
+# button rendered as "checkout unavailable".
 #
 # Publishing happens in a throwaway git worktree, so your working tree and
 # whatever branch you have checked out are never touched.
@@ -18,10 +22,9 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-: "${NEXT_PUBLIC_GUMROAD_PRODUCT_URL:=https://waaridev.gumroad.com/l/focusterminal}"
 : "${NEXT_PUBLIC_BASE_PATH:=/focus-terminal-site}"
 : "${NEXT_PUBLIC_SITE_URL:=https://codeboss-dev.github.io/focus-terminal-site/}"
-export NEXT_PUBLIC_GUMROAD_PRODUCT_URL NEXT_PUBLIC_BASE_PATH NEXT_PUBLIC_SITE_URL
+export NEXT_PUBLIC_BASE_PATH NEXT_PUBLIC_SITE_URL
 
 BRANCH="gh-pages"
 WORKTREE="$(mktemp -d)/gh-pages"

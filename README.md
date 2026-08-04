@@ -24,11 +24,16 @@ Set `NEXT_PUBLIC_SITE_URL` to the final public URL before running the production
 
 For GitHub Pages, set `NEXT_PUBLIC_BASE_PATH=/focus-terminal-site`. `next.config.ts` and the public-asset helper apply that prefix consistently while local development continues to use the root path.
 
-Set `NEXT_PUBLIC_GUMROAD_PRODUCT_URL` to the Gumroad product URL for the paid
-product. Without it the buy button renders a disabled "checkout unavailable"
-state, so it must be present in every production build. Use the bare product URL
-— appending `?wanted=true` forces Gumroad's hosted checkout page and defeats the
-on-domain overlay.
+## Where the price and store link live
+
+Focus Terminal sells through the Mac App Store only. `APP_STORE_URL`,
+`APP_STORE_ID`, and `APP_STORE_PRICE` are constants in `src/lib/site.ts`, and
+every CTA on the site reads them — the nav button, the hero, and the boarding-pass
+CTA band all render from `APP_STORE_PRICE` rather than a hardcoded string.
+
+Change the price in that one file when the App Store price changes. The site
+previously advertised a $1.99 Gumroad download while the store charged $2.99,
+because fifteen separate literals had to be kept in step and were not.
 
 ## Deploying
 

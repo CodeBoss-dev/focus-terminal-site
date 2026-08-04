@@ -2,6 +2,7 @@
 
 import { type MouseEvent, useEffect, useState } from "react";
 import BrandMark from "@/components/BrandMark";
+import { APP_STORE_PRICE } from "@/lib/site";
 
 const LINKS = [
   { href: "#what-it-is", label: "WHAT IT IS" },
@@ -127,8 +128,8 @@ export default function Nav() {
             href="#board"
             className="board-caption bg-signal px-5 py-2.5 font-bold text-ink transition-transform hover:-translate-y-0.5 max-lg:inline-flex max-lg:min-h-11 max-lg:items-center max-sm:px-3"
           >
-            <span className="max-sm:hidden">GET IT · $1.99</span>
-            <span className="sm:hidden">$1.99</span>
+            <span className="max-sm:hidden">GET IT · {APP_STORE_PRICE}</span>
+            <span className="sm:hidden">{APP_STORE_PRICE}</span>
           </a>
           <button
             type="button"

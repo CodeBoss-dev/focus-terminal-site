@@ -5,6 +5,7 @@ import { useReveal } from "@/hooks/useReveal";
 import Barcode from "@/components/Barcode";
 import BuyButton from "@/components/BuyButton";
 import { MULTI_LEG } from "@/lib/flight";
+import { APP_STORE_PRICE } from "@/lib/site";
 
 export function Manifesto() {
   const root = useReveal<HTMLElement>();
@@ -282,12 +283,13 @@ export function CTABand() {
     >
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-3 bg-ink" />
       <div className="mx-auto max-w-[1320px]">
-        {/* The band used to say MAC APP STORE / COMING SOON / PRE-LAUNCH while
-            the pass beside it said AVAILABLE NOW. It is a direct Gumroad
-            download that ships today, and every line here now says so. */}
+        {/* Focus Terminal shipped on the Mac App Store on 4 August 2026. The
+            band briefly advertised a direct Gumroad download at a different
+            price than the store charged; there is one channel now, and every
+            line here names it. */}
         <div className="flex items-end justify-between border-b border-ink/25 pb-5 max-sm:block">
-          <p className="board-caption">GET FOCUS TERMINAL / DIRECT DOWNLOAD</p>
-          <p className="board-micro text-ink/70 max-sm:mt-2">AVAILABILITY · DOWNLOAD NOW</p>
+          <p className="board-caption">GET FOCUS TERMINAL / MAC APP STORE</p>
+          <p className="board-micro text-ink/70 max-sm:mt-2">AVAILABILITY · ON SALE NOW</p>
         </div>
         <h2 data-reveal className="display mt-l max-w-[900px]">
           Board your next focus.
@@ -309,27 +311,22 @@ export function CTABand() {
             </div>
             <h3 className="headline-md mt-m">Boarding is open.</h3>
             <p className="section-deck mt-s max-w-[540px] text-ink/68">
-              Buy once, download instantly, and fly your first focus session in under a minute. No
+              Buy once on the Mac App Store and fly your first focus session in under a minute. No
               account, no subscription, no trial to remember to cancel.
             </p>
             <div className="mt-m">
               <div className="flex items-baseline gap-3">
                 <p className="text-[clamp(38px,5vw,52px)] font-extrabold leading-none tracking-[-0.05em] text-ink">
-                  $1.99
+                  {APP_STORE_PRICE}
                 </p>
-                <p className="board-caption font-bold text-stampfresh">PROMOTIONAL OFFER</p>
+                <p className="board-caption font-bold text-stampfresh">ONE TIME · PAY ONCE</p>
               </div>
-              <div className="mt-2 flex items-baseline gap-3">
-                <p className="text-[clamp(24px,3vw,32px)] font-bold leading-none tracking-[-0.03em] text-ink/55">
-                  $2.99
-                </p>
-                <p className="board-caption font-bold text-ink/65">
-                  ONCE THE PROMOTIONAL PERIOD ENDS
-                </p>
-              </div>
+              <p className="board-micro mt-2 text-ink/60">
+                US PRICE · YOUR STORE SHOWS YOUR LOCAL CURRENCY
+              </p>
             </div>
             <p className="board-caption mt-m text-ink/65">
-              ONE-TIME PURCHASE · NO SUBSCRIPTION
+              NO SUBSCRIPTION · NO ACCOUNT · NO IN-APP PURCHASES
             </p>
             <BuyButton />
           </div>
