@@ -1,47 +1,33 @@
-import SmoothScroll from "@/components/SmoothScroll";
+import Motion from "@/components/Motion";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Hero from "@/sections/Hero";
-import PlainTerms from "@/sections/PlainTerms";
-import Briefing from "@/sections/Briefing";
-import Departures from "@/sections/Departures";
-import BoardingPass from "@/sections/BoardingPass";
-import CabinDim from "@/sections/CabinDim";
+import How from "@/sections/How";
 import InFlight from "@/sections/InFlight";
-import Landing from "@/sections/Landing";
-import PassportStamp from "@/sections/PassportStamp";
-import { Manifesto, Numbers, Craft, CTABand } from "@/sections/Brand";
+import Price from "@/sections/Price";
 
 /*
- * One continuous scroll = one flight, the app's real first-run loop:
- * briefing → (light) departures/booking/pass → doors close (dark)
- * → in-flight → landing → stamp (light returns) → brand page → CTA.
+ * Four sections, in the order a skimmer needs them: what it is, how a session
+ * goes, what it feels like while you work, what it costs.
  *
- * PlainTerms sits between the hero and the story on purpose: it states the
- * product in ordinary words for visitors who skim, so the flight narrative is
- * a way of explaining something they already understand rather than the only
- * explanation on offer.
+ * The previous page told the whole flight as thirteen pinned scroll chapters.
+ * Reviewers liked how it looked and then skimmed straight past the product —
+ * there was no path through it that did not involve reading. The metaphor now
+ * lives in the route rule between sections and in the app furniture itself, so
+ * every word left on the page is literal.
  */
 export default function Home() {
   return (
-    <SmoothScroll>
+    <>
+      <Motion />
       <Nav />
       <main>
         <Hero />
-        <PlainTerms />
-        <Briefing />
-        <Departures />
-        <BoardingPass />
-        <CabinDim />
+        <How />
         <InFlight />
-        <Landing />
-        <PassportStamp />
-        <Manifesto />
-        <Numbers />
-        <Craft />
-        <CTABand />
+        <Price />
       </main>
       <Footer />
-    </SmoothScroll>
+    </>
   );
 }

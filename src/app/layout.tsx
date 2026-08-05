@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { APP_STORE_PRICE, withBasePath } from "@/lib/site";
 
-const title = "Focus Terminal — Focus sessions, flown.";
+const title = "Focus Terminal — A focus timer that goes somewhere.";
 const description =
-  `A native macOS 14+ focus app that turns each session into a flight. On the Mac App Store for a one-time ${APP_STORE_PRICE}, with no subscription or account.`;
+  `A native macOS 14+ focus timer that turns each session into a flight. On the Mac App Store for a one-time ${APP_STORE_PRICE}, with no subscription or account.`;
 
 // Canonical and social-image URLs must describe the real deployment.
 const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -79,6 +79,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Reveal and route-rule animations are scoped to .js so the page is
+            fully readable without JavaScript. Setting the class here, before
+            first paint, avoids a flash of the finished state. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('js')`,
+          }}
+        />
+      </head>
       <body className="antialiased">{children}</body>
     </html>
   );
