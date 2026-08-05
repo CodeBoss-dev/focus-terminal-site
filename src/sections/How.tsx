@@ -28,7 +28,7 @@ export default function How() {
       className="bg-nightbottom px-gutter py-[16vh] max-md:px-m max-md:py-24"
     >
       <div className="mx-auto max-w-[1200px]">
-        <RouteRule progress={0.28} from="TKS" to="HND" />
+        <RouteRule progress={0.12} from="TKS" to="HND" />
 
         {/* Interior sections run on the gate-strip grid: mono label in the
             narrow rail, everything else in the wide column. */}

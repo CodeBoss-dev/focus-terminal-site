@@ -11,33 +11,56 @@ npm run deploy  # build + publish out/ to gh-pages
 
 ## How the page is built
 
-Four sections and a footer, in the order a skimmer needs them:
-
 | Section | File | Job |
 | --- | --- | --- |
-| Hero | `src/sections/Hero.tsx` | What it is, the price, one session shown as a departures row |
-| How | `src/sections/How.tsx` | Three clock positions inside one 50-minute session |
-| In flight | `src/sections/InFlight.tsx` | The menu-bar item and the drift nudge, near-wordless |
+| Hero | `src/sections/Hero.tsx` | What it is, the price, and the flight deck as proof |
+| How | `src/sections/How.tsx` | Three clock positions inside one session |
+| Before | `src/sections/Before.tsx` | Departures board, boarding pass |
+| During | `src/sections/During.tsx` | Cabin view, menu bar, the drift nudge |
+| After | `src/sections/After.tsx` | Passport, stats |
+| FAQ | `src/sections/FAQ.tsx` | Six objections, one line each |
 | Price | `src/sections/Price.tsx` | The buying moment |
 
-This replaced a thirteen-section scroll narrative that pinned each chapter with
-GSAP and Lenis. Reviewers liked how it looked and then skimmed straight past the
-product: there was no path through the page that did not involve reading, and
-every early heading was aviation language, so visitors could not tell what the
-app actually did.
+Two rewrites got here, and both failures are worth keeping in mind.
 
-The rule that came out of that, and that new work should keep:
+The original was a thirteen-section scroll narrative that pinned each chapter
+with GSAP and Lenis, and carried the product entirely in prose. Reviewers liked
+how it looked and then skimmed past the product — every early heading was
+aviation language, so they could not tell what the app did.
 
-- **Copy is literal, pictures are aviation.** Every sentence on the page names
-  the product in ordinary words. The flight metaphor lives in the furniture —
-  `RouteRule`, the departures row, the menu-bar strip — where it costs a skimmer
-  nothing to absorb.
-- **No paragraphs.** `.lede` is the only mid-sized type role, it holds one
-  sentence, and there are five of them on the whole page. The wall of 15px body
-  copy is what made the previous site unreadable at a glance.
-- **One surface change.** The page is the night cabin until `Price`, which flips
-  to the Terminal palette. That is the arrival, and it marks the buying moment
-  without a word of transition copy.
+The rewrite after that cut to four text sections and went too far the other way:
+sparse copy on flat colour is *also* hard to skim, because the eye has no
+landmarks to jump between. What fixed it was screenshots.
+
+The rules that came out of that:
+
+- **Copy is literal, pictures are aviation.** Every sentence names the product
+  in ordinary words. The metaphor lives in the furniture — `RouteRule`, the
+  bands, the app's own interface — where it costs a skimmer nothing.
+- **Every claim gets a picture.** A feature is a screenshot, a title, and one
+  line. `Feature.tsx` will not render more than that.
+- **No paragraphs.** `.lede` is the only mid-sized type role and it holds one
+  sentence. The wall of 15px body copy is what made the first site unreadable.
+- **The surface follows the app, not the page.** You book in the Terminal
+  (light), you fly at Night, you land back in the Terminal. `Band.tsx` owns
+  this, and the three bands are the page's main landmarks.
+
+### Screenshots
+
+`public/shots/*.webp` are genuine captures of the shipping app, from the App
+Store submission set (`~/FocusTerminal/Submission/screenshots`, produced by
+`AppStoreScreenshotUITests.testCaptureFullJourney`). No mockups, no desktop
+furniture, no personal data.
+
+Rebuild them with `./scripts/build-shots.sh` when the app's UI changes. It
+downsamples the 2560x1600 sources to 1600px-wide WebP — 5.2MB of PNG becomes
+188KB — and crops two of them. **A cropped shot must have its aspect ratio
+passed to `<Shot ratio>`**, or the layout reserves the wrong height and the page
+jumps as images load. The script prints the dimensions it wrote.
+
+`next.config.ts` sets `images.unoptimized` because the site is a static export,
+so nothing resizes these at build time. What the script writes is what visitors
+download.
 
 ### The route rule
 

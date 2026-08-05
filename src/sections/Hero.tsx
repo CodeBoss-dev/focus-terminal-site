@@ -1,5 +1,5 @@
 import BuyButton from "@/components/BuyButton";
-import { FLIGHT } from "@/lib/flight";
+import Shot from "@/components/Shot";
 
 /* Deterministic so server and client render the same sky. */
 const STARS = (() => {
@@ -16,28 +16,20 @@ const STARS = (() => {
   }));
 })();
 
-/* The departures row is the hero's second half: five columns of the app's own
-   furniture, which say "this is a timed session with a destination" without a
-   sentence of explanation. */
-const ROW = [
-  { label: "FLIGHT", value: FLIGHT.number },
-  { label: "GATE", value: FLIGHT.gate },
-  { label: "DESTINATION", value: `${FLIGHT.dest.city} · ${FLIGHT.dest.iata}` },
-  { label: "DURATION", value: `${FLIGHT.minutes} MIN` },
-];
-
 /**
- * The hero states the product in plain words and shows the metaphor as an
- * artifact. Reviewers could not tell what Focus Terminal was because every
- * early line was aviation language; the split is now absolute — copy is
- * literal, pictures are aviation.
+ * The hero states the product in plain words and proves it with the app.
+ *
+ * The flight deck is the thesis image: a real map, a route being flown, and a
+ * countdown attached to it. It says "focus timer that goes somewhere" faster
+ * than the sentence does, which is the point — reviewers skim, and the first
+ * thing they should hit is a picture of the thing they would be buying.
  */
 export default function Hero() {
   return (
     <section
       id="hero"
       data-mood="dark"
-      className="bg-night-grad relative flex min-h-[100svh] flex-col justify-end overflow-hidden px-gutter pb-l pt-32 max-md:px-m max-md:pt-28"
+      className="bg-night-grad relative overflow-hidden px-gutter pb-[10vh] pt-36 max-md:px-m max-md:pb-16 max-md:pt-28"
     >
       <div className="absolute inset-0" aria-hidden="true">
         {STARS.map((star, index) => (
@@ -55,15 +47,16 @@ export default function Hero() {
         ))}
       </div>
 
-      <div className="relative mx-auto flex w-full max-w-[1200px] flex-1 flex-col justify-center py-xl">
+      <div className="relative mx-auto max-w-[1200px]">
         <p className="board-caption text-instrument">FOCUS APP FOR MAC</p>
 
         <h1 className="display mt-m max-w-[16ch] text-starlight">
           A focus timer that goes somewhere.
         </h1>
 
-        <p className="lede mt-m max-w-[46ch] text-starlight/70">
-          Choose a task and how long. The session becomes a flight to finish.
+        <p className="lede mt-m max-w-[52ch] text-starlight/70">
+          Choose a task and how long to protect. Focus Terminal turns the block into a real flight
+          that moves while you work, and logs it when you land.
         </p>
 
         <div className="mt-l flex flex-wrap items-center gap-x-l gap-y-m">
@@ -74,21 +67,18 @@ export default function Hero() {
             MAC APP STORE · macOS 14+ · NO SUBSCRIPTION
           </p>
         </div>
-      </div>
 
-      {/* One session, as the app lists it. */}
-      <div className="relative mx-auto w-full max-w-[1200px]">
-        <p className="board-micro text-starlight/45">SELECTED SESSION</p>
-        <div className="mt-s grid grid-cols-[repeat(4,auto)_1fr] items-baseline gap-x-xl gap-y-m border-y border-starlight/15 py-m max-md:grid-cols-2 max-md:gap-x-l">
-          {ROW.map((cell) => (
-            <div key={cell.label}>
-              <p className="board-micro text-starlight/45">{cell.label}</p>
-              <p className="board mt-2 text-starlight">{cell.value}</p>
-            </div>
-          ))}
-          <div className="justify-self-end max-md:justify-self-start">
-            <p className="board-micro text-starlight/45">STATUS</p>
-            <p className="board mt-2 text-boarding">● BOARDING</p>
+        <div className="mt-[9vh] max-md:mt-xl">
+          <Shot
+            src="/shots/04-flight-deck.webp"
+            alt="The Focus Terminal flight deck: a satellite map with the route drawn from Mumbai to Colombo, a captain announcement reading We've reached our cruising altitude, cruise at FL370, 1,215 km to go, and a countdown of 01:37:42."
+            priority
+          />
+          <div className="mt-s flex flex-wrap items-center justify-between gap-x-l gap-y-2">
+            <p className="board-micro text-starlight/45">
+              FLIGHT DECK · A 123-MINUTE SESSION IN PROGRESS
+            </p>
+            <p className="board-micro text-starlight/45">ACTUAL APP · NOT A MOCKUP</p>
           </div>
         </div>
       </div>

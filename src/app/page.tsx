@@ -3,18 +3,24 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Hero from "@/sections/Hero";
 import How from "@/sections/How";
-import InFlight from "@/sections/InFlight";
+import Before from "@/sections/Before";
+import During from "@/sections/During";
+import After from "@/sections/After";
+import FAQ from "@/sections/FAQ";
 import Price from "@/sections/Price";
 
 /*
- * Four sections, in the order a skimmer needs them: what it is, how a session
- * goes, what it feels like while you work, what it costs.
+ * The page follows one session: what it is, the three beats of a session, then
+ * a band each for before it, during it and after it, then the answers and the
+ * price.
  *
- * The previous page told the whole flight as thirteen pinned scroll chapters.
- * Reviewers liked how it looked and then skimmed straight past the product —
- * there was no path through it that did not involve reading. The metaphor now
- * lives in the route rule between sections and in the app furniture itself, so
- * every word left on the page is literal.
+ * Two rewrites got here. The first version told the whole flight as thirteen
+ * pinned scroll chapters and buried the product in prose, so reviewers skimmed
+ * past it. The second cut so hard there was nothing left to land on — sparse
+ * text on flat colour is paradoxically hard to skim, because the eye has no
+ * landmarks. What fixed it was screenshots: every claim now sits next to a
+ * picture of the app making good on it, so a visitor can read six headlines and
+ * six images and be done.
  */
 export default function Home() {
   return (
@@ -24,7 +30,10 @@ export default function Home() {
       <main>
         <Hero />
         <How />
-        <InFlight />
+        <Before />
+        <During />
+        <After />
+        <FAQ />
         <Price />
       </main>
       <Footer />
