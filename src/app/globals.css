@@ -152,46 +152,51 @@ body {
      scrolling the page is the journey. This is the only motion here, and it
      carries the aviation story so the copy never has to explain it.
 
-     Everything is scoped to .js — the class is set by an inline script before
-     first paint, so scripted visits animate with no flash and unscripted ones
-     get the finished state. */
-  .js .route-rule-fill {
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 1.1s cubic-bezier(0.22, 0.7, 0.2, 1);
-  }
-  .js .is-in .route-rule-fill {
-    transform: scaleX(1);
-  }
-  .js .route-rule-plane {
-    opacity: 0;
-    transform: translateX(-16px);
-    transition:
-      opacity 0.5s ease 0.7s,
-      transform 0.8s cubic-bezier(0.22, 0.7, 0.2, 1) 0.5s;
-  }
-  .js .is-in .route-rule-plane {
-    opacity: 1;
-    transform: none;
-  }
+     Everything that starts hidden is behind `scripting: enabled`, because only
+     JavaScript can reveal it again. This used to be a `.js` class set by an
+     inline script, which mismatched between the server HTML and the hydrated
+     DOM and threw a hydration error on every load. The media feature needs no
+     script, so there is nothing to disagree about — and a browser too old to
+     know it simply skips the block and paints the finished state. */
+  @media (scripting: enabled) {
+    .route-rule-fill {
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 1.1s cubic-bezier(0.22, 0.7, 0.2, 1);
+    }
+    .is-in .route-rule-fill {
+      transform: scaleX(1);
+    }
+    .route-rule-plane {
+      opacity: 0;
+      transform: translateX(-16px);
+      transition:
+        opacity 0.5s ease 0.7s,
+        transform 0.8s cubic-bezier(0.22, 0.7, 0.2, 1) 0.5s;
+    }
+    .is-in .route-rule-plane {
+      opacity: 1;
+      transform: none;
+    }
 
-  .js [data-reveal] {
-    opacity: 0;
-    transform: translateY(14px);
-    transition:
-      opacity 0.7s ease,
-      transform 0.7s cubic-bezier(0.22, 0.7, 0.2, 1);
-  }
-  .js [data-reveal].is-in {
-    opacity: 1;
-    transform: none;
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s cubic-bezier(0.22, 0.7, 0.2, 1);
+    }
+    [data-reveal].is-in {
+      opacity: 1;
+      transform: none;
+    }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js [data-reveal],
-  .js .route-rule-fill,
-  .js .route-rule-plane {
+  [data-reveal],
+  .route-rule-fill,
+  .route-rule-plane {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;

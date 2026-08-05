@@ -79,16 +79,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        {/* Reveal and route-rule animations are scoped to .js so the page is
-            fully readable without JavaScript. Setting the class here, before
-            first paint, avoids a flash of the finished state. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.add('js')`,
-          }}
-        />
-      </head>
       <body className="antialiased">{children}</body>
     </html>
   );
