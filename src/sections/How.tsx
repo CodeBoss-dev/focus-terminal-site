@@ -6,17 +6,17 @@ const BEATS = [
   {
     clock: "00:00",
     state: "DEPART",
-    line: "Pick a task and how long to protect.",
+    line: "Choose your task and how long you want.",
   },
   {
     clock: "25:00",
     state: "IN FLIGHT",
-    line: "Work anywhere. Progress sits in the menu bar.",
+    line: "Work anywhere. The plane keeps moving.",
   },
   {
     clock: "50:00",
     state: "ARRIVED",
-    line: "The session is logged, with a stamp to keep.",
+    line: "You land, and the session is yours to keep.",
   },
 ];
 
@@ -39,7 +39,7 @@ export default function How() {
 
           <div className="col-span-10 max-lg:col-span-1">
             <h2 className="headline max-w-[20ch] text-starlight" data-reveal>
-              One session, start to finish.
+              Here is what an hour looks like.
             </h2>
 
             <div className="mt-xl grid grid-cols-3 gap-x-l gap-y-xl border-t border-starlight/12 pt-l max-lg:grid-cols-1">

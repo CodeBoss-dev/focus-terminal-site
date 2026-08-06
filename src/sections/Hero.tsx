@@ -50,13 +50,13 @@ export default function Hero() {
       <div className="relative mx-auto max-w-[1200px]">
         <p className="board-caption text-instrument">FOCUS APP FOR MAC</p>
 
-        <h1 className="display mt-m max-w-[16ch] text-starlight">
-          A focus timer that goes somewhere.
+        <h1 className="display mt-m max-w-[18ch] text-starlight">
+          Every focus session takes you somewhere new.
         </h1>
 
-        <p className="lede mt-m max-w-[52ch] text-starlight/70">
-          Choose a task and how long to protect. Focus Terminal turns the block into a real flight
-          that moves while you work, and logs it when you land.
+        <p className="lede mt-m max-w-[54ch] text-starlight/70">
+          Focus Terminal is a Mac timer that turns your work sessions into real flights. Pick your
+          task, watch the plane move while you work, and land somewhere you have never been.
         </p>
 
         <div className="mt-l flex flex-wrap items-center gap-x-l gap-y-m">

@@ -104,6 +104,19 @@ body {
     line-height: 1.3;
   }
 
+  /* The split-flap name, and the only display-scale mono on the page.
+     It has to be monospaced: the animation swaps characters in place, and in a
+     proportional face every swap changes the line's width, so the whole name
+     jitters while it settles. Sized on its own scale because 14 mono characters
+     are much wider than the same string in sans. */
+  .flap-display {
+    font-family: var(--font-mono);
+    font-size: clamp(28px, 6vw, 76px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
   /* The only mid-sized role on the page. One sentence, never a paragraph. */
   .lede {
     font-size: clamp(17px, 1.5vw, 21px);

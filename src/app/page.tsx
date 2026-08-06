@@ -2,6 +2,7 @@ import Motion from "@/components/Motion";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Hero from "@/sections/Hero";
+import Introducing from "@/sections/Introducing";
 import How from "@/sections/How";
 import Before from "@/sections/Before";
 import During from "@/sections/During";
@@ -10,9 +11,9 @@ import FAQ from "@/sections/FAQ";
 import Price from "@/sections/Price";
 
 /*
- * The page follows one session: what it is, the three beats of a session, then
- * a band each for before it, during it and after it, then the answers and the
- * price.
+ * The page follows one session: the promise, the product named, the three beats
+ * of a session, then a band each for before it, during it and after it, then
+ * the answers and the price.
  *
  * Two rewrites got here. The first version told the whole flight as thirteen
  * pinned scroll chapters and buried the product in prose, so reviewers skimmed
@@ -29,6 +30,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <Introducing />
         <How />
         <Before />
         <During />

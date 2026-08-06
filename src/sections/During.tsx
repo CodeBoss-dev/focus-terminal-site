@@ -32,13 +32,13 @@ export default function During() {
       tone="night"
       progress={0.62}
       label="IN THE AIR / CABIN MODE"
-      title="An hour you can watch move."
+      title="Watch the hour actually move."
     >
       <Feature
         tone="night"
         eyebrow="CABIN VIEW"
-        title="Or nothing to look at, if you prefer."
-        caption="A window seat at 37,000 feet, one countdown, and no interface left to fiddle with."
+        title="Or just look out of the window."
+        caption="A window seat at 37,000 feet and one countdown. Nothing left to fiddle with."
         shot="/shots/05-cabin-view.webp"
         alt="The app's cabin view: a darkened aircraft cabin window looking out over cloud at cruise altitude, a wing visible below, and the focus countdown reading 01:27:42."
       />
@@ -47,8 +47,8 @@ export default function During() {
         tone="night"
         flip
         eyebrow="WHILE YOU WORK"
-        title="It follows you to the work."
-        caption="Progress stays in the menu bar, and drifting gets you a nudge rather than a locked Mac."
+        title="It stays with you the whole way."
+        caption="Your flight sits in the menu bar. Drift somewhere else and you get a nudge back, never a locked Mac."
         visual={<MenuBarVisual />}
       />
     </Band>

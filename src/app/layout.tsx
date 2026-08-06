@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { APP_STORE_PRICE, withBasePath } from "@/lib/site";
 
-const title = "Focus Terminal — A focus timer that goes somewhere.";
+const title = "Focus Terminal — Every focus session takes you somewhere new.";
 const description =
-  `A native macOS 14+ focus timer that turns each session into a flight. On the Mac App Store for a one-time ${APP_STORE_PRICE}, with no subscription or account.`;
+  `A Mac timer that turns your work sessions into real flights. Pick a task, watch the plane move while you work, and collect the country when you land. One-time ${APP_STORE_PRICE}, no subscription, macOS 14+.`;
 
 // Canonical and social-image URLs must describe the real deployment.
 const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;

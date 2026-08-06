@@ -33,7 +33,13 @@ export default function Price() {
           </p>
 
           <div className="col-span-10 max-lg:col-span-1">
-            <div className="flex flex-wrap items-baseline gap-x-m gap-y-2" data-reveal>
+            {/* The section used to open on a bare number, which asked the
+                visitor to work out what they were getting for it. */}
+            <h2 className="headline max-w-[20ch]" data-reveal>
+              One payment. Every flight you will ever take.
+            </h2>
+
+            <div className="mt-l flex flex-wrap items-baseline gap-x-m gap-y-2" data-reveal>
               <p className="display tnum">{APP_STORE_PRICE}</p>
               <p className="board-caption text-ink/55">ONE TIME · US PRICE</p>
             </div>
