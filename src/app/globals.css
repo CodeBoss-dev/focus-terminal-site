@@ -115,6 +115,13 @@ body {
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1;
+    /* A monospace space is a full character cell, and every glyph carries side
+       bearings on top of that, so at display size the gap between the two words
+       measures wider than a capital and they read as two disconnected blocks.
+       Pulling the space back to roughly half a cell makes it one wordmark
+       again. Applied to the space rather than to the letters so the character
+       advance stays uniform and the split-flap animation cannot change width. */
+    word-spacing: -0.3em;
   }
 
   /* The only mid-sized role on the page. One sentence, never a paragraph. */

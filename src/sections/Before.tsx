@@ -27,8 +27,7 @@ export default function Before() {
         title="Your task gets a ticket."
         caption="The thing you are working on prints on the pass, next to the gate, the seat and the minutes you are protecting."
         shot="/shots/03-boarding-pass.webp"
-        ratio={[1600, 661]}
-        alt="A printed boarding pass in the app for flight FT 236, Mumbai to Colombo, showing gate B24, seat 36K, 123 minutes of focus time and the task Deep Work."
+        alt="A printed boarding pass in the app for flight FT 236, Mumbai to Colombo, showing gate B24, seat 36K, 123 minutes of focus time, the task Deep Work, and a Board button."
       />
     </Band>
   );
