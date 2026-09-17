@@ -51,7 +51,7 @@
   <header>
     <p class="eyebrow">Focus Terminal for macOS</p>
     <h1>Support</h1>
-    <p class="lede">Focus Terminal turns a focus session into a flight: book a route, print a boarding pass, watch the route unfold, and land with a stamp in your passport.</p>
+    <p class="lede">Focus Terminal turns a focus session into a flight: book a route, print a boarding pass, watch the route unfold, and land with a stamp in your passport. It’s a native Mac app with local-first storage and optional private iCloud sync.</p>
   </header>
 
   <div id="contact" class="card contact">
@@ -61,7 +61,7 @@
   <h2>Getting started</h2>
   <dl>
     <dt>First launch</dt>
-    <dd>Focus Terminal opens with a short pre-flight briefing and asks you to set a <strong>home airport</strong>. Every flight departs from there. You can change it later in Settings.</dd>
+    <dd>Focus Terminal opens with a short pre-flight briefing. Press Space, Return, or the right-arrow key to continue, or click anywhere. You can then choose private iCloud sync or keep everything on this Mac before selecting your <strong>home airport</strong>. Every flight departs from home, which you can change later in Settings.</dd>
 
     <dt>Booking a flight (starting a focus session)</dt>
     <dd>From the departures board, choose <em>Book a Flight</em> (or press ⌘N). Pick a destination and fare — the flight’s duration is your focus time. Confirm to print a boarding pass, then board to begin.</dd>
@@ -70,11 +70,14 @@
     <dd>The in-flight screen shows a live map (Flight Deck) and a Cabin View scene. Turn on <em>Pure Mode</em> from the menu bar for a minimal view. The menu-bar plane shows your live status even when the window is closed.</dd>
 
     <dt>Landing</dt>
-    <dd>When the timer completes you land, collect a passport stamp, and can review the flight in your Log, Passport, and Stats. You can also divert (end early) from the in-flight screen or the menu bar.</dd>
+    <dd>When the timer completes you land, collect a passport stamp, and can review the flight in your Log, Passport, and Stats. You can also choose <em>End Flight</em> from the in-flight screen or the menu bar; elapsed focus time is kept and the flight is recorded as ended early.</dd>
   </dl>
 
   <h2>Features &amp; settings</h2>
   <dl>
+    <dt>Account &amp; iCloud sync</dt>
+    <dd><em>Keep My Flights in iCloud</em> privately syncs flight history, passport stamps, achievements, and your home airport through the iCloud account signed into macOS. No Focus Terminal password, name, or email is required. If you choose local-only during setup, you can enable it later in Settings › Account &amp; Sync. That section also lets every passenger export a complete JSON copy of their data, stop future syncing without deleting either copy, or delete the private iCloud copy while keeping local history.</dd>
+
     <dt>Cabin Mode (no-fly list)</dt>
     <dd>In Settings, add apps that pull you off task. If you linger on one mid-flight, Focus Terminal flips on the “seatbelt sign” with a turbulence nudge. It never closes or blocks other apps — it only reminds you.</dd>
 
@@ -90,11 +93,14 @@
     <dt>Export</dt>
     <dd>You can save your arrival card as an image using the standard macOS save panel. Files are written only where you choose.</dd>
 
+    <dt>Stats and Smart Analysis</dt>
+    <dd>Stats shows daily focus split by Work, Study, Read, and Create, plus a session-depth trend graph. On macOS 26 or later, a compatible Apple silicon Mac with Apple Intelligence enabled can also generate private, on-device patterns and a suggested three-flight plan from your local history.</dd>
+
     <dt>Changing or resetting your home airport</dt>
     <dd>Settings › Home Airport › <em>Change…</em> returns you to the airport picker. (You can’t change it mid-flight.)</dd>
 
-    <dt>Deleting all Focus Terminal data</dt>
-    <dd>Quit Focus Terminal, then in Finder choose Go › Go to Folder… and enter <code>~/Library/Containers/com.waaridh.FocusTerminal</code>. Move that folder to the Trash and empty the Trash. Deleting only the app may leave its local container in place. Backups such as Time Machine may retain older copies according to your backup settings.</dd>
+    <dt>Deleting local Focus Terminal data</dt>
+    <dd>If you enabled iCloud sync, first use Settings › Account &amp; Sync › <em>Delete iCloud Copy…</em>. To remove the remaining local copy, quit Focus Terminal, then in Finder choose Go › Go to Folder… and enter <code>~/Library/Containers/com.waaridh.FocusTerminal</code>. Move that folder to the Trash and empty the Trash. Deleting only the app may leave its local container in place. Backups such as Time Machine may retain older copies according to your backup settings.</dd>
   </dl>
 
   <h2>Troubleshooting</h2>
@@ -110,17 +116,24 @@
 
     <dt>My Focus Shortcut didn’t run</dt>
     <dd>The name in Settings must match a Shortcut in the Shortcuts app <em>exactly</em>. Make sure the Shortcut exists and runs on its own, then re-enter the name.</dd>
+
+    <dt>Smart Analysis isn’t available</dt>
+    <dd>The core Stats page works on every supported Mac. Smart Analysis additionally requires macOS 26 or later, a compatible Apple silicon Mac (M1 or later), and Apple Intelligence enabled with its on-device model ready. The message in Stats identifies which requirement is missing.</dd>
+
+    <dt>iCloud sync isn’t available</dt>
+    <dd>Make sure this Mac is signed into iCloud and iCloud Drive is enabled in System Settings, then return to Settings › Account &amp; Sync and try again. Focus Terminal remains fully usable with its local copy while iCloud is offline. If the Mac’s iCloud account changed, syncing pauses rather than copying one account’s history into another.</dd>
   </dl>
 
   <h2>Requirements</h2>
   <ul>
     <li><strong>macOS 14 (Sonoma) or later.</strong></li>
-    <li>Apple silicon or Intel Mac.</li>
-    <li>The core app works offline. Internet access is needed to load map tiles and to send feedback through your email provider.</li>
+    <li>Apple silicon or Intel Mac for all core features.</li>
+    <li>Smart Analysis requires macOS 26 or later and a compatible Apple silicon Mac (M1 or later) with Apple Intelligence enabled.</li>
+    <li>The core app works offline. Internet access is needed for iCloud sync, map tiles, and sending feedback through your email provider.</li>
   </ul>
 
   <h2>Privacy</h2>
-  <p>Focus Terminal collects nothing and keeps your data on your Mac. Read the full <a href="./privacy.html">Privacy Policy</a>.</p>
+  <p>Focus Terminal collects nothing for the developer. Data remains local unless you choose private iCloud sync. Read the full <a href="./privacy.html">Privacy Policy</a>.</p>
 
   <footer>
     © 2026 Waaridh Borpujari · Focus Terminal for macOS · Contact: <a href="mailto:waaridh@icloud.com">waaridh@icloud.com</a>
