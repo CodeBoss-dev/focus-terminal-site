@@ -48,20 +48,20 @@
   <header>
     <p class="eyebrow">Focus Terminal for macOS</p>
     <h1>Privacy Policy</h1>
-    <p class="meta">Effective 11 July 2026 · Last updated 4 August 2026</p>
+    <p class="meta">Effective 11 July 2026 · Last updated 15 September 2026</p>
   </header>
 
   <div class="card">
-    <p style="margin:0"><strong>The short version.</strong> The Focus Terminal app has no accounts and no servers of its own. It does not collect, transmit, sell, or use your personal data for tracking or advertising. Everything you do in the app stays on your Mac. The purchase is handled entirely by Apple through the Mac App Store — we never see your payment details, and Apple does not tell us who you are.</p>
+    <p style="margin:0"><strong>The short version.</strong> Focus Terminal has no account or servers of its own. It does not collect, sell, or use your personal data for tracking or advertising. Your data stays on your Mac unless you explicitly choose private iCloud sync. Apple handles the Mac App Store purchase; we never see your payment details or customer identity.</p>
   </div>
 
   <h2>Who this covers</h2>
   <p>This policy applies to the Focus Terminal macOS application (“Focus Terminal”, “the app”) and to this website, both published by Waaridh Borpujari (“we”, “us”). It describes what the app does and does not do with information on your device, and how your information is handled when you buy the app.</p>
 
-  <h2 id="app-data">The app: no accounts, tracking, or data collection</h2>
+  <h2 id="app-data">No Focus Terminal account, no tracking, no data collection by us</h2>
   <ul>
-    <li>Focus Terminal has <strong>no account system</strong> and no sign-in.</li>
-    <li>We <strong>do not collect, transmit, sell, or share</strong> your personal data, and we do not use it for tracking or advertising.</li>
+    <li>Focus Terminal does not create its own account, password, or email profile. Optional sync uses the iCloud account already authenticated by macOS.</li>
+    <li>We <strong>do not collect, sell, or share</strong> your personal data, and we do not use it for tracking or advertising.</li>
     <li>The app contains <strong>no third-party analytics or advertising SDKs</strong>.</li>
   </ul>
 
@@ -70,15 +70,30 @@
   <p>Apple does not give us a customer list. What we receive from App Store Connect is <strong>aggregate sales reporting</strong> — how many units were bought, on which storefronts, on which dates, and the resulting proceeds. We cannot identify an individual buyer from it, and there is nothing in it to link a purchase to a person.</p>
   <p>If you separately choose to send Apple analytics data, Apple may show us anonymised, aggregated app usage and crash statistics. That is Apple's system, controlled by your setting in <em>System Settings › Privacy &amp; Security › Analytics &amp; Improvements</em>, not something the app collects.</p>
   <p>Apple handles your purchase under <a href="https://www.apple.com/legal/privacy/">Apple's Privacy Policy</a> and the App Store Terms of Service. Questions about your receipt, your payment method, or your Apple Account data go to Apple, because we hold none of it.</p>
-  <p>The one exception is if <em>you</em> email us — then we obviously have whatever you chose to write to us, and we use it only to answer you. Ask us to delete that correspondence at any time at <a href="mailto:waaridh@icloud.com">waaridh@icloud.com</a>.</p>
+  <p>The one exception is if <em>you</em> email us — then we have whatever you chose to write to us, and we use it only to answer you. Ask us to delete that correspondence at any time at <a href="mailto:waaridh@icloud.com">waaridh@icloud.com</a>.</p>
 
   <h2>What is stored on your Mac</h2>
-  <p>Focus Terminal keeps your data locally on your device only:</p>
+  <p>Focus Terminal always keeps a local copy of your data:</p>
   <ul>
     <li><strong>Flight history and passport</strong> — your completed focus sessions, stamps, achievements, and statistics (stored with Apple’s on-device SwiftData).</li>
     <li><strong>Settings and preferences</strong> — your home airport, cabin-audio choices, the name of your optional Focus Shortcut, and your Cabin Mode “no-fly” list (stored in the app’s local preferences).</li>
   </ul>
-  <p>This information never leaves your Mac through Focus Terminal. It remains in Focus Terminal’s local macOS container until you remove that container data. Deleting only the application from the Applications folder may not remove its container. To erase all Focus Terminal data, quit the app, remove the folder at <code>~/Library/Containers/com.waaridh.FocusTerminal</code>, and empty the Trash. Backups you control, such as Time Machine backups, may retain earlier copies until you remove or expire those backups.</p>
+  <p>If you choose <em>Not Now</em>, this information remains in Focus Terminal’s local macOS container and is not uploaded by the app. Deleting only the application from the Applications folder may not remove that container. To erase the local copy, quit the app, remove <code>~/Library/Containers/com.waaridh.FocusTerminal</code>, and empty the Trash. Backups you control, such as Time Machine, may retain earlier copies until you remove or expire them.</p>
+
+  <h2>Optional private iCloud sync</h2>
+  <p>If you explicitly choose <em>Keep My Flights in iCloud</em>, Focus Terminal copies your flight history, passport stamps, achievements, home airport, and an opaque app-generated account identifier into your <strong>private CloudKit database</strong>. This lets the app restore and merge that history on another Mac signed into the same iCloud account.</p>
+  <ul>
+    <li>Apple authenticates the iCloud account. Focus Terminal does not receive the account password, name, or email address.</li>
+    <li>The private database belongs to the user’s iCloud account, counts against their iCloud storage allowance, and is not visible to the Focus Terminal developer.</li>
+    <li>Sync is optional. Skipping it does not disable any current focus, flight, log, passport, or Stats feature.</li>
+    <li>You can enable sync later under Settings › Account &amp; Sync. If iCloud becomes unavailable or the iCloud account changes, syncing pauses and the local copy remains usable.</li>
+    <li>You can export a complete JSON copy of the data Focus Terminal stores for you from Settings › Account &amp; Sync, whether you use local-only or iCloud storage.</li>
+    <li>You can delete Focus Terminal’s private iCloud copy from the same section. This removes the app’s private CloudKit zone while preserving the copy on your Mac.</li>
+  </ul>
+  <p>Focus Terminal does not currently publish profiles, friend activity, live flight presence, or statistics to a public CloudKit database. Any future social feature will require a separate opt-in and an updated privacy disclosure before it is enabled.</p>
+
+  <h2>On-device Smart Analysis</h2>
+  <p>On supported Macs, the optional <strong>Smart Analysis</strong> feature summarizes your locally stored focus-session history and asks Apple’s on-device Foundation Model to identify patterns and suggest a short plan. The analysis runs on your Mac using Apple Intelligence. Focus Terminal does not send your session history or the generated analysis to the developer or to an external AI service. If your macOS version, Mac, Apple Intelligence setting, or downloaded model is not compatible, the feature stays off and explains what is required.</p>
 
   <h2>Maps</h2>
   <p>Focus Terminal displays flight routes and scenery using <strong>Apple MapKit</strong>. Rendering maps may require network requests to Apple to fetch map and imagery tiles. Those requests are handled by Apple and governed by <a href="https://www.apple.com/legal/privacy/">Apple’s privacy policy</a> and services terms. Focus Terminal does not add tracking to these requests and does not receive your location or map activity back from Apple.</p>
@@ -112,7 +127,7 @@
   <p>For product help and troubleshooting, visit <a href="./support.html">Focus Terminal Support</a>.</p>
 
   <footer>
-    © 2026 Waaridh Borpujari. Focus Terminal is a native macOS app; it stores your focus-session data locally and collects nothing.
+    © 2026 Waaridh Borpujari. Focus Terminal stores data locally, offers optional private iCloud sync, and collects nothing for the developer.
   </footer>
 </div>
 </body>
